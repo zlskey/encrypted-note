@@ -1,0 +1,40 @@
+{
+  "name": "encrypted-note",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "concurrently \"npm run server\" \"npm run build\"",
+    "dev": "concurrently \"nodemon backend/server\" \"npm run client\"",
+    "client": "npm start --prefix frontend",
+    "build": "npm run build --prefix frontend",
+    "server": "node backend/server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zlskey/encrypted-note.git"
+  },
+  "author": "zlskey",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "compression": "^1.7.4",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.13.5",
+    "morgan": "^1.10.0",
+    "openpgp": "5.0.0-5",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "concurrently": "^6.2.1",
+    "nodemon": "^2.0.12"
+  },
+  "bugs": {
+    "url": "https://github.com/zlskey/encrypted-note/issues"
+  },
+  "homepage": "https://github.com/zlskey/encrypted-note#readme"
+}
