@@ -1,22 +1,22 @@
 # encrypted-note
 
-Web app build in MERN stack
+Web app build with MERN stack
 
 ## Technologies
 * React.js as frontend
 * Node.js (express) as API
 * MongoDB as Database
 
-
 ## Features
 * JWT auth
-* note encrypting by openpgp
+* note encrypting using openpgp
 * Creating/Editing notes
 * Sharing notes between users 
 * Separated password for account and PIN to decrypt notes
 
 ## Installation
 Requires: Node.js version 16.1.0 & Yarn version 1.22.11
+
 #### 1. Clone repo
 ```bash
 git clone https://github.com/zlskey/encrypted-note.git
@@ -27,6 +27,7 @@ cd encrypted-note
 Rename both .env.example files into .env and change their content 
 
 First is in ~/encrypted-note and second is in frontend directory
+
 
 #### 3. Install dependencies
 ```bash
