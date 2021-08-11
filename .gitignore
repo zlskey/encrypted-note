@@ -1,5 +1,5 @@
 node_modules
 .env
 
-frontend/node_modules
-frontend/.env
+frontend-dir/node_modules
+frontend-dir/.env

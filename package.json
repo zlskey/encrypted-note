@@ -6,8 +6,8 @@
   "scripts": {
     "start": "concurrently \"npm run server\" \"npm run build\"",
     "dev": "concurrently \"nodemon backend/server\" \"npm run client\"",
-    "client": "npm start --prefix frontend",
-    "build": "npm run build --prefix frontend",
+    "client": "npm start --prefix frontend-dir",
+    "build": "npm run build --prefix frontend-dir",
     "server": "node backend/server"
   },
   "repository": {

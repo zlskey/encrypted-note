@@ -1,0 +1,81 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;500&display=swap");
+
+@mixin mQ($width) {
+    @media screen and (max-width: $width) {
+        @content;
+    }
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Roboto", sans-serif;
+    font-weight: 300;
+    box-sizing: border-box;
+
+    &::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    /* Track */
+    &::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+    }
+
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+        background: #888;
+    }
+
+    /* Handle on hover */
+    &::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+}
+
+#root {
+    min-height: 100%;
+    margin: 0 auto;
+    transition: 0.2s;
+    overflow: hidden;
+    padding-bottom: 50px;
+    width: 55vw;
+
+    @include mQ(1500px) {
+        width: 65vw !important;
+    }
+    @include mQ(1100px) {
+        width: 75vw !important;
+    }
+    @include mQ(900px) {
+        width: 80vw !important;
+    }
+    @include mQ(700px) {
+        width: 100vw !important;
+    }
+}
+
+.hide {
+    display: none;
+}
+
+.clickable {
+    transition: 0.1s;
+    cursor: pointer;
+
+    &:active {
+        transform: scale(0.97);
+    }
+}
+
+svg {
+    transition: 0.1s;
+}
+
+.error {
+    color: #f44336;
+    margin-top: 2px;
+    font-weight: 400;
+    font-size: 1rem;
+}

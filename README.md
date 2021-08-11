@@ -34,7 +34,7 @@ First is in ~/encrypted-note and second is in frontend directory
 # ~/encrypted-note directory
 
 npm install
-cd frontend
+cd frontend-dir
 yarn install
 ```
 #### 4. Start app

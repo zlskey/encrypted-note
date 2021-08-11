@@ -42,7 +42,7 @@ app.use('/api', router)
 app.use((error, req, res, next) => res.status(error.status || 500).json({ error: error.message }))
 
 if (NODE_ENV === 'production') {
-    const buildPath = path.join(__dirname, '..', 'frontend', 'build')
+    const buildPath = path.join(__dirname, '..', 'frontend-dir', 'build')
 
     app.use(express.static(buildPath))
     app.get('*', (req, res) => res.sendFile(path.join(buildPath, 'index.html')))
