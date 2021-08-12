@@ -3,3 +3,4 @@ node_modules
 
 frontend-dir/node_modules
 frontend-dir/.env
+frontend-dir/build
