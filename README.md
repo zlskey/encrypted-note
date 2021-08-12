@@ -24,10 +24,9 @@ cd encrypted-note
 ```
 
 #### 2. Enviroment variables
-Rename both .env.example files into .env and change their content 
-
-First is in ~/encrypted-note and second is in frontend directory
-
+Rename .env.example files to .env and set your variables
+* ~/encrypted-note/.env.example - here you should at least add mongodb uri
+* ~/encrypted-note/frontend-dir/.env.example - if you won't change api link just rename it
 
 #### 3. Install dependencies
 ```bash

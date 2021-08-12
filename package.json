@@ -5,8 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node backend/server",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "production": "concurrently \"npm start\" \"npm run client-build\"",
+    "dev": "concurrently \"npm run client\" \"npm run server\"",
+    "production": "concurrently \"npm run client-build\" \"npm start\"",
     "client": "npm start --prefix frontend-dir",
     "client-build": "npm run build --prefix frontend-dir",
     "server": "nodemon backend/server"

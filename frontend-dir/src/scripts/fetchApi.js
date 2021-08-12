@@ -1,7 +1,7 @@
 const API_URL = process.env.REACT_APP_API_URL
 
 const fetchApi = async (url, body, method = `POST`) => {
-
+    console.log(API_URL)
     try {
         let res;
 
