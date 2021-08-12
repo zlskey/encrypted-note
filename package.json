@@ -4,11 +4,12 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "concurrently \"npm run server\" \"npm run build\"",
-    "dev": "concurrently \"nodemon backend/server\" \"npm run client\"",
+    "start": "node backend/server",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "production": "concurrently \"npm run server\" \"npm run build\"",
     "client": "npm start --prefix frontend-dir",
     "build": "npm run build --prefix frontend-dir",
-    "server": "node backend/server"
+    "server": "nodemon backend/server"
   },
   "repository": {
     "type": "git",

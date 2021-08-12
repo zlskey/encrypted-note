@@ -45,7 +45,7 @@ yarn install
 npm run dev
 
 # for production 
-npm start
+npm run production
 ```
 
 
