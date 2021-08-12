@@ -45,6 +45,7 @@ yarn install
 npm run dev
 
 # for production 
+npm run client-build
 npm run production
 ```
 
