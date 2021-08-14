@@ -94,7 +94,7 @@ const Menu = () => {
     const [showMenu, setShowMenu] = useState(false);
 
     const logout = async () => {
-        const res = await fetchApi('/logout')
+        const res = await fetchApi('/user/logout')
 
         if (res.ok) setUser(null)
         else console.error(res.error)

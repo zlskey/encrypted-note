@@ -7,8 +7,6 @@ import fetchApi from '@helpers/fetchApi'
 import SlideAnimation from '@components/SlideAnimation';
 import InputField from '@components/InputField';
 
-
-
 const Form = styled.form`
         position: relative;
         overflow: hidden;
@@ -42,7 +40,7 @@ export const LoginForm = ({ action }) => {
         if (isFormUnfilled({ login, password })) return
 
         const user = { login, password }
-        const res = await fetchApi('/login', user)
+        const res = await fetchApi('/user/login', user)
         if (res.ok) setUser(res.content)
         else setError('res', res.error)
     }
@@ -81,7 +79,7 @@ export const SignUpForm = ({ action }) => {
         }
 
         const user = { username, password }
-        const res = await fetchApi('/signup', user)
+        const res = await fetchApi('/user/signup', user)
         if (res.ok) setUser(res.content)
         else setError('res', res.error)
     }
@@ -124,7 +122,7 @@ export const TryForm = ({ action }) => {
     const handleSubmit = async e => {
         e.preventDefault()
 
-        const res = await fetchApi('/signup', { password })
+        const res = await fetchApi('/user/signup', { password })
 
         if (res.ok) setUser(res.content)
         else setError('res', res.error)

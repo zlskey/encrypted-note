@@ -59,7 +59,7 @@ const ThemeSwitch = () => {
     const [alertContent, setAlertContent] = useState('');
 
     const handleClick = async () => {
-        const res = await fetchApi('/theme', {}, 'PATCH')
+        const res = await fetchApi('/settings/theme', {}, 'PATCH')
         if (res.ok) setIsDarkTheme(prev => !prev)
         else setAlertContent(res.error)
     }

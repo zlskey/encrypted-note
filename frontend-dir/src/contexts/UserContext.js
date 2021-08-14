@@ -16,7 +16,7 @@ const UserContextProvider = ({ children }) => {
 
     useEffect(() => {
         (async () => {
-            const res = await fetchApi('/verify')
+            const res = await fetchApi('/auth/verify')
             if (res.ok) {
                 setUser(res.content)
                 setIsLoading(false)

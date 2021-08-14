@@ -44,7 +44,7 @@ const EncryptionSettings = () => {
         e.preventDefault()
         if (isFormUnfilled({ pin })) return
 
-        fetchApi('/start-encryption', { pin }, 'PATCH')
+        fetchApi('/settings/start-encryption', { pin }, 'PATCH')
             .then(res => {
                 if (res.ok) {
                     setUser(res.content)

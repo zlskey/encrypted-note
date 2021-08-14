@@ -70,7 +70,7 @@ const TopPanel = ({
 
     const unlinkNote = async () => {
         const res = await fetchApi(
-            "/unlink-note",
+            "note/unlink",
             { id: note._id, content: note.content },
             "PATCH"
         )

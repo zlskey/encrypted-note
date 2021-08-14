@@ -53,7 +53,7 @@ const PinForm = ({ setNotes, setSharedNotes, setShowPinForm }) => {
 
         if (isFormUnfilled({ pin })) return
 
-        const res = await fetchApi('/notes', { pin })
+        const res = await fetchApi('/user/notes', { pin })
         if (res.ok) {
             setNotes(res.content.userNotes)
             setSharedNotes(res.content.sharedNotes)

@@ -60,7 +60,7 @@ const NoteGallery = () => {
         if (user.encryption) return
 
         (async () => {
-            const res = await fetchApi('/notes', {})
+            const res = await fetchApi('/user/notes', {})
             if (res.ok) setNotes(res.content.userNotes)
             else setAlertContent(res.error)
         })()

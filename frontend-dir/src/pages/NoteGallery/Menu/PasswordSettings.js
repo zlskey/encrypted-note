@@ -41,7 +41,7 @@ const EncryptionSettings = () => {
 
         if (isFormUnfilled({ currentPassword, newPassword })) return
 
-        const res = await fetchApi('/change-password', { currentPassword, newPassword }, 'PATCH')
+        const res = await fetchApi('/settings/change-password', { currentPassword, newPassword }, 'PATCH')
         if (res.ok) setShowForm(false)
         else setError('res', res.error)
     }

@@ -46,7 +46,7 @@ const ShareWindow = ({ note, setNotes }) => {
     const shareNote = async e => {
         e.preventDefault()
 
-        const res = await fetchApi('/share-note', { id, content, recipient: newRecipient }, 'PATCH')
+        const res = await fetchApi('/note/share', { id, content, recipient: newRecipient }, 'PATCH')
 
         if (res.ok) {
             setRecipients(res.content)
@@ -63,7 +63,7 @@ const ShareWindow = ({ note, setNotes }) => {
     }
 
     const unlinkNote = async recipientToUnlink => {
-        const res = await fetchApi('/unlink-note', { recipientToUnlink, id, content }, 'PATCH')
+        const res = await fetchApi('/note/unlink', { recipientToUnlink, id, content }, 'PATCH')
 
         if (res.ok) {
             setRecipients(res.content)

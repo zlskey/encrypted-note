@@ -7,7 +7,6 @@ const checkRequirements = require('../middlewares/checkRequirements')
 const maxAge = 3 * 5 * 60 * 60
 const createToken = id => jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: maxAge })
 
-
 const options = {
     httpOnly: true,
     maxAge: maxAge * 1000,

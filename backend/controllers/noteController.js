@@ -1,10 +1,10 @@
 const Note = require("../schemas/NoteSchema")
-const User = require("../schemas/UserSchema")
+const User = require('../schemas/UserSchema')
 const pgpHandler = require("../middlewares/pgpHandler")
 const errorHandler = require("../middlewares/errorHandler")
 const checkRequirements = require("../middlewares/checkRequirements")
 
-module.exports.createNote = async (req, res, next) => {
+module.exports.create = async (req, res, next) => {
     try {
         const { username, encryption } = req.user
         const content = req.body.content
@@ -22,7 +22,7 @@ module.exports.createNote = async (req, res, next) => {
     } catch (err) { errorHandler(err, next) }
 }
 
-module.exports.editNote = async (req, res, next) => {
+module.exports.edit = async (req, res, next) => {
     try {
         const { username, encryption } = req.user
         const { id, content } = req.body
@@ -39,33 +39,7 @@ module.exports.editNote = async (req, res, next) => {
     } catch (err) { errorHandler(err, next) }
 }
 
-module.exports.getNotes = async (req, res, next) => {
-    const pin = req.body.pin
-
-    try {
-        const { username, encryption } = req.user
-        const userNotesFromDb = await Note.find({ author: username })
-        const sharedNotesFromDb = await Note.find({ recipients: username })
-
-        const output = {
-            userNotes: [],
-            sharedNotes: [],
-        }
-
-        if (!encryption) output.userNotes = userNotesFromDb
-        else {
-            checkRequirements(pin)
-            output.userNotes = await pgpHandler.decryptNotes(userNotesFromDb, username, pin)
-            if (sharedNotesFromDb.length) {
-                output.sharedNotes = await pgpHandler.decryptNotes(sharedNotesFromDb, username, pin)
-            }
-        }
-
-        res.status(201).json({ content: output })
-    } catch (err) { errorHandler(err, next) }
-}
-
-module.exports.removeNote = async (req, res, next) => {
+module.exports.remove = async (req, res, next) => {
     const _id = req.body.id
     const { username } = req.user
 
@@ -78,7 +52,7 @@ module.exports.removeNote = async (req, res, next) => {
     } catch (err) { errorHandler(err, next) }
 }
 
-module.exports.shareNote = async (req, res, next) => {
+module.exports.share = async (req, res, next) => {
     const { id, recipient, content } = req.body
     const { username, encryption } = req.user
 
@@ -107,7 +81,7 @@ module.exports.shareNote = async (req, res, next) => {
     } catch (err) { errorHandler(err, next) }
 }
 
-module.exports.unlinkNote = async (req, res, next) => {
+module.exports.unlink = async (req, res, next) => {
     const { id, content } = req.body
     const { username } = req.user
 
@@ -133,11 +107,4 @@ module.exports.unlinkNote = async (req, res, next) => {
         const output = isAuthor ? recipients : true
         res.status(201).json({ content: output })
     } catch (err) { errorHandler(err, next) }
-}
-
-module.exports.logout = (req, res) => {
-    res
-        .cookie("jwt", null, { maxAge: 1, })
-        .status(201)
-        .json({ content: true, })
 }
