@@ -2,10 +2,10 @@ import { useContext, useState } from 'react'
 import styled from "styled-components";
 import { IconMoonStars, IconBrightness2, } from '@tabler/icons';
 
-import { getSize } from "../../../scripts/responsiveFacilities";
-import { ThemeContext } from '../../../contexts/ThemeContext';
-import fetchApi from '../../../scripts/fetchApi';
-import Alert from '../../partials/Alert';
+import { ThemeContext } from '@contexts/ThemeContext';
+import { getSize } from "@helpers/responsiveFacilities";
+import fetchApi from '@helpers/fetchApi';
+import Alert from '@components/Alert';
 
 const Switch = styled.div`
     border-radius: 9999px;

@@ -2,16 +2,15 @@ import { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components';
 import { IconPlus } from '@tabler/icons';
 
-import { ThemeContext } from '../../contexts/ThemeContext';
-import { UserContext } from '../../contexts/UserContext';
-import fetchApi from '../../scripts/fetchApi';
+import { ThemeContext } from '@contexts/ThemeContext';
+import { UserContext } from '@contexts/UserContext';
+import fetchApi from '@helpers/fetchApi';
 import Note from './Note'
 import FocusedNote from './FocusedNote'
 import Menu from './Menu/';
 import PinForm from './PinForm'
-
-import { getColumns } from '../../scripts/responsiveFacilities';
-import Alert from '../partials/Alert';
+import { getColumns } from '@helpers/responsiveFacilities';
+import Alert from '@components/Alert';
 
 const NoteGalleryDiv = styled.div`
     padding: 0 10px;

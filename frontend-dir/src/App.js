@@ -1,6 +1,6 @@
 import { useContext } from 'react';
-import NoteGallery from './components/NoteGallery';
-import AuthPage from './components/AuthPage';
+import NoteGallery from '@pages/NoteGallery';
+import AuthPage from '@pages/Auth';
 import ThemeContextProvider from './contexts/ThemeContext';
 import UserContextProvider, { UserContext } from './contexts/UserContext';
 

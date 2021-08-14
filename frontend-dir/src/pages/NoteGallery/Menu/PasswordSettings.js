@@ -2,12 +2,12 @@ import { IconLock } from '@tabler/icons';
 import { useContext, useState } from 'react'
 import styled from "styled-components";
 
-import InputField from '../../partials/InputField'
-import { ThemeContext } from '../../../contexts/ThemeContext';
-import { getSize } from "../../../scripts/responsiveFacilities";
+import { isFormUnfilled, setError } from '@helpers/InputErrorHandler'
+import { getSize } from "@helpers/responsiveFacilities";
+import fetchApi from '@helpers/fetchApi';
+import { ThemeContext } from '@contexts/ThemeContext';
+import InputField from '@components/InputField'
 import Form from './Form';
-import { isFormUnfilled, setError } from '../../../scripts/InputErrorHandler'
-import fetchApi from '../../../scripts/fetchApi';
 
 const Button = styled.button`
     width: 100%;

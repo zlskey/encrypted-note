@@ -1,8 +1,9 @@
 import { createContext, useContext, useEffect, useState } from 'react'
-import fetchApi from '../scripts/fetchApi';
-import Loader from '../components/SiteLoader'
+
+import Loader from '@components/SiteLoader'
+import Alert from '@components/Alert'
+import fetchApi from '@helpers/fetchApi';
 import { ThemeContext } from './ThemeContext';
-import Alert from '../components/partials/Alert'
 
 export const UserContext = createContext(null)
 

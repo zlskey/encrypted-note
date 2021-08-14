@@ -2,12 +2,12 @@ import { useContext, useState } from 'react'
 import styled from "styled-components";
 import { IconGridDots } from '@tabler/icons';
 
-import { ThemeContext } from '../../../contexts/ThemeContext';
-import { UserContext } from '../../../contexts/UserContext'
-import SlideAnimation from "../../partials/SlideAnimation";
-import { getSize } from "../../../scripts/responsiveFacilities";
-import CloseOnOuterClick from "../../partials/CloseOnOuterClick";
-import fetchApi from "../../../scripts/fetchApi";
+import CloseOnOuterClick from "@components/CloseOnOuterClick";
+import SlideAnimation from "@components/SlideAnimation";
+import { ThemeContext } from "@contexts/ThemeContext";
+import { UserContext } from '@contexts/UserContext'
+import { getSize } from "@helpers/responsiveFacilities";
+import fetchApi from "@helpers/fetchApi";
 import ThemeSwitch from "./ThemeSwitch";
 import EncryptionSettings from "./EncryptionSettings";
 import PasswordSettings from './PasswordSettings'

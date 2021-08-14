@@ -1,11 +1,11 @@
 import { useContext, useState } from 'react'
 import styled from 'styled-components';
 
-import fetchApi from '../../scripts/fetchApi'
-import SlideAnimation from '../partials/SlideAnimation';
-import InputField from '../partials/InputField';
-import { UserContext } from '../../contexts/UserContext';
-import { setError, setValid, isFormUnfilled } from '../../scripts/InputErrorHandler'
+import { UserContext } from '@contexts/UserContext';
+import { setError, setValid, isFormUnfilled } from '@helpers/InputErrorHandler'
+import fetchApi from '@helpers/fetchApi'
+import SlideAnimation from '@components/SlideAnimation';
+import InputField from '@components/InputField';
 
 
 

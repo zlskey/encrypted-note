@@ -2,12 +2,12 @@ import { useContext, useState } from 'react'
 import { IconLock } from '@tabler/icons';
 import styled from "styled-components";
 
-import { ThemeContext } from '../../../contexts/ThemeContext';
-import { UserContext } from '../../../contexts/UserContext'
-import InputField from '../../partials/InputField'
-import { getSize } from "../../../scripts/responsiveFacilities";
-import { isFormUnfilled, setError } from '../../../scripts/InputErrorHandler'
-import fetchApi from '../../../scripts/fetchApi';
+import { isFormUnfilled, setError } from '@helpers/InputErrorHandler'
+import { getSize } from "@helpers/responsiveFacilities";
+import fetchApi from '@helpers/fetchApi';
+import { ThemeContext } from '@contexts/ThemeContext';
+import { UserContext } from '@contexts/UserContext'
+import InputField from '@components/InputField'
 import Form from './Form';
 
 const Button = styled.button`

@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components';
 
-import { ThemeContext } from '../../contexts/ThemeContext';
-import { getSize } from '../../scripts/responsiveFacilities';
+import { ThemeContext } from '@contexts/ThemeContext';
+import { getSize } from '@helpers/responsiveFacilities';
 
 const NoteDiv = styled.div`
     border-radius: 10px;

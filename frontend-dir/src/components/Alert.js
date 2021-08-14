@@ -3,8 +3,8 @@ import { IconAlertCircle } from '@tabler/icons';
 import { useContext, useEffect, useState } from "react";
 import { useTransition, animated } from 'react-spring'
 
-import { ThemeContext } from "../../contexts/ThemeContext";
-import { getSize } from '../../scripts/responsiveFacilities'
+import { ThemeContext } from "@contexts/ThemeContext";
+import { getSize } from '@helpers/responsiveFacilities'
 
 const AlertDiv = styled.div`
     position: absolute;

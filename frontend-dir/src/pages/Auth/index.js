@@ -2,7 +2,7 @@ import { useContext, useState } from 'react'
 import styled from 'styled-components';
 
 import { LoginForm, SignUpForm, TryForm } from './Forms'
-import { ThemeContext } from '../../contexts/ThemeContext';
+import { ThemeContext } from '@contexts/ThemeContext';
 
 const AuthPageDiv = styled.div`
     transform: translateX(-50%) translateY(-50%);

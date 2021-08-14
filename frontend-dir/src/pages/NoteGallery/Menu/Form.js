@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import { useContext } from "react";
-import { getSize } from "../../../scripts/responsiveFacilities";
-import { ThemeContext } from "../../../contexts/ThemeContext";
-import CloseOnOuterClick from "../../partials/CloseOnOuterClick";
+
+import { getSize } from "@helpers/responsiveFacilities";
+import { ThemeContext } from '@contexts/ThemeContext';
+import CloseOnOuterClick from "@components/CloseOnOuterClick";
 
 const StyledForm = styled.form`
     width: 70%;

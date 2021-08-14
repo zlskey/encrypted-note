@@ -1,10 +1,10 @@
 import { useContext, useState } from 'react'
-
-import { ThemeContext } from '../../contexts/ThemeContext';
-import InputField from '../partials/InputField';
 import styled from 'styled-components';
-import fetchApi from '../../scripts/fetchApi';
-import { isFormUnfilled, setError } from '../../scripts/InputErrorHandler';
+
+import { ThemeContext } from '@contexts/ThemeContext';
+import InputField from '@components/InputField';
+import fetchApi from '@helpers/fetchApi';
+import { isFormUnfilled, setError } from '@helpers/InputErrorHandler';
 
 const PinFormDiv = styled.div`
     z-index: 10;

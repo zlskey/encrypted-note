@@ -91,7 +91,5 @@ const generateKeys = async (name, passphrase) => {
     }
     catch (err) { throw Error(err) }
 }
-//
-
 
 module.exports = { decryptNotes, encryptNotes, encrypt, generateKeys, readPrivateKey }
