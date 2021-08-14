@@ -25,6 +25,7 @@ app.use(compression())
 app.use(cookieParser())
 app.use(cors({ origin, credentials: true }))
 app.listen(PORT, () => console.log(`listening on ${PORT}`))
+console.log(`Running in ${NODE_ENV} enviroment`)
 
 mongoose.set("useNewUrlParser", true);
 mongoose.set("useFindAndModify", false);

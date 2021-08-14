@@ -15,7 +15,7 @@ import Alert from '@components/Alert';
 const NoteGalleryDiv = styled.div`
     padding: 0 10px;
     transition: 0.2s;
-    color: ${({ theme }) => theme.fontColor}
+    color: ${({ theme }) => theme.fontColor};
 `
 
 const Notes = styled.div`
