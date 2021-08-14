@@ -39,7 +39,7 @@ mongoose
     .catch((err) => console.log(err));
 
 app.use('/api', router)
-app.use((error, req, res, next) => res.status(error.status || 500).json({ error: error.message }))
+app.use((error, req, res, next) => res.status(error.status || 500).json(error.message))
 
 if (NODE_ENV === 'production') {
     const buildPath = path.join(__dirname, '..', 'frontend-dir', 'build')

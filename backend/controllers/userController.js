@@ -1,5 +1,4 @@
-const Note = require("..//schemas/NoteSchema")
-// const User = require("..//schemas/UserSchema")
+const Note = require("../schemas/NoteSchema")
 const pgpHandler = require("../middlewares/pgpHandler")
 const errorHandler = require("../middlewares/errorHandler")
 const checkRequirements = require("../middlewares/checkRequirements")
@@ -26,7 +25,7 @@ module.exports.getNotes = async (req, res, next) => {
             }
         }
 
-        res.status(201).json({ content: output })
+        res.status(201).json(output)
     } catch (err) { errorHandler(err, next) }
 }
 
@@ -34,5 +33,5 @@ module.exports.logout = (req, res) => {
     res
         .cookie("jwt", null, { maxAge: 1, })
         .status(201)
-        .json({ content: true, })
+        .json(true)
 }

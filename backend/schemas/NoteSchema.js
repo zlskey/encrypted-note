@@ -3,15 +3,15 @@ const mongoose = require('mongoose')
 const noteSchema = new mongoose.Schema({
     author: {
         type: String,
-        require: true,
+        required: true,
     },
     recipients: {
         type: Array,
-        require: true,
+        required: true,
     },
     content: {
         type: String,
-        require: true,
+        required: true,
     }
 }, { timestamps: true })
 

@@ -40,7 +40,7 @@ export const LoginForm = ({ action }) => {
         if (isFormUnfilled({ login, password })) return
 
         const user = { login, password }
-        const res = await fetchApi('/user/login', user)
+        const res = await fetchApi('/auth/login', user)
         if (res.ok) setUser(res.content)
         else setError('res', res.error)
     }
@@ -79,7 +79,7 @@ export const SignUpForm = ({ action }) => {
         }
 
         const user = { username, password }
-        const res = await fetchApi('/user/signup', user)
+        const res = await fetchApi('/auth/signup', user)
         if (res.ok) setUser(res.content)
         else setError('res', res.error)
     }
@@ -122,7 +122,9 @@ export const TryForm = ({ action }) => {
     const handleSubmit = async e => {
         e.preventDefault()
 
-        const res = await fetchApi('/user/signup', { password })
+        const res = await fetchApi('/auth/signup', { password })
+
+        console.log(res.error)
 
         if (res.ok) setUser(res.content)
         else setError('res', res.error)

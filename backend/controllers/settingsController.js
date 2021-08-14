@@ -11,7 +11,7 @@ module.exports.toggleTheme = async (req, res, next) => {
         const theme = user.theme === 'light' ? 'dark' : 'light'
 
         await User.findOneAndUpdate({ username: req.user.username }, { theme })
-        res.status(201).json({ content: true })
+        res.status(201).json(true)
     }
     catch (err) { errorHandler(err, next) }
 }
@@ -22,6 +22,7 @@ module.exports.startEncryption = async (req, res, next) => {
 
     try {
         if (encryption) throw Error('Already have encryption')
+        if (pin.length !== 4) throw Error('Pin must have 4 characters EXERR')
         checkRequirements(pin)
 
         await pgpHandler.generateKeys(username, pin)
@@ -30,7 +31,7 @@ module.exports.startEncryption = async (req, res, next) => {
         const notes = await Note.find({ author: username })
         if (notes) pgpHandler.encryptNotes(notes, username)
 
-        res.status(201).json({ content: user })
+        res.status(201).json(true)
     }
     catch (err) { errorHandler(err, next) }
 }
@@ -41,6 +42,7 @@ module.exports.changePin = async (req, res, next) => {
 
     try {
         checkRequirements(currentPin, newPin)
+        if (newPin.length !== 4) throw Error('Pin must have 4 characters EXERR')
 
         await pgpHandler.readPrivateKey(username, currentPin) // to check if pin is correct
 
@@ -55,7 +57,7 @@ module.exports.changePin = async (req, res, next) => {
 
         if (decryptedNotes) await pgpHandler.encryptNotes(decryptedNotes, username)
 
-        res.status(200).json({ content: true })
+        res.status(200).json(true)
     }
     catch (err) { errorHandler(err, next) }
 }
@@ -67,10 +69,13 @@ module.exports.changePassword = async (req, res, next) => {
     try {
         checkRequirements(currentPassword, newPassword)
 
+        if (newPassword.length < 8) throw Error('short password')
+        if (newPassword.length > 32) throw Error('long password')
+
         await User.login(username, currentPassword) // to check if password is correct
         const user = await User.changePassword(newPassword, _id)
 
-        res.status(200).json({ content: user })
+        res.status(200).json(user)
     }
     catch (err) { errorHandler(err, next) }
 }

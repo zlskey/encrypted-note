@@ -33,7 +33,7 @@ const Input = styled.input`
     outline: none;
     font-size: 16px;
     transition: 0.3s;
-
+    color: ${({ theme }) => theme.fontColor}
 `
 
 const ShareWindow = ({ note, setNotes }) => {

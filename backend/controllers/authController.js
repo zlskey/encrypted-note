@@ -5,8 +5,9 @@ const errorHandler = require('../middlewares/errorHandler')
 const checkRequirements = require('../middlewares/checkRequirements')
 
 const maxAge = 3 * 5 * 60 * 60
-const createToken = id => jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: maxAge })
-
+const createToken = id => (
+    jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: maxAge })
+)
 const options = {
     httpOnly: true,
     maxAge: maxAge * 1000,
@@ -31,7 +32,7 @@ module.exports.signup = async (req, res, next) => {
         res
             .cookie('jwt', token, options)
             .status(201)
-            .json({ content: user })
+            .json(user)
     }
     catch (err) {
         errorHandler(err, next)
@@ -52,7 +53,7 @@ module.exports.login = async (req, res, next) => {
         res
             .cookie('jwt', token, options)
             .status(201)
-            .json({ content: user })
+            .json(user)
     }
     catch (err) {
         errorHandler(err, next)
@@ -66,9 +67,9 @@ module.exports.verify = async (req, res, next) => {
 
         if (user) {
             user.password = null
-            res.status(201).json({ content: user })
+            res.status(201).json(user)
         }
-        else res.status(201).json({ content: false })
+        else res.status(201).json(false)
     }
     catch (err) {
         errorHandler(err, next)

@@ -1,7 +1,6 @@
 const API_URL = process.env.REACT_APP_API_URL
 
 const fetchApi = async (url, body, method = `POST`) => {
-    console.log(API_URL)
     try {
         let res;
 
@@ -21,10 +20,10 @@ const fetchApi = async (url, body, method = `POST`) => {
         }
 
         const ok = res.ok
-        const { content, error } = await res.json()
+        const data = await res.json()
 
-        if (res.ok) return { content, ok }
-        else return { error, ok }
+        if (res.ok) return { content: data, ok }
+        else return { error: data, ok }
     }
     catch (err) {
         return { ok: false, error: `Can't connect to the server` }

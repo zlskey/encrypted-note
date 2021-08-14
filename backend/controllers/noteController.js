@@ -18,7 +18,7 @@ module.exports.create = async (req, res, next) => {
         const note = await Note.create({ author: username, content: output })
         note.content = content
 
-        res.status(201).json({ content: note })
+        res.status(201).json(note)
     } catch (err) { errorHandler(err, next) }
 }
 
@@ -35,7 +35,7 @@ module.exports.edit = async (req, res, next) => {
 
         const note = await Note.findOneAndUpdate({ _id: id, author: username }, { content: output })
 
-        res.status(201).json({ content: true })
+        res.status(201).json(true)
     } catch (err) { errorHandler(err, next) }
 }
 
@@ -47,7 +47,7 @@ module.exports.remove = async (req, res, next) => {
         checkRequirements(_id)
         await Note.findOneAndRemove({ author: username, _id })
 
-        res.status(201).json({ content: true })
+        res.status(201).json(true)
 
     } catch (err) { errorHandler(err, next) }
 }
@@ -76,7 +76,7 @@ module.exports.share = async (req, res, next) => {
 
         await Note.findByIdAndUpdate(id, { recipients: [...recipients, recipient], content: encryptedContent, })
 
-        res.status(201).json({ content: [...recipients, recipient], })
+        res.status(201).json([...recipients, recipient])
 
     } catch (err) { errorHandler(err, next) }
 }
@@ -105,6 +105,6 @@ module.exports.unlink = async (req, res, next) => {
         })
 
         const output = isAuthor ? recipients : true
-        res.status(201).json({ content: output })
+        res.status(201).json(output)
     } catch (err) { errorHandler(err, next) }
 }

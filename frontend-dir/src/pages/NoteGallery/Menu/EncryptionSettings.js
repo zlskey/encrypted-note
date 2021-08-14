@@ -47,7 +47,10 @@ const EncryptionSettings = () => {
         fetchApi('/settings/start-encryption', { pin }, 'PATCH')
             .then(res => {
                 if (res.ok) {
-                    setUser(res.content)
+                    setUser(user => {
+                        user.encryption = true
+                        return user
+                    })
                     setShowSetPinForm(false)
                 }
                 else setError('pin', res.error)
