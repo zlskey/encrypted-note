@@ -1,6 +1,6 @@
 # encrypted-note
 
-Web app build with MERN stack
+Web app build with MERN stack. You can try it [here](https://zlskey.pl)
 
 ## Technologies
 * React.js as frontend
@@ -43,8 +43,7 @@ yarn install
 # for development (frontend will run on port 3000 and backend on port 5000)
 npm run dev
 
-# for production 
-npm run client-build
+# for production (app will run on port 5000)
 npm run production
 ```
 
