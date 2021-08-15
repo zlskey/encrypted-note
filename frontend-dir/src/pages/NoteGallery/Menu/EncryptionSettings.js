@@ -62,7 +62,7 @@ const EncryptionSettings = () => {
 
         if (isFormUnfilled({ currentPin, newPin })) return
 
-        fetchApi('/change-pin', { currentPin, newPin }, 'PATCH')
+        fetchApi('/settings/change-pin', { currentPin, newPin }, 'PATCH')
             .then(res => {
                 if (res.ok) setShowChangePinForm(false)
                 else setError('res', res.error)

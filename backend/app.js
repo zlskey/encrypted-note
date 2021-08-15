@@ -6,13 +6,8 @@ const compression = require(`compression`)
 const logger = require('morgan')
 const dotenv = require('dotenv')
 const path = require('path')
-const fs = require('fs')
 
 dotenv.config()
-
-const output = JSON.stringify({ errors: [] })
-const errorsStorage = path.join(__dirname, 'error_log.json')
-fs.writeFileSync(errorsStorage, output)
 
 const PORT = process.env.PORT || 5000
 const dbURI = process.env.DATABASE_URL
