@@ -6,8 +6,13 @@ const compression = require(`compression`)
 const logger = require('morgan')
 const dotenv = require('dotenv')
 const path = require('path')
+const fs = require('fs')
 
 dotenv.config()
+
+const output = JSON.stringify({ errors: [] })
+const errorsStorage = path.join(__dirname, 'error_log.json')
+fs.writeFileSync(errorsStorage, output)
 
 const PORT = process.env.PORT || 5000
 const dbURI = process.env.DATABASE_URL
@@ -26,6 +31,8 @@ app.use(cookieParser())
 app.use(cors({ origin, credentials: true }))
 app.listen(PORT, () => console.log(`listening on ${PORT}`))
 console.log(`Running in ${NODE_ENV} enviroment`)
+
+
 
 mongoose.set("useNewUrlParser", true);
 mongoose.set("useFindAndModify", false);

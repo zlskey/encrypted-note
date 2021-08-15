@@ -71,7 +71,7 @@ const NoteGallery = () => {
     return (
         <>
             {showPinForm && <PinForm setNotes={setNotes} setSharedNotes={setSharedNotes} setShowPinForm={setShowPinForm} />}
-            {noteToFocus && <FocusedNote setShowPinForm={setShowPinForm} setNoteToFocus={setNoteToFocus} note={noteToFocus} setNotes={setNotes} setSharedNotes={setSharedNotes} />}
+            {noteToFocus && <FocusedNote setNoteToFocus={setNoteToFocus} note={noteToFocus} setNotes={setNotes} setSharedNotes={setSharedNotes} />}
             <Alert content={alertContent} setContent={setAlertContent} />
 
             <NoteGalleryDiv theme={theme} style={{ filter: `${(showPinForm || noteToFocus) ? 'blur(5px)' : ''}` }}>
