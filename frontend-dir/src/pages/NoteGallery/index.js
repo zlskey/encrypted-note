@@ -55,7 +55,7 @@ const NoteGallery = () => {
 
     const [showPinForm, setShowPinForm] = useState(user.encryption);
     const [alertContent, setAlertContent] = useState('');
-
+    //
     useEffect(() => {
         if (user.encryption) return
 
