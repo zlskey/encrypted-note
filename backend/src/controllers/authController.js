@@ -4,7 +4,7 @@ const findUserByToken = require('../middlewares/findUserByToken')
 const errorHandler = require('../middlewares/errorHandler')
 const checkRequirements = require('../middlewares/checkRequirements')
 
-const maxAge = 3 * 5 * 60 * 60
+const maxAge = 7 * 24 * 60 * 60
 const createToken = id => (
     jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: maxAge })
 )
