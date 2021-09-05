@@ -15,6 +15,26 @@ Web app build with MERN stack. You can try it [here](https://zlskey.pl)
 * Separated password for account and PIN to decrypt notes
 
 ## Installation
+
+### With docker:
+
+#### 1. Clone repo
+```bash
+git clone https://github.com/zlskey/encrypted-note.git
+cd encrypted-note
+```
+
+#### 2. Preparing docker-compose
+* Rename docker-compose.yml.example to docker-compose.yml
+* Set enviroment variables inside docker-compose.yml
+
+#### 3. Run containers
+```bash
+docker compose up -d --build
+```
+
+### Without docker:
+
 Requires: Node.js version 16.1.0 & Yarn version 1.22.11
 
 #### 1. Clone repo
