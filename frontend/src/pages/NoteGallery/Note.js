@@ -21,7 +21,7 @@ const NoteDiv = styled.div`
     color: inherit;
     border: 5px solid ${({ theme }) => theme.uiColor};
     background-color: ${({ theme }) => theme.uiColor};
-    box-shadow: ${({ theme }) => theme.shadow};
+    box-shadow: ${({ theme }) => theme.type === 'light' && theme.shadow};
 
     .date {
         font-size: calc(0.8 * ${getSize});

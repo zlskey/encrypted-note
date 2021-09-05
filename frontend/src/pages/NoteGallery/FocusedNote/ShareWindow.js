@@ -33,7 +33,7 @@ const Input = styled.input`
     outline: none;
     font-size: 16px;
     transition: 0.3s;
-    color: ${({ theme }) => theme.fontColor}
+    color: ${({ theme }) => theme.fontColor};
 `
 
 const ShareWindow = ({ note, setNotes }) => {
@@ -80,7 +80,9 @@ const ShareWindow = ({ note, setNotes }) => {
 
     return (
         <ShareWindowDiv theme={theme}>
+
             <p>Users with access: </p>
+
             {recipients.map(user => (
                 <User
                     key={user}
@@ -92,10 +94,12 @@ const ShareWindow = ({ note, setNotes }) => {
                     {user} <IconUnlink size="15" />
                 </User>
             ))}
+
             <form onSubmit={e => shareNote(e)}>
                 <Input value={newRecipient} onChange={e => setNewRecipient(e.target.value)} theme={theme} type="text" placeholder='share to...' />
                 <div className="error res"></div>
             </form>
+
         </ShareWindowDiv>
     );
 }

@@ -98,7 +98,7 @@ const TopPanel = ({
                         handleClick={() => setNoteToFocus(null)}
                     />
 
-                    {note !== "new" && !isShared && (
+                    {note !== "new" && !isShared && !isEditing && (
                         <>
                             <Icon
                                 title="Edit note"

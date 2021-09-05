@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 
 import { getSize } from "@helpers/responsiveFacilities"
 import { ThemeContext } from "@contexts/ThemeContext"
@@ -92,11 +92,21 @@ const FocusedNote = ({ note, setNoteToFocus, setNotes, setSharedNotes }) => {
     const [isSaved, setIsSaved] = useState(null)
     const [isEditing, setIsEditing] = useState(false)
 
+    const handleKeyUp = e => {
+        const key = e.code
+        if (key === 'Escape') setNoteToFocus(null)
+    }
+
+    useEffect(() => {
+        document.addEventListener('keyup', handleKeyUp)
+        return () => document.removeEventListener('keyup', handleKeyUp)
+    }, [isEditing])
+
     return (
         <FocusedNoteWrapper>
             <Alert content={alertContent} setContent={setAlertContent} />
 
-            <CloseOnOuterClick setSomething={setNoteToFocus}>
+            <CloseOnOuterClick setSomething={setNoteToFocus} valueToSet={isEditing && note}>
                 <FocusedNoteWindow theme={theme}>
                     <TopPanel
                         note={note}

@@ -13,7 +13,7 @@ const CloseOnOuterClick = ({ children, setSomething, valueToSet = false }) => {
     useEffect(() => {
         document.addEventListener('click', handleClick)
         return () => document.removeEventListener('click', handleClick)
-    }, [])
+    }, [valueToSet])
 
     return <span ref={node}>{children}</span>
 }
