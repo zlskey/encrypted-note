@@ -36,7 +36,7 @@ const MenuDiv = styled.div`
     text-align: center;
     overflow: hidden;
 
-    @media screen and (max-width: 1000px) {
+    @media screen and (max-width: 450px) {
         width: 90vw;
     }
 

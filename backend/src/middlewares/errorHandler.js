@@ -8,7 +8,7 @@ const errorHandler = (err, next) => {
 
     if (contain('Incorrect key passphrase')) error.message = 'Wrong PIN'
     else if (contain('incorrect password')) error.message = 'Wrong password'
-    else if (contain('incorrect username')) error.message = 'User with these username doesn`t exists'
+    else if (contain('incorrect username')) error.message = 'User with this username doesn`t exists'
     else if (contain('duplicate key error')) error.message = 'User already exists'
     // else if (contain('short password')) error.message = `Password is too short`
     else if (contain('long password')) error.message = `Password is too long`
