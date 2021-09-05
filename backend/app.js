@@ -5,6 +5,7 @@ const cors = require('cors')
 const compression = require(`compression`)
 const logger = require('morgan')
 const dotenv = require('dotenv')
+const path = require('path')
 
 dotenv.config()
 
@@ -17,7 +18,7 @@ const router = require('./src/routers/router')
 
 app = express()
 
-if (NODE_ENV === 'development') app.use(logger('dev'))
+if (NODE_ENV === 'development' || NODE_ENV === 'docker') app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(compression())
@@ -42,3 +43,11 @@ mongoose
 
 app.use('/api', router)
 app.use((error, req, res, next) => res.status(error.status || 500).json(error.message))
+if (NODE_ENV === 'production') {
+
+    const buildDir = path.join(__dirname, '..', 'frontend', 'build')
+
+    app.use(express.static(buildDir))
+    app.get('/', (req, res) => res.sendFile(path.join(buildDir, 'index.html')))
+
+}
