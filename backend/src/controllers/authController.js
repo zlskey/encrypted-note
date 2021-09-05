@@ -5,13 +5,25 @@ const errorHandler = require('../middlewares/errorHandler')
 const checkRequirements = require('../middlewares/checkRequirements')
 
 const maxAge = 7 * 24 * 60 * 60
-const createToken = id => (
-    jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: maxAge })
-)
-const options = {
-    httpOnly: true,
-    maxAge: maxAge * 1000,
-    secure: true,
+const createToken = (id, dontLogout = false) => {
+    const options = dontLogout
+        ? {}
+        : { expiresIn: maxAge }
+
+    return jwt.sign({ id }, process.env.JWT_SECRET, options)
+}
+
+const getCookieOptions = (dontLogout = false) => {
+    return dontLogout
+        ? {
+            httpOnly: true,
+            secure: true,
+        }
+        : {
+            httpOnly: true,
+            secure: true,
+            maxAge: maxAge * 1000,
+        }
 }
 
 module.exports.signup = async (req, res, next) => {
@@ -30,7 +42,7 @@ module.exports.signup = async (req, res, next) => {
         user.password = null
 
         res
-            .cookie('jwt', token, options)
+            .cookie('jwt', token, getCookieOptions())
             .status(201)
             .json(user)
     }
@@ -41,17 +53,19 @@ module.exports.signup = async (req, res, next) => {
 }
 
 module.exports.login = async (req, res, next) => {
-    const { login, password } = req.body
+    const { login, password, dontLogout } = req.body
 
     try {
         checkRequirements(login, password)
 
         const user = await User.login(login, password)
-        const token = createToken(user._id)
+        const token = createToken(user._id, dontLogout)
         user.password = null
 
+        console.log(getCookieOptions(dontLogout))
+
         res
-            .cookie('jwt', token, options)
+            .cookie('jwt', token, getCookieOptions(dontLogout))
             .status(201)
             .json(user)
     }
