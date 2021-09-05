@@ -1,0 +1,17 @@
+version: '1'
+services: 
+
+  backend: 
+    build: ./backend
+    environment: 
+      - DATABASE_URL=mongodb uri          # replace with your mongodb uri
+      - NODE_ENV=production               # don't have to change
+      - CORS_ORIGIN=http://localhost      # don't have to change
+      - JWT_SECRET=secret                 # don't have to change 
+    ports: 
+      - "5000:5000"
+
+  frontend: 
+    build: ./frontend
+    ports: 
+      - "80:80"

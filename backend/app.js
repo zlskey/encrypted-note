@@ -5,7 +5,6 @@ const cors = require('cors')
 const compression = require(`compression`)
 const logger = require('morgan')
 const dotenv = require('dotenv')
-const path = require('path')
 
 dotenv.config()
 
@@ -14,7 +13,7 @@ const dbURI = process.env.DATABASE_URL
 const origin = process.env.CORS_ORIGIN
 const NODE_ENV = process.env.NODE_ENV
 
-const router = require('./routers/router')
+const router = require('./src/routers/router')
 
 app = express()
 
@@ -43,10 +42,3 @@ mongoose
 
 app.use('/api', router)
 app.use((error, req, res, next) => res.status(error.status || 500).json(error.message))
-
-if (NODE_ENV === 'production') {
-    const buildPath = path.join(__dirname, '..', 'frontend-dir', 'build')
-
-    app.use(express.static(buildPath))
-    app.get('/', (req, res) => res.sendFile(path.join(buildPath, 'index.html')))
-}

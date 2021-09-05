@@ -124,8 +124,6 @@ export const TryForm = ({ action }) => {
 
         const res = await fetchApi('/auth/signup', { password })
 
-        console.log(res.error)
-
         if (res.ok) setUser(res.content)
         else setError('res', res.error)
     }

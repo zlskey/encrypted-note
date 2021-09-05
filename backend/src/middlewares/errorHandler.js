@@ -1,5 +1,3 @@
-const path = require('path')
-
 const errorHandler = (err, next) => {
     const error = new Error()
     error.status = 403
@@ -10,7 +8,7 @@ const errorHandler = (err, next) => {
     else if (contain('incorrect password')) error.message = 'Wrong password'
     else if (contain('incorrect username')) error.message = 'User with this username doesn`t exists'
     else if (contain('duplicate key error')) error.message = 'User already exists'
-    // else if (contain('short password')) error.message = `Password is too short`
+    else if (contain('short password')) error.message = `Password is too short`
     else if (contain('long password')) error.message = `Password is too long`
     else if (contain('EXERR')) error.message = err.message.replace(' EXERR', '') // EXERR is Expected Error
     else {
