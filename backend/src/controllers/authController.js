@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 const findUserByToken = require('../middlewares/findUserByToken')
 const errorHandler = require('../middlewares/errorHandler')
 const checkRequirements = require('../middlewares/checkRequirements')
-const sendRecoverMail = require('../middlewares/sendRecoverMail')
+const { sendPasswordRecoveryMail } = require('../middlewares/mailHandler')
 const { isEmail } = require('validator')
 
 const maxAge = 7 * 24 * 60 * 60
@@ -70,8 +70,6 @@ module.exports.login = async (req, res, next) => {
         const token = createToken(user._id, dontLogout)
         user.password = null
 
-        console.log(getCookieOptions(dontLogout))
-
         res
             .cookie('jwt', token, getCookieOptions(dontLogout))
             .status(201)
@@ -108,7 +106,7 @@ module.exports.sendRecoverMail = async (req, res, next) => {
 
         const { _id } = await PasswordRecovery.create({ mail })
 
-        const isSent = await sendRecoverMail(mail, _id)
+        const isSent = await sendPasswordRecoveryMail(mail, _id)
         if (isSent) res.status(200).json('success')
         else throw new Error('something went wrong')
     }

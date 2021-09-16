@@ -5,7 +5,6 @@ const cors = require('cors')
 const compression = require(`compression`)
 const logger = require('morgan')
 const dotenv = require('dotenv')
-const path = require('path')
 
 dotenv.config()
 
@@ -41,13 +40,5 @@ mongoose
     .then(() => console.log(`db connected`))
     .catch((err) => console.log(err));
 
-app.use('/api', router)
+app.use('/', router)
 app.use((error, req, res, next) => res.status(error.status || 500).json(error.message))
-if (NODE_ENV === 'production') {
-
-    const buildDir = path.join(__dirname, '..', 'frontend', 'build')
-
-    app.use(express.static(buildDir))
-    app.get('/', (req, res) => res.sendFile(path.join(buildDir, 'index.html')))
-
-}

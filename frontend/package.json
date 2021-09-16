@@ -8,18 +8,14 @@
     "@testing-library/jest-dom": "^5.12.0",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
-    "cross-env": "^7.0.3",
     "draft-js": "^0.11.7",
     "node-sass": "^6.0.0",
-    "path": "^0.12.7",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router-dom": "^5.3.0",
     "react-scripts": "4.0.3",
     "react-spring": "^9.2.3",
-    "sfcookies": "^1.0.2",
     "styled-components": "^5.3.0",
-    "universal-cookie": "^4.0.4",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
