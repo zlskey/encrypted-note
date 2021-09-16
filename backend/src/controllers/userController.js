@@ -1,7 +1,9 @@
 const Note = require("../schemas/NoteSchema")
+const User = require("../schemas/UserSchema")
 const pgpHandler = require("../middlewares/pgpHandler")
 const errorHandler = require("../middlewares/errorHandler")
 const checkRequirements = require("../middlewares/checkRequirements")
+
 
 module.exports.getNotes = async (req, res, next) => {
     const pin = req.body.pin
@@ -34,4 +36,19 @@ module.exports.logout = (req, res) => {
         .cookie("jwt", null, { maxAge: 1, })
         .status(201)
         .json(true)
+}
+
+module.exports.setMail = async (req, res, next) => {
+    const mail = req.body.mail
+
+    try {
+        checkRequirements(mail)
+
+        const user = await User.setMail(req.user._id, mail)
+
+        res.status(200).json(user)
+    }
+    catch (err) {
+        errorHandler(err, next)
+    }
 }

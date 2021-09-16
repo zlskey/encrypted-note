@@ -5,6 +5,9 @@ import { IconCheck } from "@tabler/icons"
 
 const InputField = styled.div`
     margin-top: 10px;
+    * {
+        cursor: pointer;
+    }
 `
 
 const Input = styled.input`
@@ -39,7 +42,7 @@ const RadioField = ({ name, text, isChecked, setIsChecked }) => {
     const { theme } = useContext(ThemeContext)
 
     return (
-        <InputField>
+        <InputField className='clickable'>
             <Input
                 value={isChecked}
                 onChange={() => setIsChecked(!isChecked)}

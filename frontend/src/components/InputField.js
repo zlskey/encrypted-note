@@ -7,6 +7,7 @@ const InputFieldDiv = styled.div`
     flex-direction: column;
     margin-top: 20px;
     text-align: left;
+    position: relative;
 `
 
 const Label = styled.label`
@@ -23,7 +24,14 @@ const Input = styled.input`
 
         color: inherit;
         background-color: ${({ theme }) => theme.bgColor};
-        box-shadow: ${({ theme }) => theme.shadow}
+        box-shadow: ${({ theme }) => theme.type === 'light' && theme.shadow};
+`
+
+const Error = styled.div`
+    background-color: transparent;
+    color: #f44336;
+    padding: 0;
+    margin: 5px 0;
 `
 
 const InputField = ({ name, text, type = 'text', content, setContent, ...props }) => {
@@ -42,7 +50,7 @@ const InputField = ({ name, text, type = 'text', content, setContent, ...props }
                 autoComplete='off'
                 {...props}
             />
-            <div className={`${name} error hide`} />
+            <Error className={`${name} error`} />
         </InputFieldDiv>
     );
 }

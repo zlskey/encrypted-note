@@ -1,16 +1,17 @@
 import { useContext, useState } from 'react'
 import styled from "styled-components";
 import { IconGridDots } from '@tabler/icons';
+import { Link } from 'react-router-dom'
 
 import CloseOnOuterClick from "@components/CloseOnOuterClick";
 import SlideAnimation from "@components/SlideAnimation";
 import { ThemeContext } from "@contexts/ThemeContext";
 import { UserContext } from '@contexts/UserContext'
 import { getSize } from "@helpers/responsiveFacilities";
-import fetchApi from "@helpers/fetchApi";
 import ThemeSwitch from "./ThemeSwitch";
 import EncryptionSettings from "./EncryptionSettings";
 import PasswordSettings from './PasswordSettings'
+import EmailSettings from './EmailSettings'
 
 const MenuWrapper = styled.div`
     position: fixed;
@@ -20,7 +21,7 @@ const MenuWrapper = styled.div`
 
 const MenuButton = styled.button`
     background-color: ${({ theme }) => theme.uiColor};
-    box-shadow: ${({ theme }) => theme.shadow};
+    box-shadow: ${({ theme }) => theme.type === 'light' && theme.shadow};
     border: none;
     outline: none;
     border-radius: 50%;
@@ -51,7 +52,7 @@ const MenuDiv = styled.div`
 
     background-color: ${({ theme }) => theme.uiColor};
     color: ${({ theme }) => theme.fontColor};
-    box-shadow: ${({ theme }) => theme.shadow};
+    box-shadow: ${({ theme }) => theme.type === 'light' && theme.shadow};
 `
 
 const Button = styled.button`
@@ -59,15 +60,17 @@ const Button = styled.button`
     aspect-ratio: 20/3;
     font-size: ${getSize()};
     outline: none;
-    border: none;
-    color: #fafafa;    
+    border: none;  
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     gap: 5px;
+    color: #fafafa;
     margin-block: 15px;
+    text-decoration: none;
     font-weight: 500;
+    
 
     background-color: ${({ color }) => color};
     box-shadow: ${({ theme }) => theme.shadow};
@@ -90,15 +93,8 @@ const User = styled.div`
 
 const Menu = () => {
     const { theme } = useContext(ThemeContext)
-    const { setUser, user } = useContext(UserContext)
+    const { user } = useContext(UserContext)
     const [showMenu, setShowMenu] = useState(false);
-
-    const logout = async () => {
-        const res = await fetchApi('/user/logout')
-
-        if (res.ok) setUser(null)
-        else console.error(res.error)
-    }
 
     return (
         <MenuWrapper>
@@ -113,15 +109,17 @@ const Menu = () => {
 
                         <div style={{ padding: '10px 20px' }}>
 
-
                             <ThemeSwitch />
 
                             <PasswordSettings />
                             <EncryptionSettings />
+                            <EmailSettings />
 
-                            <Button onClick={() => logout()} color='#f44336' theme={theme} className='clickable'>
-                                Logout
-                            </Button>
+                            <Link to='/auth' style={{ textDecoration: 'none' }}>
+                                <Button className='clickable' color='#f44336' theme={theme} >
+                                    Logout
+                                </Button>
+                            </Link>
                         </div>
 
                     </MenuDiv>
@@ -132,7 +130,7 @@ const Menu = () => {
                 <IconGridDots color={theme.fontColor} size='30px' />
             </MenuButton>
 
-        </MenuWrapper>
+        </MenuWrapper >
     );
 }
 

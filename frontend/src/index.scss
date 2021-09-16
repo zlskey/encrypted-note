@@ -74,8 +74,11 @@ svg {
 }
 
 .error {
-    color: #f44336;
-    margin-top: 2px;
+    background-color: #f44336;
+    color: #fafafa;
+    margin: 8px;
     font-weight: 400;
     font-size: 1rem;
+    border-radius: 5px;
+    padding:10px;
 }

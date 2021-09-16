@@ -97,7 +97,7 @@ const ShareWindow = ({ note, setNotes }) => {
 
             <form onSubmit={e => shareNote(e)}>
                 <Input value={newRecipient} onChange={e => setNewRecipient(e.target.value)} theme={theme} type="text" placeholder='share to...' />
-                <div className="error res"></div>
+                <div className="error res hide"></div>
             </form>
 
         </ShareWindowDiv>

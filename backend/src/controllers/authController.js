@@ -1,8 +1,11 @@
 const User = require('../schemas/UserSchema')
+const PasswordRecovery = require('../schemas/PasswordRecovery')
 const jwt = require('jsonwebtoken')
 const findUserByToken = require('../middlewares/findUserByToken')
 const errorHandler = require('../middlewares/errorHandler')
 const checkRequirements = require('../middlewares/checkRequirements')
+const sendRecoverMail = require('../middlewares/sendRecoverMail')
+const { isEmail } = require('validator')
 
 const maxAge = 7 * 24 * 60 * 60
 const createToken = (id, dontLogout = false) => {
@@ -27,15 +30,20 @@ const getCookieOptions = (dontLogout = false) => {
 }
 
 module.exports.signup = async (req, res, next) => {
-    const { username, password } = req.body
+    const { username, password, mail } = req.body
 
     try {
         checkRequirements(password)
+        if (mail && !isEmail(mail)) throw Error('invalid email EXERR')
 
-        const data =
-            username
-                ? { username, password }
-                : { username: `user:${Math.floor(Math.random() * 10000000)}`, password }
+        const data = { password }
+
+        if (mail) {
+            if (!isEmail(mail)) throw Error('invalid email EXERR')
+
+            data.mail = mail
+        }
+        data.username = username || `user:${Math.floor(Math.random() * 10000000)}`
 
         const user = await User.create(data)
         const token = createToken(user._id)
@@ -88,4 +96,49 @@ module.exports.verify = async (req, res, next) => {
     catch (err) {
         errorHandler(err, next)
     }
+}
+
+module.exports.sendRecoverMail = async (req, res, next) => {
+    const mail = req.body.mail
+
+    try {
+        checkRequirements(mail)
+        const user = await User.findOne({ mail })
+        if (!user) throw new Error("User with this mail doesn't exists")
+
+        const { _id } = await PasswordRecovery.create({ mail })
+
+        const isSent = await sendRecoverMail(mail, _id)
+        if (isSent) res.status(200).json('success')
+        else throw new Error('something went wrong')
+    }
+    catch (err) {
+        next(err)
+    }
+
+}
+module.exports.passwordRecover = async (req, res, next) => {
+    const id = req.body.id
+    const password = req.body.password
+
+    try {
+        checkRequirements(id, password)
+
+        const isIdCorrect = await PasswordRecovery.exists({ _id: id })
+        if (!isIdCorrect) throw new Error('Password recovery request probably expired, try again EXERR')
+
+        if (password.length < 8) throw new Error('short password')
+        if (password.length > 32) throw new Error('long password')
+
+        const { mail } = await PasswordRecovery.findOneAndRemove(id)
+        const user = await User.findOne({ mail })
+
+        await User.changePassword(password, user._id)
+        user.password = null
+        res.status(200).json(user)
+    }
+    catch (err) {
+        errorHandler(err, next)
+    }
+
 }

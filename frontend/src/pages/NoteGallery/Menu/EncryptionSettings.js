@@ -26,7 +26,7 @@ const Button = styled.button`
     font-weight: 500;
 
     background-color: ${({ color }) => color};
-    box-shadow: ${({ theme }) => theme.shadow};
+    box-shadow: ${({ theme }) => theme.type === 'light' && theme.shadow};
 `
 
 const EncryptionSettings = () => {

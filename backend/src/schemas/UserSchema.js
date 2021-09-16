@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
+const { isEmail } = require('validator')
 
 const userSchema = new mongoose.Schema({
     username: {
@@ -13,6 +14,10 @@ const userSchema = new mongoose.Schema({
         minLength: [8, 'short password'],
         maxLength: [32, 'long password'],
     },
+    mail: {
+        type: String,
+        required: false,
+    },
     theme: {
         type: String,
         default: 'light'
@@ -22,6 +27,7 @@ const userSchema = new mongoose.Schema({
         default: false
     },
 })
+
 
 userSchema.pre('save', async function (next) {
     const salt = await bcrypt.genSalt()
@@ -54,6 +60,17 @@ userSchema.statics.login = async function (username, password) {
     throw Error('incorrect username')
 }
 
+userSchema.statics.setMail = async function (id, mail) {
+    try {
+        if (!isEmail(mail)) throw Error('invalid email EXERR')
+
+        const user = await this.findByIdAndUpdate(id, { mail })
+        return user
+    }
+    catch (err) {
+        throw Error(err)
+    }
+}
 
 const User = mongoose.model('Users', userSchema)
 

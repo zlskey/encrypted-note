@@ -7,7 +7,6 @@ import { ThemeContext } from './ThemeContext';
 
 export const UserContext = createContext(null)
 
-
 const UserContextProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [isLoading, setIsLoading] = useState(true);

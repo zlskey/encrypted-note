@@ -11,7 +11,6 @@ import fetchApi from "@helpers/fetchApi"
 import ShareWindow from "./ShareWindow"
 import { useContext, useState } from "react"
 import { UserContext } from "@contexts/UserContext"
-// import { ThemeContext } from '@contexts/ThemeContext';
 
 const TopPanel = ({
     note,

@@ -26,7 +26,7 @@ const FocusedNoteWindow = styled.div`
     border-radius: 10px;
     margin-inline: auto;
     background-color: ${({ theme }) => theme.uiColor};
-    box-shadow: ${({ theme }) => theme.shadow};
+    box-shadow: ${({ theme }) => theme.type === 'light' && theme.shadow};
     color: ${({ theme }) => theme.fontColor};
     transition: 0.1s;
     overflow: hidden;
