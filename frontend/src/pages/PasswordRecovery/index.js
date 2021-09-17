@@ -15,7 +15,7 @@ const PasswordRecovery = () => {
 
     return (
         <Container>
-            <Window>
+            <Window theme={theme}>
                 <ReturnIcon>
                     <Link to='/auth'>
                         <IconArrowLeft
@@ -55,7 +55,8 @@ const Window = styled.div`
     padding: 20px 40px;
     text-align: center;
     border-radius: 5px;
-    background-color: #eeeeee;
+    background-color: ${(props) => props.theme.uiColor};
+    color: ${(props) => props.theme.fontColor};
     position: relative;
 `
 
