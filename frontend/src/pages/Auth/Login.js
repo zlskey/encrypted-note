@@ -10,9 +10,11 @@ import Button from "@components/Button"
 import SlideAnimation from "@components/SlideAnimation"
 import { setError, isFormUnfilled } from "@helpers/InputErrorHandler"
 import { ThemeContext } from "@contexts/ThemeContext"
+import { AlertContext } from '../../contexts/AlertContext'
 
 const Login = ({ action }) => {
     const { setUser, user } = useContext(UserContext)
+    const { setType, setContent } = useContext(AlertContext)
     const { theme } = useContext(ThemeContext)
     const history = useHistory()
 
@@ -29,7 +31,11 @@ const Login = ({ action }) => {
 
         const data = { login, password, dontLogout }
         const res = await fetchApi("/auth/login", data)
-        if (res.ok) setUser(res.content)
+        if (res.ok) {
+            setUser(res.content)
+            setType('success')
+            setContent(`Hi again ${res.content.username}`)
+        }
         else setError("res", res.error)
     }
 
@@ -63,7 +69,7 @@ const Login = ({ action }) => {
                         setIsChecked={setDontLogout}
                     />
 
-                    <Separator theme={theme} />
+                    {window.innerWidth > 500 && <Separator theme={theme} />}
 
                     <Link style={{ textDecoration: 'none', color: theme.fontColor, fontWeight: 300, fontSize: '19px' }} to="/password-recovery">
                         Reset password
@@ -89,6 +95,11 @@ const LoginBar = styled.div`
     justify-content: space-around;
     gap: 10px;
     margin-block: 10px;
+
+    @media (max-width: 500px) {
+        flex-direction: column;
+        align-items: center;
+    }
 `
 
 const Separator = styled.div`

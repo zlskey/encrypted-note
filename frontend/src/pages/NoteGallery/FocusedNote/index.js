@@ -4,8 +4,8 @@ import { useContext, useEffect, useState } from "react"
 import { getSize } from "@helpers/responsiveFacilities"
 import { ThemeContext } from "@contexts/ThemeContext"
 import CloseOnOuterClick from "@components/CloseOnOuterClick.js"
-import Alert from "@components/Alert"
 import TopPanel from "./TopPanel"
+import { AlertContext } from '@contexts/AlertContext'
 
 const FocusedNoteWrapper = styled.div`
     position: absolute;
@@ -86,7 +86,6 @@ const FocusedNoteWindow = styled.div`
 
 const FocusedNote = ({ note, setNoteToFocus, setNotes, setSharedNotes }) => {
     const [content, setContent] = useState(note.content || "")
-    const [alertContent, setAlertContent] = useState("")
     const { theme } = useContext(ThemeContext)
 
     const [isSaved, setIsSaved] = useState(null)
@@ -104,15 +103,12 @@ const FocusedNote = ({ note, setNoteToFocus, setNotes, setSharedNotes }) => {
 
     return (
         <FocusedNoteWrapper>
-            <Alert content={alertContent} setContent={setAlertContent} />
-
             <CloseOnOuterClick setSomething={setNoteToFocus} valueToSet={isEditing && note}>
                 <FocusedNoteWindow theme={theme}>
                     <TopPanel
                         note={note}
                         isSaved={isSaved}
                         setNoteToFocus={setNoteToFocus}
-                        setAlertContent={setAlertContent}
                         content={content}
                         setNotes={setNotes}
                         setIsSaved={setIsSaved}

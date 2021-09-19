@@ -65,6 +65,7 @@ userSchema.statics.setMail = async function (id, mail) {
         if (!isEmail(mail)) throw Error('invalid email EXERR')
 
         const user = await this.findByIdAndUpdate(id, { mail })
+        user.mail = mail
         return user
     }
     catch (err) {

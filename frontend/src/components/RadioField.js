@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import styled from "styled-components";
 import { ThemeContext } from "../contexts/ThemeContext";
 import { IconCheck } from "@tabler/icons"

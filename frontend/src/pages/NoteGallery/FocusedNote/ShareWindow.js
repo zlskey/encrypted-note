@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 import fetchApi from "@helpers/fetchApi";
 import { ThemeContext } from "@contexts/ThemeContext";
+import { AlertContext } from "@contexts/AlertContext";
 import { setError, setValid } from '@helpers/InputErrorHandler'
 
 const ShareWindowDiv = styled.div`
@@ -38,8 +39,10 @@ const Input = styled.input`
 
 const ShareWindow = ({ note, setNotes }) => {
     const { theme } = useContext(ThemeContext)
+    const { setType, setContent } = useContext(AlertContext)
     const [newRecipient, setNewRecipient] = useState('');
     const [recipients, setRecipients] = useState(note.recipients);
+
 
     const { _id: id, content } = note
 
@@ -58,7 +61,10 @@ const ShareWindow = ({ note, setNotes }) => {
             })
             setValid('res')
         }
-        else setError('res', res.error)
+        else {
+            setType('error')
+            setContent(res.error)
+        }
         setNewRecipient('')
     }
 

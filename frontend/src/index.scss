@@ -9,9 +9,8 @@
 * {
     margin: 0;
     padding: 0;
-    font-family: "Roboto", sans-serif;
-    font-weight: 300;
     box-sizing: border-box;
+    font-weight: 300;
 
     &::-webkit-scrollbar {
         width: 10px;
@@ -34,26 +33,18 @@
     }
 }
 
+html {
+    min-height: 100vh;
+    font-family: "Roboto", sans-serif;
+}
+
 #root {
     min-height: 100%;
     margin: 0 auto;
     transition: 0.2s;
     overflow: hidden;
     padding-bottom: 50px;
-    width: 55vw;
-
-    @include mQ(1500px) {
-        width: 65vw !important;
-    }
-    @include mQ(1100px) {
-        width: 75vw !important;
-    }
-    @include mQ(900px) {
-        width: 80vw !important;
-    }
-    @include mQ(700px) {
-        width: 100vw !important;
-    }
+    width: MIN(1000px,calc(95vw));
 }
 
 .hide {

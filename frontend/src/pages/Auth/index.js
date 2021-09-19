@@ -7,20 +7,29 @@ import TryForm from './Try'
 import { ThemeContext } from "@contexts/ThemeContext"
 import { UserContext } from "../../contexts/UserContext"
 import fetchApi from "@helpers/fetchApi"
+import { AlertContext } from '../../contexts/AlertContext'
 
 const AuthWindow = () => {
 	const { theme } = useContext(ThemeContext)
 	const { user, setUser } = useContext(UserContext)
+	const { setType, setContent } = useContext(AlertContext)
 	const [action, setAction] = useState("login")
 
 	useEffect(() => {
 		if (user) {
 			fetchApi("/user/logout").then((res) => {
-				if (res.ok) setUser(null)
-				else console.error(res.error)
+				if (res.ok) {
+					setType('success')
+					setContent('Come back soon 😊')
+					setUser(null)
+				}
+				else {
+					setType('error')
+					setContent(res.error)
+				}
 			})
 		}
-	}, [])
+	}, [setType, setContent])
 
 	return (
 		<>

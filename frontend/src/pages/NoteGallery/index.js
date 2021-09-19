@@ -7,10 +7,11 @@ import { UserContext } from "@contexts/UserContext"
 import fetchApi from "@helpers/fetchApi"
 import Note from "./Note"
 import FocusedNote from "./FocusedNote"
-import Menu from "./Menu/"
+import Settings from "./Settings/"
 import PinForm from "./PinForm"
 import { getColumns } from "@helpers/responsiveFacilities"
-import Alert from "@components/Alert"
+import Button from "@components/Button"
+import { AlertContext } from '@contexts/AlertContext'
 
 const NoteGalleryDiv = styled.div`
 	padding: 0 10px;
@@ -47,6 +48,7 @@ const SectionHeader = styled.div`
 const NoteGallery = () => {
 	const { theme } = useContext(ThemeContext)
 	const { user } = useContext(UserContext)
+	const { setType, setContent } = useContext(AlertContext)
 	const [noteToFocus, setNoteToFocus] = useState(null)
 
 	const range = new Array(8).fill("loading")
@@ -54,20 +56,21 @@ const NoteGallery = () => {
 	const [sharedNotes, setSharedNotes] = useState([])
 
 	const [showPinForm, setShowPinForm] = useState(user.encryption)
-	const [alertContent, setAlertContent] = useState("")
+	const [blurContent, setBlurContent] = useState(false);
 
 	useEffect(() => {
 		if (user.encryption) return
 		fetchApi("/user/notes", {}).then((res) => {
 			if (res.ok) setNotes(res.content.userNotes)
-			else setAlertContent(res.error)
+			else {
+				setType('error')
+				setContent(res.error)
+			}
 		})
-	}, [])
+	}, [user.encryption, setType, setContent])
 
 	return (
 		<>
-			<Alert content={alertContent} setContent={setAlertContent} />
-
 			{showPinForm && (
 				<PinForm
 					setNotes={setNotes}
@@ -88,7 +91,7 @@ const NoteGallery = () => {
 			<NoteGalleryDiv
 				theme={theme}
 				style={{
-					filter: `${showPinForm || noteToFocus ? "blur(5px)" : ""}`,
+					filter: `${blurContent ? "blur(5px)" : ""}`,
 				}}
 			>
 				<SectionHeader theme={theme}>
@@ -132,7 +135,7 @@ const NoteGallery = () => {
 				)}
 			</NoteGalleryDiv>
 
-			<Menu />
+			<Settings setBlurContent={setBlurContent} />
 		</>
 	)
 }

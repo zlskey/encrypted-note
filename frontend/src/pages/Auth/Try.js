@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom'
 
 import fetchApi from "@helpers/fetchApi"
 import { UserContext } from "@contexts/UserContext"
+import { AlertContext } from '../../contexts/AlertContext'
 import InputField from "@components/InputField"
 import Button from "@components/Button"
 import SlideAnimation from "@components/SlideAnimation"
@@ -11,6 +12,7 @@ import { setError } from "@helpers/InputErrorHandler"
 
 const TryForm = ({ action }) => {
     const { setUser, user } = useContext(UserContext)
+    const { setType, setContent } = useContext(AlertContext)
     const history = useHistory()
 
     const [password, setPassword] = useState("")
@@ -23,8 +25,13 @@ const TryForm = ({ action }) => {
 
         const res = await fetchApi("/auth/signup", { password })
 
-        if (res.ok) setUser(res.content)
-        else setError("res", res.error)
+        if (res.ok)
+            if (res.ok) {
+                setUser(res.content)
+                setType('success')
+                setContent(`Welcome ${res.content.username}`)
+            }
+            else setError("res", res.error)
     }
 
     return (

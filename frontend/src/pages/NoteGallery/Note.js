@@ -84,7 +84,7 @@ const Note = ({ setNoteToFocus, data }) => {
 
     useEffect(() => {
         if (data !== 'loading') setIsLoading(false)
-    }, [])
+    }, [data])
 
     const date = new Date(updatedAt).toLocaleDateString()
 

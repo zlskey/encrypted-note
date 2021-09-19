@@ -3,6 +3,7 @@ import NoteGallery from "@pages/NoteGallery"
 import AuthPage from "@pages/Auth"
 import PasswordRecovery from "@pages/PasswordRecovery"
 import ThemeContextProvider from "./contexts/ThemeContext"
+import AlertContextProvider from "./contexts/AlertContext"
 import UserContextProvider, { UserContext } from "./contexts/UserContext"
 import {
 	BrowserRouter as Router,
@@ -14,10 +15,12 @@ import {
 const App = () => {
 	return (
 		<ThemeContextProvider>
-			<UserContextProvider>
+			<AlertContextProvider>
+				<UserContextProvider>
 
-				<AppRouter />
-			</UserContextProvider>
+					<AppRouter />
+				</UserContextProvider>
+			</AlertContextProvider>
 		</ThemeContextProvider>
 	)
 }
