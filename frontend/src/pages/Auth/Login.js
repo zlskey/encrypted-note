@@ -34,7 +34,7 @@ const Login = ({ action }) => {
         if (res.ok) {
             setUser(res.content)
             setType('success')
-            setContent(`Hi again ${res.content.username}`)
+            setContent(`Hi ${res.content.username} 👋`)
         }
         else setError("res", res.error)
     }
