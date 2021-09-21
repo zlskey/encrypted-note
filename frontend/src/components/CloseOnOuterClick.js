@@ -1,21 +1,20 @@
-import React, { useEffect, useRef, useCallback } from "react"
+import { useEffect, useRef } from "react"
 
 const CloseOnOuterClick = ({ children, setSomething, valueToSet = false }) => {
     const node = useRef(null)
 
-    const handleClick = useCallback(
-        e => {
-            if (!node.current) return
+    useEffect(
+        () => {
+            const handleClick = e => {
+                if (!node.current || node.current.contains(e.target)) return
+                else setSomething(valueToSet)
+            }
 
-            if (node.current.contains(e.target)) return
-            else setSomething(valueToSet)
-        }, [setSomething, valueToSet]
+            document.addEventListener('click', handleClick)
+            return () => document.removeEventListener('click', handleClick)
+        },
+        [valueToSet, setSomething]
     )
-
-    useEffect(() => {
-        document.addEventListener('click', handleClick)
-        return () => document.removeEventListener('click', handleClick)
-    }, [valueToSet, handleClick])
 
     return <span ref={node}>{children}</span>
 }

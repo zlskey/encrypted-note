@@ -10,7 +10,6 @@ import FocusedNote from "./FocusedNote"
 import Settings from "./Settings/"
 import PinForm from "./PinForm"
 import { getColumns } from "@helpers/responsiveFacilities"
-import Button from "@components/Button"
 import { AlertContext } from '@contexts/AlertContext'
 
 const NoteGalleryDiv = styled.div`
@@ -57,6 +56,11 @@ const NoteGallery = () => {
 
 	const [showPinForm, setShowPinForm] = useState(user.encryption)
 	const [blurContent, setBlurContent] = useState(false);
+
+	useEffect(() => {
+		if (showPinForm || noteToFocus) setBlurContent(true)
+		else setBlurContent(false)
+	}, [showPinForm, noteToFocus])
 
 	useEffect(() => {
 		if (user.encryption) return

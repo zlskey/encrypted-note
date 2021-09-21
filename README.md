@@ -10,6 +10,7 @@ Web app build with MERN stack. You can try it [here](https://zlskey.pl)
 ## Features
 * JWT auth
 * note encrypting using openpgp
+* password recovery using email
 * Creating/Editing notes
 * Sharing notes between users 
 * Separated password for account and PIN to decrypt notes
@@ -44,27 +45,26 @@ cd encrypted-note
 ```
 
 #### 2. Enviroment variables
-Rename .env.example files to .env and set your variables
-* ~/encrypted-note/.env.example - here you should at least add mongodb uri
-* ~/encrypted-note/frontend-dir/.env.example - if you won't change api link just rename it
+Rename .env.example files to .env and set your enviroment variables in
+* `~/encrypted-note/backend/.env.example` 
+* `~/encrypted-note/frontend/.env.example`
 
 #### 3. Install dependencies
 ```bash
 # ~/encrypted-note directory
 
-npm install
-cd frontend-dir
+cd frontend
 yarn install
+
+cd ../backend
+npm install
 ```
 #### 4. Start app
 ```bash
 # ~/encrypted-note directory
 
-# for development (frontend will run on port 3000 and backend on port 5000)
-npm run dev
-
-# for production (app will run on port 5000)
-npm run production
+# frontend will run on port 3000 & backend on port 5000
+# you will have to run 'npm start' in both directories
 ```
 
 

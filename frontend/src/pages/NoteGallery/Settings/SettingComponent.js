@@ -1,6 +1,4 @@
 import styled from 'styled-components';
-import { useState } from 'react';
-import CloseOnOuterClick from '@components/CloseOnOuterClick'
 
 const SettingComponent = ({ description, value, children, setShowSetting, showSetting }) => (
     <Content>
@@ -17,7 +15,7 @@ const SettingComponent = ({ description, value, children, setShowSetting, showSe
 
 const Preview = styled.p`
     span {
-        color: #1b5e20;
+        color: #03a9f4;
         cursor: pointer;
         &:hover {
             text-decoration: underline;

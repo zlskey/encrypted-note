@@ -11,13 +11,13 @@ import fetchApi from "@helpers/fetchApi"
 import ShareWindow from "./ShareWindow"
 import { useContext, useState } from "react"
 import { UserContext } from "@contexts/UserContext"
+import { AlertContext } from "@contexts/AlertContext"
 
 const TopPanel = ({
     note,
     content,
     setSharedNotes,
     setNoteToFocus,
-    setAlertContent,
     setNotes,
     isSaved,
     setIsSaved,
@@ -26,8 +26,8 @@ const TopPanel = ({
 }) => {
     const [showShareWindow, setShowShareWindow] = useState(false)
     const { user } = useContext(UserContext)
+    const { setType, setContent: setAlertContent } = useContext(AlertContext)
     const [isShared] = useState(note.author !== user.username)
-    // const { theme } = useContext(ThemeContext)
 
     const date = note.updatedAt
         ? new Date(note.updatedAt).toLocaleDateString()
@@ -39,7 +39,10 @@ const TopPanel = ({
         if (res.ok) {
             setNotes((notes) => notes.filter((el) => el._id !== note._id))
             setNoteToFocus(null)
-        } else setAlertContent(res.error)
+        } else {
+            setType('error')
+            setAlertContent(res.error)
+        }
     }
 
     const saveNote = async () => {
@@ -50,7 +53,10 @@ const TopPanel = ({
                 notes ? [...notes, res.content] : [res.content]
             )
             setIsSaved(true)
-        } else setAlertContent(res.error)
+        } else {
+            setType('error')
+            setAlertContent(res.error)
+        }
     }
 
     const saveChanges = async () => {
@@ -64,7 +70,10 @@ const TopPanel = ({
                     return el
                 })
             )
-        } else setAlertContent(res.error)
+        } else {
+            setType('error')
+            setAlertContent(res.error)
+        }
     }
 
     const unlinkNote = async () => {
@@ -77,7 +86,10 @@ const TopPanel = ({
         if (res.ok) {
             setSharedNotes((notes) => notes.filter((el) => el._id !== note._id))
             setNoteToFocus(null)
-        } else setAlertContent(res.error)
+        } else {
+            setType('error')
+            setAlertContent(res.error)
+        }
     }
 
     const handleSaveButtonClick = () => {

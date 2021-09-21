@@ -32,7 +32,6 @@ const PasswordForm = ({ id }) => {
             }
         )
             .then(res => {
-                console.log(res)
                 if (res.ok) history.push('/auth')
                 else setError('res', res.error)
             })

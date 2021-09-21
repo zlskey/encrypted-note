@@ -6,11 +6,13 @@
     }
 }
 
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-weight: 300;
+    font-family: "Roboto", sans-serif;
 
     &::-webkit-scrollbar {
         width: 10px;
@@ -35,7 +37,6 @@
 
 html {
     min-height: 100vh;
-    font-family: "Roboto", sans-serif;
 }
 
 #root {

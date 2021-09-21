@@ -45,7 +45,6 @@ module.exports.setMail = async (req, res, next) => {
         checkRequirements(mail)
 
         const user = await User.setMail(req.user._id, mail)
-        console.log(user)
         res.status(200).json(user)
     }
     catch (err) {

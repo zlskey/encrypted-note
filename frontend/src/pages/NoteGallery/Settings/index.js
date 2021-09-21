@@ -6,21 +6,20 @@ import { UserContext } from '@contexts/UserContext';
 import SettingComponent from './SettingComponent'
 import MailSetting from './MailSetting';
 import PinSetting from './PinSetting';
+import ThemeSetting from './ThemeSetting';
 import PasswordSetting from './PasswordSetting';
 import CloseOnOuterClick from '@components/CloseOnOuterClick'
 import { Link } from 'react-router-dom'
-// import fetchApi from '@helpers/fetchApi'
 
 const Settings = ({ setBlurContent }) => {
     const { theme } = useContext(ThemeContext)
-    const { user, setUser } = useContext(UserContext)
+    const { user } = useContext(UserContext)
 
     const [showSettings, setShowSettings] = useState(false);
 
     const [showMailSetting, setShowMailSetting] = useState(false);
     const [showPasswordSetting, setShowPasswordSetting] = useState(false);
     const [showPinSetting, setShowPinSetting] = useState(false);
-
     useEffect(() => setBlurContent(showSettings), [showSettings, setBlurContent])
 
     return (
@@ -31,15 +30,16 @@ const Settings = ({ setBlurContent }) => {
                 onClick={() => setShowSettings(!showSettings)}
                 style={{ filter: `${showSettings ? "blur(2px)" : ""}`, }}
             >
-                <IconSettings size='40px' style={{ opacity: 0.8 }} />
+                <IconSettings color={theme.fontColor} size='40px' style={{ opacity: 0.8 }} />
             </SettingsButton>
 
             {showSettings &&
-                <Container>
+                <Container theme={theme}>
                     <CloseOnOuterClick setSomething={setShowSettings}>
                         <Window theme={theme}>
                             <Header>Settings</Header>
 
+                            <ThemeSetting />
 
                             <SettingComponent value={''} description={`Username: ${user.username}`} />
 
@@ -66,7 +66,7 @@ const Settings = ({ setBlurContent }) => {
                             </SettingComponent>
 
                             <SettingComponent
-                                value={'click'}
+                                value='click'
                                 description={user.encryption ? 'Change PIN: ' : 'Start encryption '}
                                 setShowSetting={setShowPinSetting}
                                 showSetting={showPinSetting}
@@ -75,23 +75,6 @@ const Settings = ({ setBlurContent }) => {
                                     <PinSetting setShowPinSetting={setShowPinSetting} />
                                 </CloseOnOuterClick>
                             </SettingComponent>
-                            {/* 
-
-                            <Line
-                                description={'Change password: '}
-                                value={'click'}
-                                callback={e => e.preventDefault()}
-                                inputText={'New password'}
-                                inputType='password'
-                            />
-
-                            <Line
-                                description={user.enryption ? 'Change PIN ' : 'Turn on encryption '}
-                                value={'click'}
-                                callback={e => e.preventDefault()}
-                                inputText={user.enryption ? 'New PIN' : 'PIN for file encryption'}
-                                inputType='password'
-                            /> */}
 
                             <LogoutButton color='#f44336' theme={theme} >
                                 <Link to='/auth' className='clickable'> Logout</Link>
@@ -133,7 +116,7 @@ const Window = styled.div`
     background-color: ${(props => props.theme.uiColor)};
     box-shadow: ${(props => props.theme.type === 'light' && props.theme.shadow)};
     width: min(500px, 90vw);
-    border-radius: 5px;
+    border-radius: 0.5rem;
     padding-inline: 2rem;
     padding-bottom: 1rem;
     margin-block: 3rem;
@@ -151,6 +134,7 @@ const Container = styled.div`
     left: 0;
     display: grid;
     place-items: center;
+    color: ${props => props.theme.fontColor};
 `
 
 const SettingsButton = styled.button`

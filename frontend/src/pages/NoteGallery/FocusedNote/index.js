@@ -5,7 +5,6 @@ import { getSize } from "@helpers/responsiveFacilities"
 import { ThemeContext } from "@contexts/ThemeContext"
 import CloseOnOuterClick from "@components/CloseOnOuterClick.js"
 import TopPanel from "./TopPanel"
-import { AlertContext } from '@contexts/AlertContext'
 
 const FocusedNoteWrapper = styled.div`
     position: absolute;
@@ -91,19 +90,19 @@ const FocusedNote = ({ note, setNoteToFocus, setNotes, setSharedNotes }) => {
     const [isSaved, setIsSaved] = useState(null)
     const [isEditing, setIsEditing] = useState(false)
 
-    const handleKeyUp = e => {
-        const key = e.code
-        if (key === 'Escape') setNoteToFocus(null)
-    }
-
     useEffect(() => {
+        const handleKeyUp = e => {
+            const key = e.code
+            if (key === 'Escape') setNoteToFocus(null)
+        }
+
         document.addEventListener('keyup', handleKeyUp)
         return () => document.removeEventListener('keyup', handleKeyUp)
-    }, [isEditing])
+    }, [isEditing, setNoteToFocus])
 
     return (
         <FocusedNoteWrapper>
-            <CloseOnOuterClick setSomething={setNoteToFocus} valueToSet={isEditing && note}>
+            <CloseOnOuterClick valueToSet={isEditing || note} setSomething={setNoteToFocus} >
                 <FocusedNoteWindow theme={theme}>
                     <TopPanel
                         note={note}
