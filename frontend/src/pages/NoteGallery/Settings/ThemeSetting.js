@@ -6,16 +6,13 @@ import { ThemeContext } from '@contexts/ThemeContext';
 import { useContext } from 'react';
 
 const ThemeSetting = () => {
-    const { setType, setContent } = useContext(AlertContext)
+    const { setAlert } = useContext(AlertContext)
     const { theme, setIsDarkTheme } = useContext(ThemeContext)
 
     const handleClick = async () => {
         const res = await fetchApi('/settings/theme', {}, 'PATCH')
         if (res.ok) setIsDarkTheme(prev => !prev)
-        else {
-            setType('error')
-            setContent(res.error)
-        }
+        else setAlert('error', res.error)
     }
 
     return (

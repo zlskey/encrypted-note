@@ -8,11 +8,11 @@ import Button from "@components/Button"
 import SlideAnimation from "@components/SlideAnimation"
 import { setError, isFormUnfilled, setValid } from "@helpers/InputErrorHandler"
 import fetchApi from "@helpers/fetchApi"
-import { AlertContext } from '../../contexts/AlertContext'
+import { AlertContext } from '@contexts/AlertContext'
 
 const SignUp = ({ action }) => {
     const { setUser, user } = useContext(UserContext)
-    const { setType, setContent } = useContext(AlertContext)
+    const { setAlert } = useContext(AlertContext)
     const history = useHistory()
 
     const [username, setUsername] = useState("")
@@ -46,8 +46,7 @@ const SignUp = ({ action }) => {
         const res = await fetchApi("/auth/signup", user)
         if (res.ok) {
             setUser(res.content)
-            setType('success')
-            setContent(`Welcome ${res.content.username}`)
+            setAlert('success', `Welcome ${res.content.username}`)
         }
         else setError("res", res.error)
     }

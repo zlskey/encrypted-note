@@ -39,7 +39,7 @@ const Input = styled.input`
 
 const ShareWindow = ({ note, setNotes }) => {
     const { theme } = useContext(ThemeContext)
-    const { setType, setContent } = useContext(AlertContext)
+    const { setAlert } = useContext(AlertContext)
     const [newRecipient, setNewRecipient] = useState('');
     const [recipients, setRecipients] = useState(note.recipients);
 
@@ -61,10 +61,7 @@ const ShareWindow = ({ note, setNotes }) => {
             })
             setValid('res')
         }
-        else {
-            setType('error')
-            setContent(res.error)
-        }
+        else setAlert('error', res.error)
         setNewRecipient('')
     }
 

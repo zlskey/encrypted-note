@@ -12,7 +12,7 @@ const UserContextProvider = ({ children }) => {
     const [isLoading, setIsLoading] = useState(true);
 
     const { setIsDarkTheme } = useContext(ThemeContext)
-    const { setType, setContent } = useContext(AlertContext)
+    const { setAlert } = useContext(AlertContext)
 
     useEffect(() => {
         (async () => {
@@ -21,12 +21,9 @@ const UserContextProvider = ({ children }) => {
                 setUser(res.content)
                 setIsLoading(false)
             }
-            else {
-                setType('error')
-                setContent(res.error)
-            }
+            else setAlert('error', res.error)
         })()
-    }, [setType, setContent])
+    }, [setAlert])
 
     useEffect(() => user && setIsDarkTheme(user.theme === 'light' ? false : true), [user, setIsDarkTheme])
 

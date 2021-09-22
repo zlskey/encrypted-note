@@ -26,7 +26,7 @@ const TopPanel = ({
 }) => {
     const [showShareWindow, setShowShareWindow] = useState(false)
     const { user } = useContext(UserContext)
-    const { setType, setContent: setAlertContent } = useContext(AlertContext)
+    const { setAlert } = useContext(AlertContext)
     const [isShared] = useState(note.author !== user.username)
 
     const date = note.updatedAt
@@ -39,10 +39,8 @@ const TopPanel = ({
         if (res.ok) {
             setNotes((notes) => notes.filter((el) => el._id !== note._id))
             setNoteToFocus(null)
-        } else {
-            setType('error')
-            setAlertContent(res.error)
         }
+        else setAlert('error', res.error)
     }
 
     const saveNote = async () => {
@@ -53,10 +51,8 @@ const TopPanel = ({
                 notes ? [...notes, res.content] : [res.content]
             )
             setIsSaved(true)
-        } else {
-            setType('error')
-            setAlertContent(res.error)
         }
+        else setAlert('error', res.error)
     }
 
     const saveChanges = async () => {
@@ -70,10 +66,8 @@ const TopPanel = ({
                     return el
                 })
             )
-        } else {
-            setType('error')
-            setAlertContent(res.error)
         }
+        else setAlert('error', res.error)
     }
 
     const unlinkNote = async () => {
@@ -86,10 +80,8 @@ const TopPanel = ({
         if (res.ok) {
             setSharedNotes((notes) => notes.filter((el) => el._id !== note._id))
             setNoteToFocus(null)
-        } else {
-            setType('error')
-            setAlertContent(res.error)
         }
+        else setAlert('error', res.error)
     }
 
     const handleSaveButtonClick = () => {

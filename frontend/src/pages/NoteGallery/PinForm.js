@@ -26,18 +26,28 @@ const PinForm = ({ setNotes, setSharedNotes, setShowPinForm }) => {
     }
 
     return (
-        <PinFormDiv theme={theme}>
-            <h2>Enter your PIN</h2>
-            <form onSubmit={e => getNotes(e)}>
+        <Background>
+            <PinFormDiv theme={theme}>
+                <h2>Enter your PIN</h2>
+                <form onSubmit={e => getNotes(e)}>
 
-                <InputField name='pin' type='password' content={pin} setContent={setPin} autoFocus={true} />
+                    <InputField name='pin' type='password' content={pin} setContent={setPin} autoFocus={true} />
 
-                <Button content="Decrypt data" />
-            </form>
-        </PinFormDiv>
+                    <Button content="Decrypt data" />
+                </form>
+            </PinFormDiv>
+        </Background>
     );
 }
 
+const Background = styled.div`
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: transparent;
+`
 
 const PinFormDiv = styled.div`
     z-index: 10;

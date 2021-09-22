@@ -9,7 +9,7 @@ const PasswordSetting = ({ setShowPasswordSetting }) => {
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
 
-    const { setType, setContent } = useContext(AlertContext)
+    const { setAlert } = useContext(AlertContext)
     const { setUser } = useContext(UserContext)
 
     const passwordHandler = e => {
@@ -21,15 +21,11 @@ const PasswordSetting = ({ setShowPasswordSetting }) => {
             .then(
                 res => {
                     if (res.ok) {
-                        setType('success')
-                        setContent('Password changed')
+                        setAlert('success', 'Password changed')
                         setUser(res.content)
                         setShowPasswordSetting(false)
                     }
-                    else {
-                        setType('error')
-                        setContent(res.error)
-                    }
+                    else setAlert('error', res.error)
                 }
             )
     }

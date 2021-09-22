@@ -26,12 +26,14 @@ module.exports.startEncryption = async (req, res, next) => {
         checkRequirements(pin)
 
         await pgpHandler.generateKeys(username, pin)
-        const user = await User.findByIdAndUpdate(_id, { encryption: true })
+        await User.findByIdAndUpdate(_id, { encryption: true })
 
         const notes = await Note.find({ author: username })
         if (notes) pgpHandler.encryptNotes(notes, username)
 
-        res.status(201).json(true)
+        req.user.encryption = true
+
+        res.status(201).json(req.user)
     }
     catch (err) { errorHandler(err, next) }
 }

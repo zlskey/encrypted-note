@@ -47,7 +47,7 @@ const SectionHeader = styled.div`
 const NoteGallery = () => {
 	const { theme } = useContext(ThemeContext)
 	const { user } = useContext(UserContext)
-	const { setType, setContent } = useContext(AlertContext)
+	const { setAlert } = useContext(AlertContext)
 	const [noteToFocus, setNoteToFocus] = useState(null)
 
 	const range = new Array(8).fill("loading")
@@ -64,14 +64,12 @@ const NoteGallery = () => {
 
 	useEffect(() => {
 		if (user.encryption) return
+
 		fetchApi("/user/notes", {}).then((res) => {
 			if (res.ok) setNotes(res.content.userNotes)
-			else {
-				setType('error')
-				setContent(res.error)
-			}
+			else setAlert('error', res.error)
 		})
-	}, [user.encryption, setType, setContent])
+	}, [user, setAlert])
 
 	return (
 		<>
@@ -139,7 +137,7 @@ const NoteGallery = () => {
 				)}
 			</NoteGalleryDiv>
 
-			<Settings setBlurContent={setBlurContent} />
+			<Settings setBlurContent={setBlurContent} blurContent={blurContent} />
 		</>
 	)
 }

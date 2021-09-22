@@ -7,7 +7,7 @@ import { isFormUnfilled } from '@helpers/InputErrorHandler'
 
 const MailSetting = ({ setShowMailSetting }) => {
     const [mail, setMail] = useState('');
-    const { setType, setContent } = useContext(AlertContext)
+    const { setAlert } = useContext(AlertContext)
     const { setUser } = useContext(UserContext)
 
     const mailHandler = e => {
@@ -19,15 +19,11 @@ const MailSetting = ({ setShowMailSetting }) => {
             .then(
                 res => {
                     if (res.ok) {
-                        setType('success')
-                        setContent('Mail changed')
+                        setAlert('success', 'Mail changed')
                         setUser(res.content)
                         setShowMailSetting(false)
                     }
-                    else {
-                        setType('error')
-                        setContent(res.error)
-                    }
+                    else setAlert('error', res.error)
                 }
             )
     }

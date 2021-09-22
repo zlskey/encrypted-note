@@ -64,6 +64,8 @@ userSchema.statics.setMail = async function (id, mail) {
     try {
         if (!isEmail(mail)) throw Error('invalid email EXERR')
 
+        mail = mail.toLowerCase()
+
         const user = await this.findByIdAndUpdate(id, { mail })
         user.mail = mail
         return user

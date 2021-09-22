@@ -11,7 +11,7 @@ import PasswordSetting from './PasswordSetting';
 import CloseOnOuterClick from '@components/CloseOnOuterClick'
 import { Link } from 'react-router-dom'
 
-const Settings = ({ setBlurContent }) => {
+const Settings = ({ setBlurContent, blurContent }) => {
     const { theme } = useContext(ThemeContext)
     const { user } = useContext(UserContext)
 
@@ -23,12 +23,15 @@ const Settings = ({ setBlurContent }) => {
     useEffect(() => setBlurContent(showSettings), [showSettings, setBlurContent])
 
     return (
-        <>
+        <Background>
             <SettingsButton
                 theme={theme}
                 className='clickable'
-                onClick={() => setShowSettings(!showSettings)}
-                style={{ filter: `${showSettings ? "blur(2px)" : ""}`, }}
+                onClick={() => {
+                    if (blurContent && !showSettings) return
+                    setShowSettings(!showSettings)
+                }}
+                style={{ filter: `${blurContent ? "blur(2px)" : ""}`, }}
             >
                 <IconSettings color={theme.fontColor} size='40px' style={{ opacity: 0.8 }} />
             </SettingsButton>
@@ -85,9 +88,18 @@ const Settings = ({ setBlurContent }) => {
                 </Container>
             }
 
-        </>
+        </Background>
     );
 }
+
+const Background = styled.div`
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: transparent;
+`
 
 const LogoutButton = styled.div`
     display: block;

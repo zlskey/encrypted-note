@@ -8,8 +8,8 @@ import { isFormUnfilled } from '@helpers/InputErrorHandler'
 const PinSetting = ({ setShowPinSetting }) => {
     const [currentPin, setCurrentPin] = useState('');
     const [newPin, setNewPin] = useState('');
-    const { setType, setContent } = useContext(AlertContext)
-    const { user } = useContext(UserContext)
+    const { setAlert } = useContext(AlertContext)
+    const { user, setUser } = useContext(UserContext)
 
     const changePin = e => {
         e.preventDefault()
@@ -20,14 +20,10 @@ const PinSetting = ({ setShowPinSetting }) => {
             .then(
                 res => {
                     if (res.ok) {
-                        setType('success')
-                        setContent('Pin changed')
+                        setAlert('success', 'Pin changed')
                         setShowPinSetting(false)
                     }
-                    else {
-                        setType('error')
-                        setContent(res.error)
-                    }
+                    else setAlert('error', res.error)
                 }
             )
     }
@@ -41,14 +37,11 @@ const PinSetting = ({ setShowPinSetting }) => {
             .then(
                 res => {
                     if (res.ok) {
-                        setType('success')
-                        setContent('Now you\'re safe')
+                        setUser(res.content)
+                        setAlert('success', 'Now you\'re safe')
                         setShowPinSetting(false)
                     }
-                    else {
-                        setType('error')
-                        setContent(res.error)
-                    }
+                    else setAlert('error', res.error)
                 }
             )
     }

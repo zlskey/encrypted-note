@@ -8,18 +8,25 @@ import { useTransition, animated } from 'react-spring'
 export const AlertContext = createContext(null)
 
 const AlertContextProvider = ({ children }) => {
-    const [content, setContent] = useState(null);
-
-    const [type, setType] = useState(null);
-    const [color, setColor] = useState(null);
-
     const { theme } = useContext(ThemeContext)
 
-    const transition = useTransition(type, {
+    const [type, setType] = useState(null);
+    const [content, setContent] = useState(null);
+    const [color, setColor] = useState(null);
+
+    const [showAlert, setShowAlert] = useState();
+
+    const transition = useTransition(showAlert, {
         from: { opacity: 0 },
         enter: { opacity: 1 },
         leave: { opacity: 0 },
     })
+
+    const setAlert = (type, content) => {
+        setShowAlert(true)
+        setContent(content)
+        setType(type)
+    }
 
     useEffect(() => {
 
@@ -40,8 +47,8 @@ const AlertContextProvider = ({ children }) => {
     }, [type])
 
     return (
-        <AlertContext.Provider value={{ setContent, setType }}>
-            <CloseOnOuterClick setSomething={setType}>
+        <AlertContext.Provider value={{ setAlert }}>
+            <CloseOnOuterClick setSomething={setShowAlert}>
                 {transition((style, item) =>
                     item &&
                     <animated.div style={style}>
@@ -67,8 +74,8 @@ const Alert = styled.div`
     left: 50%;
     transform: translateX(-50%);
     background-color: ${props => props.background};
-    color: #fafafa;
     box-shadow: ${props => props.theme.type === 'light' && props.theme.shadow};
+    color: #fafafa;
     font-size: 1.3rem;
     display: flex;
     flex-direction: row;

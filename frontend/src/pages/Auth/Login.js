@@ -10,11 +10,11 @@ import Button from "@components/Button"
 import SlideAnimation from "@components/SlideAnimation"
 import { setError, isFormUnfilled } from "@helpers/InputErrorHandler"
 import { ThemeContext } from "@contexts/ThemeContext"
-import { AlertContext } from '../../contexts/AlertContext'
+import { AlertContext } from '@contexts/AlertContext'
 
 const Login = ({ action }) => {
     const { setUser, user } = useContext(UserContext)
-    const { setType, setContent } = useContext(AlertContext)
+    const { setAlert } = useContext(AlertContext)
     const { theme } = useContext(ThemeContext)
     const history = useHistory()
 
@@ -33,8 +33,7 @@ const Login = ({ action }) => {
         const res = await fetchApi("/auth/login", data)
         if (res.ok) {
             setUser(res.content)
-            setType('success')
-            setContent(`Hi ${res.content.username} 👋`)
+            setAlert('success', `Hi ${res.content.username} 👋`)
         }
         else setError("res", res.error)
     }
