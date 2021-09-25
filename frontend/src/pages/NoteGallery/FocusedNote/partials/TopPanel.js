@@ -1,3 +1,4 @@
+import styled from 'styled-components'
 import {
 	IconEdit,
 	IconTrash,
@@ -6,7 +7,6 @@ import {
 	IconUnlink,
 	IconShare,
 } from '@tabler/icons'
-import styled from 'styled-components'
 
 import fetchApi from '@helpers/fetchApi'
 import ShareWindow from './Sharing'
@@ -30,7 +30,7 @@ const TopPanel = ({
 	const { user } = useContext(UserContext)
 	const { setAlert } = useContext(AlertContext)
 	const { theme } = useContext(ThemeContext)
-	const [isShared] = useState(note.author !== user.username)
+	const isShared = note.author && note.author !== user.username
 
 	const date = note.updatedAt
 		? new Date(note.updatedAt).toLocaleDateString()
@@ -70,7 +70,7 @@ const TopPanel = ({
 
 	const unlinkNote = async () => {
 		const res = await fetchApi(
-			'note/unlink',
+			'/note/unlink',
 			{ id: note._id, content: note.content },
 			'PATCH'
 		)
@@ -120,7 +120,7 @@ const TopPanel = ({
 						</>
 					)}
 
-					{isShared && note !== 'new' && (
+					{isShared && (
 						<>
 							<Icon
 								title="Unlink note"

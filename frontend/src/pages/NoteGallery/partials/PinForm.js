@@ -20,7 +20,10 @@ const PinForm = ({ setNotes, setSharedNotes, setShowPinForm, showPinForm }) => {
 			setNotes(res.content.userNotes)
 			setSharedNotes(res.content.sharedNotes)
 			setShowPinForm(false)
-		} else setError('pin', res.error)
+		} else {
+			setPin('')
+			setError('pin', res.error)
+		}
 	}
 
 	return (
