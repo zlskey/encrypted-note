@@ -30,11 +30,11 @@ const SignUp = ({ action }) => {
         if (password !== repeatPassword) {
             setError(
                 'password',
-                'Password and second password must be the same',
+                'Password and second password must be the same'
             )
             setError(
                 'repeatPassword',
-                'Password and second password must be the same',
+                'Password and second password must be the same'
             )
             return
         } else {

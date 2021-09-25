@@ -29,7 +29,7 @@ const Alert = ({ type, content, color, showAlert, setShowAlert }) => {
                                 {content && content.replace('Error: ', '')}
                             </AlertDiv>
                         </animated.div>
-                    ),
+                    )
             )}
         </CloseOnOuterClick>
     )

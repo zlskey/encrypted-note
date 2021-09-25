@@ -23,11 +23,11 @@ const ThemeContextProvider = ({ children }) => {
 
     useEffect(
         () => (document.body.style.backgroundColor = theme.bgColor),
-        [theme],
+        [theme]
     )
     useEffect(
         () => setTheme(isDarkTheme ? darkTheme : lightTheme),
-        [isDarkTheme],
+        [isDarkTheme]
     )
 
     return (

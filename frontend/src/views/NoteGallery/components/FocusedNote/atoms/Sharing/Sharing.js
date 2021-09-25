@@ -22,7 +22,7 @@ const Sharing = ({ note, setNotes }) => {
         const res = await fetchApi(
             '/note/share',
             { id, content, recipient: newRecipient },
-            'PATCH',
+            'PATCH'
         )
 
         if (res.ok) {
@@ -42,7 +42,7 @@ const Sharing = ({ note, setNotes }) => {
         const res = await fetchApi(
             '/note/unlink',
             { recipientToUnlink, id, content },
-            'PATCH',
+            'PATCH'
         )
 
         if (res.ok) {

@@ -31,7 +31,7 @@ const Settings = ({ setBlurContent, blurContent }) => {
 
     useEffect(
         () => setBlurContent(showSettings),
-        [showSettings, setBlurContent],
+        [showSettings, setBlurContent]
     )
 
     return (

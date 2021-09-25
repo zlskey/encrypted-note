@@ -64,7 +64,7 @@ const TopPanel = ({
                 notes.map(el => {
                     if (el._id === note._id) el.content = content
                     return el
-                }),
+                })
             )
         } else setAlert('error', res.error)
     }
@@ -73,7 +73,7 @@ const TopPanel = ({
         const res = await fetchApi(
             '/note/unlink',
             { id: note._id, content: note.content },
-            'PATCH',
+            'PATCH'
         )
 
         if (res.ok) {

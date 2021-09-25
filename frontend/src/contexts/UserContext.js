@@ -26,7 +26,7 @@ const UserContextProvider = ({ children }) => {
 
     useEffect(
         () => user && setIsDarkTheme(user.theme === 'light' ? false : true),
-        [user, setIsDarkTheme],
+        [user, setIsDarkTheme]
     )
 
     return (

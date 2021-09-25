@@ -22,7 +22,7 @@ const PinSetting = ({ setShowPinSetting }) => {
                     setAlert('success', 'Pin changed')
                     setShowPinSetting(false)
                 } else setAlert('error', res.error)
-            },
+            }
         )
     }
 
@@ -38,7 +38,7 @@ const PinSetting = ({ setShowPinSetting }) => {
                     setAlert('success', "Now you're safe")
                     setShowPinSetting(false)
                 } else setAlert('error', res.error)
-            },
+            }
         )
     }
 

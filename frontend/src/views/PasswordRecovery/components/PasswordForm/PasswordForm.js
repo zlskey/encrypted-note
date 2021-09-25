@@ -18,11 +18,11 @@ const PasswordForm = ({ id }) => {
         if (password !== secondPassword) {
             setError(
                 'password',
-                'Password and second password must be the same',
+                'Password and second password must be the same'
             )
             setError(
                 'secondPassword',
-                'Password and second password must be the same',
+                'Password and second password must be the same'
             )
             return
         } else {

@@ -20,7 +20,7 @@ const PasswordSetting = ({ setShowPasswordSetting }) => {
         fetchApi(
             '/settings/change-password',
             { currentPassword, newPassword },
-            'PATCH',
+            'PATCH'
         ).then(res => {
             if (res.ok) {
                 setAlert('success', 'Password changed')

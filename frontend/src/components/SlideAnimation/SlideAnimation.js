@@ -13,7 +13,7 @@ const SlideAnimation = ({ isVisible, children, start, end }) => {
                 (style, item) =>
                     item && (
                         <animated.div style={style}>{children}</animated.div>
-                    ),
+                    )
             )}
         </>
     )

@@ -23,13 +23,13 @@ module.exports.getNotes = async (req, res, next) => {
             output.userNotes = await pgpHandler.decryptNotes(
                 userNotesFromDb,
                 username,
-                pin,
+                pin
             )
             if (sharedNotesFromDb.length) {
                 output.sharedNotes = await pgpHandler.decryptNotes(
                     sharedNotesFromDb,
                     username,
-                    pin,
+                    pin
                 )
             }
         }

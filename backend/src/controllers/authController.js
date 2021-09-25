@@ -116,7 +116,7 @@ module.exports.passwordRecover = async (req, res, next) => {
         const isIdCorrect = await PasswordRecovery.exists({ _id: id })
         if (!isIdCorrect)
             throw new Error(
-                'Password recovery request probably expired, try again EXERR',
+                'Password recovery request probably expired, try again EXERR'
             )
 
         if (password.length < 8) throw new Error('short password')

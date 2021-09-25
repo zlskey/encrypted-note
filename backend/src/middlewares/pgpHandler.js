@@ -36,7 +36,7 @@ const decryptNotes = async (encryptedNotes, username, pin) => {
 
                 note.content = content.data
                 return note
-            }),
+            })
         )
         return decryptedNotes
     } catch (err) {
@@ -50,7 +50,7 @@ const encryptNotes = async (notes, username) => {
             notes.map(async note => {
                 const content = await encrypt(note.content, username)
                 await Note.findByIdAndUpdate(note._id, { content })
-            }),
+            })
         )
 
         return true
@@ -67,7 +67,7 @@ const encrypt = async (content, ...usernames) => {
                 const armoredKey = keys.publicKey
                 const encryptionKey = await openpgp.readKey({ armoredKey })
                 return encryptionKey
-            }),
+            })
         )
         const message = await openpgp.createMessage({ text: content })
 

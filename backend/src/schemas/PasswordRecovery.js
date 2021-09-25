@@ -20,7 +20,7 @@ passwordRecoverySchema.pre('save', function (next) {
 
 const PasswordRecovery = mongoose.model(
     'Password recovery',
-    passwordRecoverySchema,
+    passwordRecoverySchema
 )
 
 module.exports = PasswordRecovery

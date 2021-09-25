@@ -37,7 +37,7 @@ module.exports.edit = async (req, res, next) => {
 
         const note = await Note.findOneAndUpdate(
             { _id: id, author: username },
-            { content: output },
+            { content: output }
         )
 
         res.status(201).json(true)
@@ -113,12 +113,12 @@ module.exports.unlink = async (req, res, next) => {
             : username
 
         const recipients = note.recipients.filter(
-            user => user !== recipientToUnlink,
+            user => user !== recipientToUnlink
         )
         const encryptedContent = await pgpHandler.encrypt(
             content,
             note.author,
-            ...recipients,
+            ...recipients
         )
 
         await Note.findByIdAndUpdate(id, {

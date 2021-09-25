@@ -6,7 +6,7 @@ const fetch = (...args) =>
 module.exports = async (mail, id) => {
     const content = messageSheet.replace(
         '#link',
-        `${process.env.CORS_ORIGIN}/password-recovery?id=${id}`,
+        `${process.env.CORS_ORIGIN}/password-recovery?id=${id}`
     )
 
     const body = JSON.stringify({
