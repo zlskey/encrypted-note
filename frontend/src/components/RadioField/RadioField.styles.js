@@ -1,36 +1,36 @@
 import styled from 'styled-components'
 
 export const InputField = styled.div`
-	margin-top: 10px;
+    margin-top: 10px;
 
-	* {
-		cursor: pointer;
-	}
+    * {
+        cursor: pointer;
+    }
 `
 
 export const Input = styled.input`
-	display: none;
+    display: none;
 `
 
 export const Label = styled.label`
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	align-items: center;
-	gap: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 `
 
 export const Checkbox = styled.div`
-	display: grid;
-	position: relative;
-	place-items: center;
-	width: 20px;
-	height: 20px;
-	border-radius: 3px;
-	background-color: ${props => props.theme.bgColor};
-	box-shadow: ${props => props.theme.type === 'light' && props.theme.shadow};
+    display: grid;
+    position: relative;
+    place-items: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
+    background-color: ${props => props.theme.bgColor};
+    box-shadow: ${props => props.theme.type === 'light' && props.theme.shadow};
 `
 
 export const Content = styled.p`
-	display: inline-block;
+    display: inline-block;
 `

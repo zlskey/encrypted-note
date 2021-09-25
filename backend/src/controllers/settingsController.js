@@ -12,8 +12,9 @@ module.exports.toggleTheme = async (req, res, next) => {
 
         await User.findOneAndUpdate({ username: req.user.username }, { theme })
         res.status(201).json(true)
+    } catch (err) {
+        errorHandler(err, next)
     }
-    catch (err) { errorHandler(err, next) }
 }
 
 module.exports.startEncryption = async (req, res, next) => {
@@ -34,8 +35,9 @@ module.exports.startEncryption = async (req, res, next) => {
         req.user.encryption = true
 
         res.status(201).json(req.user)
+    } catch (err) {
+        errorHandler(err, next)
     }
-    catch (err) { errorHandler(err, next) }
 }
 
 module.exports.changePin = async (req, res, next) => {
@@ -49,19 +51,20 @@ module.exports.changePin = async (req, res, next) => {
         await pgpHandler.readPrivateKey(username, currentPin) // to check if pin is correct
 
         const notesFromDB = await Note.find({ author: username })
-        const decryptedNotes =
-            notesFromDB
-                ? await pgpHandler.decryptNotes(notesFromDB, username, currentPin)
-                : null
+        const decryptedNotes = notesFromDB
+            ? await pgpHandler.decryptNotes(notesFromDB, username, currentPin)
+            : null
 
         await Key.findOneAndRemove({ username })
         await pgpHandler.generateKeys(username, newPin)
 
-        if (decryptedNotes) await pgpHandler.encryptNotes(decryptedNotes, username)
+        if (decryptedNotes)
+            await pgpHandler.encryptNotes(decryptedNotes, username)
 
         res.status(200).json(true)
+    } catch (err) {
+        errorHandler(err, next)
     }
-    catch (err) { errorHandler(err, next) }
 }
 
 module.exports.changePassword = async (req, res, next) => {
@@ -78,6 +81,7 @@ module.exports.changePassword = async (req, res, next) => {
         const user = await User.changePassword(newPassword, _id)
 
         res.status(200).json(user)
+    } catch (err) {
+        errorHandler(err, next)
     }
-    catch (err) { errorHandler(err, next) }
 }

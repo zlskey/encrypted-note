@@ -6,22 +6,22 @@ import { useContext } from 'react'
 import { SwitchContainer, Switch } from './ThemeSetting.styles'
 
 const ThemeSetting = () => {
-	const { setAlert } = useContext(AlertContext)
-	const { theme, setIsDarkTheme } = useContext(ThemeContext)
+    const { setAlert } = useContext(AlertContext)
+    const { theme, setIsDarkTheme } = useContext(ThemeContext)
 
-	const handleClick = async () => {
-		const res = await fetchApi('/settings/theme', {}, 'PATCH')
-		if (res.ok) setIsDarkTheme(prev => !prev)
-		else setAlert('error', res.error)
-	}
+    const handleClick = async () => {
+        const res = await fetchApi('/settings/theme', {}, 'PATCH')
+        if (res.ok) setIsDarkTheme(prev => !prev)
+        else setAlert('error', res.error)
+    }
 
-	return (
-		<SwitchContainer>
-			<IconMoonStars />
-			<Switch theme={theme} onClick={handleClick} />
-			<IconBrightness2 />
-		</SwitchContainer>
-	)
+    return (
+        <SwitchContainer>
+            <IconMoonStars />
+            <Switch theme={theme} onClick={handleClick} />
+            <IconBrightness2 />
+        </SwitchContainer>
+    )
 }
 
 export default ThemeSetting

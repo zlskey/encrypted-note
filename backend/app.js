@@ -31,14 +31,14 @@ mongoose.set('useFindAndModify', false)
 mongoose.set('useCreateIndex', true)
 
 mongoose
-	.connect(dbURI, {
-		useNewUrlParser: true,
-		useUnifiedTopology: true,
-	})
-	.then(() => console.log(`db connected`))
-	.catch(err => console.log(err))
+    .connect(dbURI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    })
+    .then(() => console.log(`db connected`))
+    .catch(err => console.log(err))
 
 app.use('/', router)
 app.use((error, req, res, next) =>
-	res.status(error.status || 500).json(error.message)
+    res.status(error.status || 500).json(error.message),
 )

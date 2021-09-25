@@ -3,33 +3,38 @@
 Web app build with MERN stack. You can try it [here](https://zlskey.pl)
 
 ## Technologies
-* React.js as frontend
-* Node.js (express) as API
-* MongoDB as Database
+
+-   React.js as frontend
+-   Node.js (express) as API
+-   MongoDB as Database
 
 ## Features
-* JWT auth
-* note encrypting using openpgp
-* password recovery using email
-* Creating/Editing notes
-* Sharing notes between users 
-* Separated password for account and PIN to decrypt notes
+
+-   JWT auth
+-   note encrypting using openpgp
+-   password recovery using email
+-   Creating/Editing notes
+-   Sharing notes between users
+-   Separated password for account and PIN to decrypt notes
 
 ## Installation
 
 ### With docker:
 
 #### 1. Clone repo
+
 ```bash
 git clone https://github.com/zlskey/encrypted-note.git
 cd encrypted-note
 ```
 
 #### 2. Preparing docker-compose
-* Rename docker-compose.yml.example to docker-compose.yml
-* Set enviroment variables inside docker-compose.yml
+
+-   Rename docker-compose.yml.example to docker-compose.yml
+-   Set enviroment variables inside docker-compose.yml
 
 #### 3. Run containers
+
 ```bash
 docker compose up -d --build
 ```
@@ -39,17 +44,21 @@ docker compose up -d --build
 Requires: Node.js version 16.1.0 & Yarn version 1.22.11
 
 #### 1. Clone repo
+
 ```bash
 git clone https://github.com/zlskey/encrypted-note.git
 cd encrypted-note
 ```
 
 #### 2. Enviroment variables
+
 Rename .env.example files to .env and set your enviroment variables in
-* `~/encrypted-note/backend/.env.example` 
-* `~/encrypted-note/frontend/.env.example`
+
+-   `~/encrypted-note/backend/.env.example`
+-   `~/encrypted-note/frontend/.env.example`
 
 #### 3. Install dependencies
+
 ```bash
 # ~/encrypted-note directory
 
@@ -59,7 +68,9 @@ yarn install
 cd ../backend
 npm install
 ```
+
 #### 4. Start app
+
 ```bash
 # ~/encrypted-note directory
 
@@ -67,8 +78,8 @@ npm install
 # you will have to run 'npm start' in both directories
 ```
 
-
 ## License
+
 MIT License
 
 Copyright (c) 2021 zlskey
