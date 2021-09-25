@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 
-import Loader from '@components/SiteLoader'
+import Loader from '@components/SiteLoader/SiteLoader'
 import fetchApi from '@helpers/fetchApi'
 import { ThemeContext } from './ThemeContext'
 import { AlertContext } from './AlertContext'
