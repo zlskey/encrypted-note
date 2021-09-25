@@ -7,5 +7,3 @@ router.patch('/change-pin', settingsController.changePin)
 router.patch('/change-password', settingsController.changePassword)
 
 module.exports = router
-
-

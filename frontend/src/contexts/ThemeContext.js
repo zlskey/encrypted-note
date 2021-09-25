@@ -1,20 +1,20 @@
-import { createContext, useEffect, useState } from "react"
+import { createContext, useEffect, useState } from 'react'
 
 export const ThemeContext = createContext(null)
 
 const darkTheme = {
-	type: "dark",
-	fontColor: "#fafafa",
-	bgColor: "#212121",
-	uiColor: "#424242",
-	shadow: "0 0 3px #616161",
+	type: 'dark',
+	fontColor: '#fafafa',
+	bgColor: '#212121',
+	uiColor: '#424242',
+	shadow: '0 0 3px #616161',
 }
 const lightTheme = {
-	type: "light",
-	fontColor: "#424242",
-	bgColor: "#fafafa",
-	uiColor: "#eeeeee",
-	shadow: "0 0 10px -5px #212121",
+	type: 'light',
+	fontColor: '#424242',
+	bgColor: '#fafafa',
+	uiColor: '#eeeeee',
+	shadow: '0 0 10px -5px #212121',
 }
 
 const ThemeContextProvider = ({ children }) => {

@@ -1,3 +1,4 @@
+// prettier-ignore
 const errorHandler = (err, next) => {
     const error = new Error()
     error.status = 403

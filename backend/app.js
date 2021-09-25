@@ -26,17 +26,19 @@ app.use(cors({ origin, credentials: true }))
 app.listen(PORT, () => console.log(`listening on ${PORT}`))
 console.log(`Running in ${NODE_ENV} enviroment`)
 
-mongoose.set("useNewUrlParser", true);
-mongoose.set("useFindAndModify", false);
-mongoose.set("useCreateIndex", true);
+mongoose.set('useNewUrlParser', true)
+mongoose.set('useFindAndModify', false)
+mongoose.set('useCreateIndex', true)
 
 mongoose
-    .connect(dbURI, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-    })
-    .then(() => console.log(`db connected`))
-    .catch((err) => console.log(err));
+	.connect(dbURI, {
+		useNewUrlParser: true,
+		useUnifiedTopology: true,
+	})
+	.then(() => console.log(`db connected`))
+	.catch(err => console.log(err))
 
 app.use('/', router)
-app.use((error, req, res, next) => res.status(error.status || 500).json(error.message))
+app.use((error, req, res, next) =>
+	res.status(error.status || 500).json(error.message)
+)

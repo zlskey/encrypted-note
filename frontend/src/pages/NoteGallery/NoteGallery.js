@@ -1,15 +1,15 @@
-import { useContext, useEffect, useState } from "react"
-import styled from "styled-components"
-import { IconPlus } from "@tabler/icons"
+import { useContext, useEffect, useState } from 'react'
+import styled from 'styled-components'
+import { IconPlus } from '@tabler/icons'
 
-import { ThemeContext } from "@contexts/ThemeContext"
-import { UserContext } from "@contexts/UserContext"
-import fetchApi from "@helpers/fetchApi"
-import Note from "./Note"
-import FocusedNote from "./FocusedNote"
-import Settings from "./Settings/"
-import PinForm from "./PinForm"
-import { getColumns } from "@helpers/responsiveFacilities"
+import { ThemeContext } from '@contexts/ThemeContext'
+import { UserContext } from '@contexts/UserContext'
+import fetchApi from '@helpers/fetchApi'
+import Note from './partials/Note'
+import FocusedNote from './FocusedNote/FocusedNote'
+import Settings from './Settings/Settings'
+import PinForm from './PinForm/PinForm'
+import { getColumns } from '@helpers/responsiveFacilities'
 import { AlertContext } from '@contexts/AlertContext'
 
 const NoteGalleryDiv = styled.div`
@@ -50,12 +50,12 @@ const NoteGallery = () => {
 	const { setAlert } = useContext(AlertContext)
 	const [noteToFocus, setNoteToFocus] = useState(null)
 
-	const range = new Array(8).fill("loading")
+	const range = new Array(8).fill('loading')
 	const [notes, setNotes] = useState(range)
 	const [sharedNotes, setSharedNotes] = useState([])
 
 	const [showPinForm, setShowPinForm] = useState(user.encryption)
-	const [blurContent, setBlurContent] = useState(false);
+	const [blurContent, setBlurContent] = useState(false)
 
 	useEffect(() => {
 		if (showPinForm || noteToFocus) setBlurContent(true)
@@ -65,7 +65,7 @@ const NoteGallery = () => {
 	useEffect(() => {
 		if (user.encryption) return
 
-		fetchApi("/user/notes", {}).then((res) => {
+		fetchApi('/user/notes', {}).then(res => {
 			if (res.ok) setNotes(res.content.userNotes)
 			else setAlert('error', res.error)
 		})
@@ -93,7 +93,7 @@ const NoteGallery = () => {
 			<NoteGalleryDiv
 				theme={theme}
 				style={{
-					filter: `${blurContent ? "blur(5px)" : ""}`,
+					filter: `${blurContent ? 'blur(5px)' : ''}`,
 				}}
 			>
 				<SectionHeader theme={theme}>
@@ -101,7 +101,7 @@ const NoteGallery = () => {
 
 					<IconPlus
 						size="30px"
-						onClick={() => setNoteToFocus("new")}
+						onClick={() => setNoteToFocus('new')}
 						className="clickable"
 					/>
 				</SectionHeader>
@@ -110,7 +110,7 @@ const NoteGallery = () => {
 					{notes.length === 0 && <p>Add your first note!</p>}
 
 					{notes.length !== 0 &&
-						notes.map((note) => (
+						notes.map(note => (
 							<Note
 								setNoteToFocus={setNoteToFocus}
 								key={note._id || Math.random()}
@@ -125,7 +125,7 @@ const NoteGallery = () => {
 							<p>Shared notes</p>
 						</SectionHeader>
 						<Notes>
-							{sharedNotes.map((note) => (
+							{sharedNotes.map(note => (
 								<Note
 									setNoteToFocus={setNoteToFocus}
 									key={note._id || Math.random()}
@@ -137,7 +137,10 @@ const NoteGallery = () => {
 				)}
 			</NoteGalleryDiv>
 
-			<Settings setBlurContent={setBlurContent} blurContent={blurContent} />
+			<Settings
+				setBlurContent={setBlurContent}
+				blurContent={blurContent}
+			/>
 		</>
 	)
 }
