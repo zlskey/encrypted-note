@@ -6,12 +6,14 @@ import {
 	IconUnlink,
 	IconShare,
 } from '@tabler/icons'
+import styled from 'styled-components'
 
 import fetchApi from '@helpers/fetchApi'
 import ShareWindow from './Sharing'
 import { useContext, useState } from 'react'
 import { UserContext } from '@contexts/UserContext'
 import { AlertContext } from '@contexts/AlertContext'
+import { ThemeContext } from '@contexts/ThemeContext'
 
 const TopPanel = ({
 	note,
@@ -27,6 +29,7 @@ const TopPanel = ({
 	const [showShareWindow, setShowShareWindow] = useState(false)
 	const { user } = useContext(UserContext)
 	const { setAlert } = useContext(AlertContext)
+	const { theme } = useContext(ThemeContext)
 	const [isShared] = useState(note.author !== user.username)
 
 	const date = note.updatedAt
@@ -86,7 +89,7 @@ const TopPanel = ({
 	}
 
 	return (
-		<div className="top-panel">
+		<TopPanelDiv theme={theme}>
 			<div className="upper-row">
 				<div className="buttons">
 					<Icon
@@ -143,9 +146,31 @@ const TopPanel = ({
 			{showShareWindow && note.author === user.username && (
 				<ShareWindow note={note} setNotes={setNotes} />
 			)}
-		</div>
+		</TopPanelDiv>
 	)
 }
+
+const TopPanelDiv = styled.div`
+	padding: 10px;
+	display: flex;
+	flex-direction: column;
+	box-shadow: ${({ theme }) => theme.shadow};
+	gap: 10px;
+
+	.upper-row {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+	}
+
+	.buttons {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		font-size: 20px;
+		gap: 10px;
+	}
+`
 
 const Icon = ({ handleClick, Icon, title, ...props }) => (
 	<div title={title}>

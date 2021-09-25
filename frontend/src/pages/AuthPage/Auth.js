@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react'
 
-import { AuthPageDiv, ActionSwitch } from './Auth.styles'
+import { AuthPageDiv, ActionSwitch, SwitchOption } from './Auth.styles'
 import LoginForm from './partials/Login'
 import SignUpForm from './partials/SignUp'
 
@@ -32,22 +32,22 @@ const AuthWindow = () => {
 		<>
 			<AuthPageDiv theme={theme}>
 				<ActionSwitch theme={theme}>
-					<p
+					<SwitchOption
 						onClick={() => setAction('login')}
 						className={`clickable ${
 							action === 'login' ? 'active' : ''
 						}`}
 					>
 						Login
-					</p>
-					<p
+					</SwitchOption>
+					<SwitchOption
 						onClick={() => setAction('signup')}
 						className={`clickable ${
 							action === 'signup' ? 'active' : ''
 						}`}
 					>
 						Sign Up
-					</p>
+					</SwitchOption>
 				</ActionSwitch>
 
 				<LoginForm action={action} />

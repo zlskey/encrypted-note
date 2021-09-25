@@ -5,10 +5,10 @@ import { IconPlus } from '@tabler/icons'
 import { ThemeContext } from '@contexts/ThemeContext'
 import { UserContext } from '@contexts/UserContext'
 import fetchApi from '@helpers/fetchApi'
-import Note from './partials/Note'
+import Note from './Note/Note'
 import FocusedNote from './FocusedNote/FocusedNote'
 import Settings from './Settings/Settings'
-import PinForm from './PinForm/PinForm'
+import PinForm from './partials/PinForm'
 import { getColumns } from '@helpers/responsiveFacilities'
 import { AlertContext } from '@contexts/AlertContext'
 
@@ -73,13 +73,12 @@ const NoteGallery = () => {
 
 	return (
 		<>
-			{showPinForm && (
-				<PinForm
-					setNotes={setNotes}
-					setSharedNotes={setSharedNotes}
-					setShowPinForm={setShowPinForm}
-				/>
-			)}
+			<PinForm
+				setNotes={setNotes}
+				showPinForm={showPinForm}
+				setShowPinForm={setShowPinForm}
+				setSharedNotes={setSharedNotes}
+			/>
 
 			{noteToFocus && (
 				<FocusedNote

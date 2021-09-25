@@ -32,29 +32,15 @@ export const ActionSwitch = styled.div`
 	box-shadow: ${({ theme }) => theme.shadow};
 	margin-top: 10px;
 	overflow: hidden;
-
-	p {
-		flex-grow: 1;
-		display: grid;
-		place-items: center;
-		transition: 0.3s;
-	}
-
-	.active {
-		color: #fafafa;
-		background-color: #2196f3;
-	}
 `
 
 export const SwitchOption = styled.p`
-	p {
-		flex-grow: 1;
-		display: grid;
-		place-items: center;
-		transition: 0.3s;
-	}
+	flex-grow: 1;
+	display: grid;
+	place-items: center;
+	transition: 0.3s;
 
-	.active {
+	&.active {
 		color: #fafafa;
 		background-color: #2196f3;
 	}

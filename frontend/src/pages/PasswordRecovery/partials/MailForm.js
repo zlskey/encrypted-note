@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import InputField from '@components/InputField'
 import Button from '@components/Button'
-import { isFormUnfilled, setError, setValid } from '@helpers/InputErrorHandler'
+import { isFormUnfilled, setError } from '@helpers/InputErrorHandler'
 import fetchApi from '@helpers/fetchApi'
 import styled from 'styled-components'
 
