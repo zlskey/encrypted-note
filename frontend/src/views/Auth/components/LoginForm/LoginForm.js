@@ -1,40 +1,44 @@
 import { useContext, useState, useEffect } from 'react'
 import { useHistory, Link } from 'react-router-dom'
 
-import fetchApi from '@helpers/fetchApi'
-import { UserContext } from '@contexts/UserContext'
 import InputField from '@components/InputField/InputField'
 import RadioField from '@components/RadioField/RadioField'
 import Button from '@components/Button/Button'
 import SlideAnimation from '@components/SlideAnimation/SlideAnimation'
-import { setError, isFormUnfilled } from '@helpers/InputErrorHandler'
+import { setError, isFormUnfilled, setValid } from '@helpers/InputErrorHandler'
 import { ThemeContext } from '@contexts/ThemeContext'
 import { AlertContext } from '@contexts/AlertContext'
 import { Form, LoginBar, Separator } from './LoginForm.styles'
+import { useSelector, useDispatch } from 'react-redux'
+import useApi from '@hooks/useApi'
+import { UPDATE_USER } from '@redux/types'
 
 const Login = ({ action }) => {
-    const { setUser, user } = useContext(UserContext)
     const { setAlert } = useContext(AlertContext)
     const { theme } = useContext(ThemeContext)
     const history = useHistory()
+    const user = useSelector(state => state.auth.user)
+    const dispatch = useDispatch()
 
     const [login, setLogin] = useState('')
     const [password, setPassword] = useState('')
     const [dontLogout, setDontLogout] = useState(false)
+    const [doFetch, status] = useApi('/auth/login', 'POST')
 
-    useEffect(() => user && history.push('/'), [user, history])
+    useEffect(() => user?.username && history.push('/'), [user, history])
 
     const handleSubmit = async e => {
         e.preventDefault()
+        setValid('res')
 
-        if (isFormUnfilled({ login, password })) return
+        const user = { username: login, password, dontLogout }
 
-        const data = { login, password, dontLogout }
-        const res = await fetchApi('/auth/login', data)
-        if (res.ok) {
-            setUser(res.content)
-            setAlert('success', `Hi ${res.content.username} 👋`)
-        } else setError('res', res.error)
+        doFetch((content, ok) => {
+            if (ok) {
+                dispatch({ type: UPDATE_USER, data: { user: content } })
+                setAlert('success', `Hi ${content.username} 👋`)
+            } else setError('res', content)
+        }, user)
     }
 
     return (
@@ -51,6 +55,7 @@ const Login = ({ action }) => {
                     text='Login'
                     content={login}
                     setContent={setLogin}
+                    required={true}
                 />
                 <InputField
                     name='password'
@@ -58,6 +63,7 @@ const Login = ({ action }) => {
                     type='password'
                     content={password}
                     setContent={setPassword}
+                    required={true}
                 />
 
                 <LoginBar>
@@ -83,7 +89,7 @@ const Login = ({ action }) => {
                     </Link>
                 </LoginBar>
 
-                <Button content='Confirm' />
+                <Button loading={status === 'fetching'} content='Confirm' />
             </SlideAnimation>
         </Form>
     )

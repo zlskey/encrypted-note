@@ -4,8 +4,6 @@ import { IconPlus } from '@tabler/icons'
 import { NoteGalleryDiv, Notes, SectionHeader } from './NoteGallery.styles'
 
 import { ThemeContext } from '@contexts/ThemeContext'
-import { UserContext } from '@contexts/UserContext'
-import fetchApi from '@helpers/fetchApi'
 import { AlertContext } from '@contexts/AlertContext'
 
 import Note from './components/Note/Note'
@@ -13,77 +11,77 @@ import FocusedNote from './components/FocusedNote/FocusedNote'
 import Settings from './components/Settings/Settings'
 import PinForm from './components/PinForm/PinForm'
 
-const NoteGallery = () => {
-    const { theme } = useContext(ThemeContext)
-    const { user } = useContext(UserContext)
-    const { setAlert } = useContext(AlertContext)
-    const [noteToFocus, setNoteToFocus] = useState(null)
+import useApi from '@hooks/useApi'
+import { UPDATE_USER_NOTES, UPDATE_SHARED_NOTES } from '@redux/types'
+import { SHOW_FOCUSED_NOTE } from '@redux/types'
+import { useSelector, useDispatch } from 'react-redux'
 
-    const range = new Array(8).fill('loading')
-    const [notes, setNotes] = useState(range)
-    const [sharedNotes, setSharedNotes] = useState([])
+const loadingRange = new Array(8).fill('loading')
+
+const NoteGallery = () => {
+    const user = useSelector(state => state.auth.user)
+    const userNotes = useSelector(state => state.notes.user)
+    const sharedNotes = useSelector(state => state.notes.shared)
+    const noteToFocus = useSelector(state => state.focusedNote.data)
+    const dispatch = useDispatch()
+
+    const { theme } = useContext(ThemeContext)
+    const { setAlert } = useContext(AlertContext)
 
     const [showPinForm, setShowPinForm] = useState(user.encryption)
-    const [blurContent, setBlurContent] = useState(false)
 
-    useEffect(() => {
-        if (showPinForm || noteToFocus) setBlurContent(true)
-        else setBlurContent(false)
-    }, [showPinForm, noteToFocus])
-
+    const [doFetch, status] = useApi('/user/notes', 'POST')
     useEffect(() => {
         if (user.encryption) return
 
-        fetchApi('/user/notes', {}).then(res => {
-            if (res.ok) setNotes(res.content.userNotes)
-            else setAlert('error', res.error)
+        doFetch((content, ok) => {
+            if (ok) {
+                dispatch({ type: UPDATE_USER_NOTES, notes: content.userNotes })
+                dispatch({
+                    type: UPDATE_SHARED_NOTES,
+                    notes: content.sharedNotes,
+                })
+            } else setAlert('error', content)
         })
-    }, [user, setAlert])
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return (
         <>
             <PinForm
-                setNotes={setNotes}
                 showPinForm={showPinForm}
                 setShowPinForm={setShowPinForm}
-                setSharedNotes={setSharedNotes}
             />
 
-            {noteToFocus && (
-                <FocusedNote
-                    setNoteToFocus={setNoteToFocus}
-                    note={noteToFocus}
-                    setNotes={setNotes}
-                    setSharedNotes={setSharedNotes}
-                />
-            )}
+            {noteToFocus && <FocusedNote />}
 
-            <NoteGalleryDiv
-                theme={theme}
-                style={{
-                    filter: `${blurContent ? 'blur(5px)' : ''}`,
-                }}
-            >
+            <NoteGalleryDiv theme={theme}>
                 <SectionHeader theme={theme}>
                     <p>Your notes</p>
 
                     <IconPlus
                         size='30px'
-                        onClick={() => setNoteToFocus('new')}
+                        onClick={() =>
+                            dispatch({ type: SHOW_FOCUSED_NOTE, note: 'new' })
+                        }
                         className='clickable'
                     />
                 </SectionHeader>
 
                 <Notes>
-                    {notes.length === 0 && <p>Add your first note!</p>}
+                    {status === 'fetching' &&
+                        loadingRange.map(note => (
+                            <Note data={note} key={Math.random()} />
+                        ))}
 
-                    {notes.length !== 0 &&
-                        notes.map(note => (
-                            <Note
-                                setNoteToFocus={setNoteToFocus}
-                                key={note._id || Math.random()}
-                                data={note}
-                            />
+                    {status !== 'fetching' && userNotes.length === 0 && (
+                        <p>Add your first note!</p>
+                    )}
+
+                    {userNotes.length !== 0 &&
+                        userNotes.map(note => (
+                            <Note key={note._id} data={note} />
                         ))}
                 </Notes>
 
@@ -95,7 +93,6 @@ const NoteGallery = () => {
                         <Notes>
                             {sharedNotes.map(note => (
                                 <Note
-                                    setNoteToFocus={setNoteToFocus}
                                     key={note._id || Math.random()}
                                     data={note}
                                 />
@@ -105,10 +102,7 @@ const NoteGallery = () => {
                 )}
             </NoteGalleryDiv>
 
-            <Settings
-                setBlurContent={setBlurContent}
-                blurContent={blurContent}
-            />
+            <Settings />
         </>
     )
 }

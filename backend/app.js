@@ -14,6 +14,7 @@ const origin = process.env.CORS_ORIGIN
 const NODE_ENV = process.env.NODE_ENV
 
 const router = require('./src/routers/router')
+const errorHandler = require('./src/middlewares/errorHandler')
 
 app = express()
 
@@ -39,6 +40,4 @@ mongoose
     .catch(err => console.log(err))
 
 app.use('/', router)
-app.use((error, req, res, next) =>
-    res.status(error.status || 500).json(error.message)
-)
+app.use(errorHandler)

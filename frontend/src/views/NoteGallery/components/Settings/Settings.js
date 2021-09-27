@@ -1,49 +1,58 @@
 import { IconSettings } from '@tabler/icons'
 import { useContext, useEffect, useState } from 'react'
 import { ThemeContext } from '@contexts/ThemeContext'
-import { UserContext } from '@contexts/UserContext'
 import CloseOnOuterClick from '@components/CloseOnOuterClick/CloseOnOuterClick'
 import Window from '@components/Window/Window'
-import { Link } from 'react-router-dom'
+import Button from '@components/Button/Button'
 
 import SettingComponent from './atoms/SettingComponent/SettingComponent'
 import MailSetting from './atoms/MailSetting/MailSetting'
+import PasswordSetting from './atoms/PasswordSetting/PasswordSetting'
 import PinSetting from './atoms/PinSetting/PinSetting'
 import ThemeSetting from './atoms/ThemeSetting/ThemeSetting'
-import PasswordSetting from './atoms/PasswordSetting/PasswordSetting'
+import { AlertContext } from '@contexts/AlertContext'
+import { useSelector, useDispatch } from 'react-redux'
+import { UPDATE_USER } from '@redux/types'
+import useApi from '@hooks/useApi'
 
 import {
     settingsWindowStyles,
-    LogoutButton,
     Header,
     SettingsButton,
+    LogoutButton,
 } from './Settings.styles'
 
-const Settings = ({ setBlurContent, blurContent }) => {
+const Settings = () => {
+    const user = useSelector(state => state.auth.user)
+    const dispatch = useDispatch()
+
     const { theme } = useContext(ThemeContext)
-    const { user } = useContext(UserContext)
+    const { setAlert } = useContext(AlertContext)
 
     const [showSettings, setShowSettings] = useState(false)
-
     const [showMailSetting, setShowMailSetting] = useState(false)
     const [showPasswordSetting, setShowPasswordSetting] = useState(false)
     const [showPinSetting, setShowPinSetting] = useState(false)
 
-    useEffect(
-        () => setBlurContent(showSettings),
-        [showSettings, setBlurContent]
-    )
+    const [doFetch, status] = useApi('/user/logout')
+
+    const handleLogout = () => {
+        if (!user) return
+
+        doFetch((content, ok) => {
+            if (ok) {
+                dispatch({ type: UPDATE_USER, data: { user: null } })
+                setAlert('success', 'Come back soon 😊')
+            }
+        })
+    }
 
     return (
         <>
             <SettingsButton
+                onClick={() => setShowSettings(currentState => !currentState)}
                 theme={theme}
                 className='clickable'
-                onClick={() => {
-                    if (blurContent && !showSettings) return
-                    setShowSettings(!showSettings)
-                }}
-                style={{ filter: `${blurContent ? 'blur(2px)' : ''}` }}
             >
                 <IconSettings
                     color={theme.fontColor}
@@ -106,11 +115,12 @@ const Settings = ({ setBlurContent, blurContent }) => {
                     </CloseOnOuterClick>
                 </SettingComponent>
 
-                <LogoutButton color='#f44336' theme={theme}>
-                    <Link to='/auth' className='clickable'>
-                        {' '}
-                        Logout
-                    </Link>
+                <LogoutButton onClick={handleLogout}>
+                    <Button
+                        color='#f44336'
+                        content='Logout'
+                        loading={status === 'fetching'}
+                    />
                 </LogoutButton>
             </Window>
         </>

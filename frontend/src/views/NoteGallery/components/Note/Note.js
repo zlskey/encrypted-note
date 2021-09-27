@@ -1,29 +1,29 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import { ThemeContext } from '@contexts/ThemeContext'
 import { NoteDiv, NoteDate, Content } from './Note.styles'
+import { SHOW_FOCUSED_NOTE } from '@redux/types'
+import { useDispatch } from 'react-redux'
 
-const Note = ({ setNoteToFocus, data }) => {
+const Note = ({ data }) => {
     const { theme } = useContext(ThemeContext)
-    const { updatedAt, content } = data
-    const [isLoading, setIsLoading] = useState(true)
+    const [isLoading] = useState(data === 'loading')
+    const dispatch = useDispatch()
 
-    useEffect(() => {
-        if (data !== 'loading') setIsLoading(false)
-    }, [data])
-
-    const date = new Date(updatedAt).toLocaleDateString()
+    const date = new Date(data.updatedAt).toLocaleDateString()
 
     return (
         <NoteDiv
             theme={theme}
-            className={isLoading ? '' : 'clickable'}
-            onClick={() => !isLoading && setNoteToFocus(data)}
+            className={!isLoading && 'clickable'}
+            onClick={() =>
+                !isLoading && dispatch({ type: SHOW_FOCUSED_NOTE, note: data })
+            }
         >
             <NoteDate theme={theme} isLoading={isLoading}>
                 {date}
             </NoteDate>
             <Content theme={theme} isLoading={isLoading}>
-                {content}
+                {data.content}
             </Content>
         </NoteDiv>
     )

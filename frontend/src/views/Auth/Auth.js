@@ -1,32 +1,26 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 
 import { AuthPageDiv, ActionSwitch, SwitchOption } from './Auth.styles'
 import LoginForm from './components/LoginForm/LoginForm'
 import SignUpForm from './components/SignUpForm/SignUpForm'
 
 import { ThemeContext } from '@contexts/ThemeContext'
-import { UserContext } from '@contexts/UserContext'
-import { AlertContext } from '@contexts/AlertContext'
-
-import fetchApi from '@helpers/fetchApi'
 
 const AuthWindow = () => {
     const { theme } = useContext(ThemeContext)
-    const { user, setUser } = useContext(UserContext)
-    const { setAlert } = useContext(AlertContext)
     const [action, setAction] = useState('login')
 
-    useEffect(() => {
-        if (user) {
-            fetchApi('/user/logout').then(res => {
-                if (res.ok) {
-                    setUser(null)
-                    setAlert('success', 'Come back soon 😊')
-                } else setAlert('error', res.error)
-            })
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [setUser, setAlert])
+    // useEffect(() => {
+    //     if (!user) return
+
+    //     doFetch((content, ok) => {
+    //         if (ok) {
+    //             dispatch({ type: UPDATE_USER, data: { user: null } })
+    //             setAlert('success', 'Come back soon 😊')
+    //         }
+    //     })
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [setAlert, dispatch, doFetch])
 
     return (
         <>

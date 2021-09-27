@@ -2,7 +2,6 @@ const User = require('../schemas/UserSchema')
 const PasswordRecovery = require('../schemas/PasswordRecovery')
 const jwt = require('jsonwebtoken')
 const findUserByToken = require('../middlewares/findUserByToken')
-const errorHandler = require('../middlewares/errorHandler')
 const checkRequirements = require('../middlewares/checkRequirements')
 const { sendPasswordRecoveryMail } = require('../middlewares/mailHandler')
 const { isEmail } = require('validator')
@@ -50,25 +49,25 @@ module.exports.signup = async (req, res, next) => {
 
         res.cookie('jwt', token, getCookieOptions()).status(201).json(user)
     } catch (err) {
-        errorHandler(err, next)
+        next(err)
     }
 }
 
 module.exports.login = async (req, res, next) => {
-    const { login, password, dontLogout } = req.body
+    const { username, password, dontLogout } = req.body
 
     try {
-        checkRequirements(login, password)
+        checkRequirements(username, password)
 
-        const user = await User.login(login, password)
+        const user = await User.login(username, password)
         const token = createToken(user._id, dontLogout)
         user.password = null
 
         res.cookie('jwt', token, getCookieOptions(dontLogout))
-            .status(201)
+            .status(200)
             .json(user)
     } catch (err) {
-        errorHandler(err, next)
+        next(err)
     }
 }
 
@@ -78,10 +77,10 @@ module.exports.verify = async (req, res, next) => {
 
         if (user) {
             user.password = null
-            res.status(201).json(user)
-        } else res.status(201).json(false)
+            res.status(200).json(user)
+        } else res.status(200).json(false)
     } catch (err) {
-        errorHandler(err, next)
+        next(err)
     }
 }
 
@@ -129,6 +128,6 @@ module.exports.passwordRecover = async (req, res, next) => {
         user.password = null
         res.status(200).json(user)
     } catch (err) {
-        errorHandler(err, next)
+        next(err)
     }
 }

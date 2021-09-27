@@ -1,4 +1,4 @@
-import { useContext, useRef } from 'react'
+import { useContext, useRef, useEffect } from 'react'
 import { ThemeContext } from '@contexts/ThemeContext'
 
 import { Background, Content } from './Window.styles'
@@ -14,9 +14,20 @@ const Window = ({
     const content = useRef(null)
 
     const closeWindow = e => {
-        if (!onClickClosing || content.current.contains(e.target)) return
+        if (!onClickClosing || (e && content.current.contains(e.target))) return
         setShowWindow(null)
     }
+
+    useEffect(() => {
+        const handleKeyUp = e => {
+            if (e.code === 'Escape') closeWindow()
+        }
+
+        document.addEventListener('keyup', handleKeyUp)
+        return () => {
+            document.removeEventListener('keyup', handleKeyUp)
+        }
+    }, [])
 
     return (
         <>

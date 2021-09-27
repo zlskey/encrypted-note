@@ -1,7 +1,6 @@
 const Note = require('../schemas/NoteSchema')
 const User = require('../schemas/UserSchema')
 const pgpHandler = require('../middlewares/pgpHandler')
-const errorHandler = require('../middlewares/errorHandler')
 const checkRequirements = require('../middlewares/checkRequirements')
 
 module.exports.getNotes = async (req, res, next) => {
@@ -36,7 +35,7 @@ module.exports.getNotes = async (req, res, next) => {
 
         res.status(201).json(output)
     } catch (err) {
-        errorHandler(err, next)
+        next(err)
     }
 }
 
@@ -53,6 +52,6 @@ module.exports.setMail = async (req, res, next) => {
         const user = await User.setMail(req.user._id, mail)
         res.status(200).json(user)
     } catch (err) {
-        errorHandler(err, next)
+        next(err)
     }
 }

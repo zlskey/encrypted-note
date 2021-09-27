@@ -5,9 +5,9 @@ export const Background = styled.div`
     height: 100vh;
     position: absolute;
     left: 0;
+    backdrop-filter: blur(5px);
     top: 0;
     z-index: 9;
-    background-color: transparent;
 `
 
 export const Content = styled.div`

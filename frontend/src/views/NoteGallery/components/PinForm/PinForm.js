@@ -1,29 +1,42 @@
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
 
 import InputField from '@components/InputField/InputField'
 import Button from '@components/Button/Button'
 import Window from '@components/Window/Window'
-import fetchApi from '@helpers/fetchApi'
+
+import { UPDATE_USER_NOTES, UPDATE_SHARED_NOTES } from '@redux/types'
 import { isFormUnfilled, setError } from '@helpers/InputErrorHandler'
+import useApi from '@hooks/useApi'
+
 import { customStyles } from './PinForm.styles'
 
-const PinForm = ({ setNotes, setSharedNotes, setShowPinForm, showPinForm }) => {
+const PinForm = ({ setShowPinForm, showPinForm }) => {
     const [pin, setPin] = useState('')
+    const dispatch = useDispatch()
+
+    const [doFetch, status] = useApi('/user/notes', 'POST')
 
     const getNotes = async e => {
         e.preventDefault()
 
         if (isFormUnfilled({ pin })) return
 
-        const res = await fetchApi('/user/notes', { pin })
-        if (res.ok) {
-            setNotes(res.content.userNotes)
-            setSharedNotes(res.content.sharedNotes)
-            setShowPinForm(false)
-        } else {
-            setPin('')
-            setError('pin', res.error)
-        }
+        const body = { pin }
+
+        doFetch((content, ok) => {
+            if (ok) {
+                dispatch({ type: UPDATE_USER_NOTES, notes: content.userNotes })
+                dispatch({
+                    type: UPDATE_SHARED_NOTES,
+                    notes: content.sharedNotes,
+                })
+                setShowPinForm(false)
+            } else {
+                setPin('')
+                setError('pin', content)
+            }
+        }, body)
     }
 
     return (
@@ -42,7 +55,10 @@ const PinForm = ({ setNotes, setSharedNotes, setShowPinForm, showPinForm }) => {
                     autoFocus={true}
                 />
 
-                <Button content='Decrypt data' />
+                <Button
+                    loading={status === 'fetching'}
+                    content='Decrypt data'
+                />
             </form>
         </Window>
     )

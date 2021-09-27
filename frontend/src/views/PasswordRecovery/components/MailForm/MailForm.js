@@ -1,23 +1,26 @@
 import { useState } from 'react'
 import InputField from '@components/InputField/InputField'
 import Button from '@components/Button/Button'
-import { isFormUnfilled, setError } from '@helpers/InputErrorHandler'
-import fetchApi from '@helpers/fetchApi'
+import { setError } from '@helpers/InputErrorHandler'
+import useApi from '@hooks/useApi'
 import { Info } from './MailForm.styles'
 
 const MailSending = () => {
     const [mail, setMail] = useState('')
     const [InfoMessage, setInfoMessage] = useState('')
 
+    const [doFetch, status] = useApi('/auth/send-recover-mail', 'POST')
+
     const handleMailSending = async e => {
         e.preventDefault()
 
-        if (isFormUnfilled({ mail })) return
-
-        const res = await fetchApi('/auth/send-recover-mail', { mail })
-
-        if (res.ok) setInfoMessage('Mail is sent')
-        else setError('res', res.error)
+        doFetch(
+            (content, ok) => {
+                if (ok) setInfoMessage('Mail is sent')
+                else setError('res', content)
+            },
+            { mail }
+        )
     }
 
     return (
@@ -36,8 +39,12 @@ const MailSending = () => {
                         text='Your mail'
                         content={mail}
                         setContent={setMail}
+                        required={true}
                     />
-                    <Button content='Send mail with link' />
+                    <Button
+                        loading={status === 'fetching'}
+                        content='Send mail with link'
+                    />
                 </>
             )}
         </form>

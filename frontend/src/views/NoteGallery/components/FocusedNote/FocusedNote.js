@@ -4,43 +4,38 @@ import { ThemeContext } from '@contexts/ThemeContext'
 import Window from '@components/Window/Window'
 import TopPanel from './atoms/TopPanel/TopPanel'
 import { NoteContent, TextArea, noteCustomStyles } from './FocusedNote.styles'
+import { useSelector, useDispatch } from 'react-redux'
+import { HIDE_FOCUSED_NOTE } from '@redux/types'
 
-const FocusedNote = ({ note, setNoteToFocus, setNotes, setSharedNotes }) => {
-    const [content, setContent] = useState(note.content || '')
+const FocusedNote = () => {
+    const data = useSelector(state => state.focusedNote.data)
+    const dispatch = useDispatch()
+
+    const [content, setContent] = useState(data.content)
+
     const { theme } = useContext(ThemeContext)
 
     const [isSaved, setIsSaved] = useState(null)
     const [isEditing, setIsEditing] = useState(false)
 
-    useEffect(() => {
-        const handleKeyUp = e => {
-            if (e.code === 'Escape') setNoteToFocus(null)
-        }
-
-        document.addEventListener('keyup', handleKeyUp)
-        return () => document.removeEventListener('keyup', handleKeyUp)
-    }, [isEditing, setNoteToFocus])
+    const hideFocusedNote = () => dispatch({ type: HIDE_FOCUSED_NOTE })
 
     return (
         <Window
-            showWindow={note}
-            setShowWindow={setNoteToFocus}
+            showWindow={data}
+            setShowWindow={hideFocusedNote}
             onClickClosing={isSaved !== false}
             customStyles={noteCustomStyles}
         >
             <TopPanel
-                note={note}
                 isSaved={isSaved}
-                setNoteToFocus={setNoteToFocus}
-                content={content}
-                setNotes={setNotes}
                 setIsSaved={setIsSaved}
-                setSharedNotes={setSharedNotes}
                 isEditing={isEditing}
                 setIsEditing={setIsEditing}
+                content={content}
             />
 
-            {note === 'new' || isEditing ? (
+            {data === 'new' || isEditing ? (
                 <TextArea
                     autoComplete='off'
                     autoFocus='on'
@@ -52,7 +47,7 @@ const FocusedNote = ({ note, setNoteToFocus, setNotes, setSharedNotes }) => {
                     }}
                 />
             ) : (
-                <NoteContent>{note.content}</NoteContent>
+                <NoteContent>{data.content}</NoteContent>
             )}
         </Window>
     )

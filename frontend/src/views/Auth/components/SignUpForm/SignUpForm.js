@@ -1,31 +1,27 @@
-import { useContext, useState, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useContext, useState } from 'react'
+import { useDispatch } from 'react-redux'
 
-import { UserContext } from '@contexts/UserContext'
 import InputField from '@components/InputField/InputField'
 import Button from '@components/Button/Button'
 import SlideAnimation from '@components/SlideAnimation/SlideAnimation'
-import { setError, isFormUnfilled, setValid } from '@helpers/InputErrorHandler'
-import fetchApi from '@helpers/fetchApi'
+import { setError, setValid } from '@helpers/InputErrorHandler'
 import { AlertContext } from '@contexts/AlertContext'
+import useApi from '@hooks/useApi'
+import { UPDATE_USER } from '@redux/types'
 import { Form } from './SignUpForm.styles'
 
 const SignUp = ({ action }) => {
-    const { setUser, user } = useContext(UserContext)
     const { setAlert } = useContext(AlertContext)
-    const history = useHistory()
+    const dispatch = useDispatch()
 
     const [username, setUsername] = useState('')
     const [mail, setMail] = useState('')
     const [password, setPassword] = useState('')
     const [repeatPassword, setRepeatPassword] = useState('')
-
-    useEffect(() => user && history.push('/'), [user, history])
+    const [doFetch, status] = useApi('/auth/signup', 'POST')
 
     const handleSubmit = async e => {
         e.preventDefault()
-
-        if (isFormUnfilled({ password, repeatPassword })) return
 
         if (password !== repeatPassword) {
             setError(
@@ -43,11 +39,12 @@ const SignUp = ({ action }) => {
         }
 
         const user = { username, password, mail }
-        const res = await fetchApi('/auth/signup', user)
-        if (res.ok) {
-            setUser(res.content)
-            setAlert('success', `Welcome ${res.content.username}`)
-        } else setError('res', res.error)
+        doFetch((content, ok) => {
+            if (ok) {
+                dispatch({ type: UPDATE_USER, data: { user: content } })
+                setAlert('success', `Welcome ${content.username}`)
+            } else setError('res', content)
+        }, user)
     }
 
     return (
@@ -77,6 +74,7 @@ const SignUp = ({ action }) => {
                     type='password'
                     content={password}
                     setContent={setPassword}
+                    required={true}
                 />
                 <InputField
                     name='repeatPassword'
@@ -84,8 +82,9 @@ const SignUp = ({ action }) => {
                     type='password'
                     content={repeatPassword}
                     setContent={setRepeatPassword}
+                    required={true}
                 />
-                <Button content='Confirm' />
+                <Button loading={status === 'fetching'} content='Confirm' />
             </SlideAnimation>
         </Form>
     )

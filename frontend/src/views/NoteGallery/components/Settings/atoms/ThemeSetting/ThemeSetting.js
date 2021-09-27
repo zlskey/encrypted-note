@@ -1,4 +1,4 @@
-import fetchApi from '@helpers/fetchApi'
+import useApi from '@hooks/useApi'
 import { AlertContext } from '@contexts/AlertContext'
 import { IconMoonStars, IconBrightness2 } from '@tabler/icons'
 import { ThemeContext } from '@contexts/ThemeContext'
@@ -9,10 +9,14 @@ const ThemeSetting = () => {
     const { setAlert } = useContext(AlertContext)
     const { theme, setIsDarkTheme } = useContext(ThemeContext)
 
+    const [doFetch] = useApi('/settings/theme', 'PATCH')
+
     const handleClick = async () => {
-        const res = await fetchApi('/settings/theme', {}, 'PATCH')
-        if (res.ok) setIsDarkTheme(prev => !prev)
-        else setAlert('error', res.error)
+        setIsDarkTheme(prev => !prev)
+
+        doFetch((content, ok) => {
+            if (!ok) setAlert('error', content)
+        })
     }
 
     return (

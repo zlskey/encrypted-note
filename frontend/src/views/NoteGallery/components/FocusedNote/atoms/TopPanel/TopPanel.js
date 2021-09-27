@@ -7,79 +7,89 @@ import {
     IconShare,
 } from '@tabler/icons'
 import { useContext, useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 
-import { UserContext } from '@contexts/UserContext'
 import { AlertContext } from '@contexts/AlertContext'
 import { ThemeContext } from '@contexts/ThemeContext'
-import fetchApi from '@helpers/fetchApi'
+import useApi from '@hooks/useApi'
+import {
+    CHANGE_USER_NOTE,
+    REMOVE_USER_NOTE,
+    REMOVE_SHARED_NOTE,
+    ADD_USER_NOTE,
+} from '@redux/types'
+import { HIDE_FOCUSED_NOTE } from '@redux/types'
 
 import { TopPanelDiv, UpperRow, Buttons } from './TopPanel.styles'
 import ShareWindow from '../Sharing/Sharing'
 
 const TopPanel = ({
-    note,
-    content,
-    setSharedNotes,
-    setNoteToFocus,
-    setNotes,
     isSaved,
     setIsSaved,
     isEditing,
     setIsEditing,
+    content,
 }) => {
-    const [showShareWindow, setShowShareWindow] = useState(false)
-    const { user } = useContext(UserContext)
+    const user = useSelector(state => state.auth.user)
+    const note = useSelector(state => state.focusedNote.data)
+    const dispatch = useDispatch()
+
     const { setAlert } = useContext(AlertContext)
     const { theme } = useContext(ThemeContext)
+
+    const [showShareWindow, setShowShareWindow] = useState(false)
     const isShared = note.author && note.author !== user.username
+
+    const [doRemoveNoteFetch] = useApi('/note', 'DELETE')
+    const [doSaveNoteFetch] = useApi('/note', 'POST')
+    const [doSaveChangesFetch] = useApi('/note', 'PATCH')
+    const [doUnlinkNoteFetch] = useApi('/note/unlink', 'PATCH')
 
     const date = note.updatedAt
         ? new Date(note.updatedAt).toLocaleDateString()
         : new Date().toLocaleDateString()
 
     const removeNote = async () => {
-        const res = await fetchApi('/note', { id: note._id }, 'DELETE')
+        const body = { id: note._id }
 
-        if (res.ok) {
-            setNotes(notes => notes.filter(el => el._id !== note._id))
-            setNoteToFocus(null)
-        } else setAlert('error', res.error)
+        doRemoveNoteFetch((content, ok) => {
+            if (ok) {
+                dispatch({ type: REMOVE_USER_NOTE, note })
+                dispatch({ type: HIDE_FOCUSED_NOTE })
+            } else setAlert('error', content)
+        }, body)
     }
 
     const saveNote = async () => {
-        const res = await fetchApi('/note', { content }, 'POST')
+        const body = { content }
 
-        if (res.ok) {
-            setNotes(notes => (notes ? [...notes, res.content] : [res.content]))
-            setIsSaved(true)
-        } else setAlert('error', res.error)
+        doSaveNoteFetch((content, ok) => {
+            if (ok) {
+                dispatch({ type: ADD_USER_NOTE, note: content })
+                setIsSaved(true)
+            } else setAlert('error', content)
+        }, body)
     }
 
     const saveChanges = async () => {
-        const res = await fetchApi('/note', { content, id: note._id }, 'PATCH')
-
-        if (res.ok) {
-            setIsSaved(true)
-            setNotes(notes =>
-                notes.map(el => {
-                    if (el._id === note._id) el.content = content
-                    return el
-                })
-            )
-        } else setAlert('error', res.error)
+        const body = { content, id: note._id }
+        doSaveChangesFetch((res, ok) => {
+            if (ok) {
+                dispatch({ type: CHANGE_USER_NOTE, note: { ...note, content } })
+                setIsSaved(true)
+            } else setAlert('error', res)
+        }, body)
     }
 
     const unlinkNote = async () => {
-        const res = await fetchApi(
-            '/note/unlink',
-            { id: note._id, content: note.content },
-            'PATCH'
-        )
+        const body = { id: note._id, content: note.content }
 
-        if (res.ok) {
-            setSharedNotes(notes => notes.filter(el => el._id !== note._id))
-            setNoteToFocus(null)
-        } else setAlert('error', res.error)
+        doUnlinkNoteFetch((content, ok) => {
+            if (ok) {
+                dispatch({ type: REMOVE_SHARED_NOTE, note })
+                dispatch({ type: HIDE_FOCUSED_NOTE })
+            } else setAlert('error', content)
+        }, body)
     }
 
     const handleSaveButtonClick = () => {
@@ -96,7 +106,9 @@ const TopPanel = ({
                     <Icon
                         title='Close'
                         Icon={IconArrowLeft}
-                        handleClick={() => setNoteToFocus(null)}
+                        handleClick={() =>
+                            dispatch({ type: HIDE_FOCUSED_NOTE })
+                        }
                     />
 
                     {note !== 'new' && !isShared && !isEditing && (
@@ -144,8 +156,8 @@ const TopPanel = ({
                 <div className='date'>{date}</div>
             </UpperRow>
 
-            {showShareWindow && note.author === user.username && (
-                <ShareWindow note={note} setNotes={setNotes} />
+            {showShareWindow && note.author === user.username && !isEditing && (
+                <ShareWindow />
             )}
         </TopPanelDiv>
     )

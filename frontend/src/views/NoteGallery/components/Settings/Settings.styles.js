@@ -8,21 +8,8 @@ export const settingsWindowStyles = css`
 `
 
 export const LogoutButton = styled.div`
-    display: block;
     margin: 0 auto;
     text-align: center;
-
-    a {
-        font-size: 20px;
-        outline: none;
-        border: none;
-        display: inline-block;
-        margin: 0 auto;
-        padding: 0.5rem 3rem;
-        color: #fafafa;
-        text-decoration: none;
-        background-color: ${({ color }) => color};
-    }
 `
 
 export const Header = styled.h1`

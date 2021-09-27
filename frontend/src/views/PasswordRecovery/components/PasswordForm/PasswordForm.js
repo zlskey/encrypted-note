@@ -1,19 +1,22 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import InputField from '@components/InputField/InputField'
 import Button from '@components/Button/Button'
-import { isFormUnfilled, setError, setValid } from '@helpers/InputErrorHandler'
-import fetchApi from '@helpers/fetchApi'
+import { setError, setValid } from '@helpers/InputErrorHandler'
+import useApi from '@hooks/useApi'
 import { useHistory } from 'react-router'
+import { AlertContext } from '@contexts/AlertContext'
 
 const PasswordForm = ({ id }) => {
     const [password, setPassword] = useState('')
     const [secondPassword, setSecondPassword] = useState('')
     const history = useHistory()
 
+    const { setAlert } = useContext(AlertContext)
+
+    const [doFetch, status] = useApi('/auth/password-recover', 'POST')
+
     const handlePasswordChange = e => {
         e.preventDefault()
-
-        if (isFormUnfilled({ password, secondPassword })) return
 
         if (password !== secondPassword) {
             setError(
@@ -30,13 +33,14 @@ const PasswordForm = ({ id }) => {
             setValid('secondPassword')
         }
 
-        fetchApi('/auth/password-recover', {
-            password,
-            id,
-        }).then(res => {
-            if (res.ok) history.push('/auth')
-            else setError('res', res.error)
-        })
+        const body = { password, id }
+
+        doFetch((content, ok) => {
+            if (ok) {
+                history.push('/auth')
+                setAlert('success', 'Password is changed')
+            } else setError('res', content)
+        }, body)
     }
 
     return (
@@ -47,6 +51,7 @@ const PasswordForm = ({ id }) => {
                 type='password'
                 content={password}
                 setContent={setPassword}
+                required={true}
             />
             <InputField
                 name='secondPassword'
@@ -54,9 +59,10 @@ const PasswordForm = ({ id }) => {
                 type='password'
                 content={secondPassword}
                 setContent={setSecondPassword}
+                required={true}
             />
 
-            <Button content='Change password' />
+            <Button loading={status === 'fetching'} content='Change password' />
         </form>
     )
 }

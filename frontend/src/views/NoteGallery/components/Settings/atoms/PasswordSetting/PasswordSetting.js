@@ -1,6 +1,6 @@
-import fetchApi from '@helpers/fetchApi'
+import useApi from '@hooks/useApi'
 import { useContext, useState } from 'react'
-import { UserContext } from '@contexts/UserContext'
+
 import { AlertContext } from '@contexts/AlertContext'
 import InputField from '@components/InputField/InputField'
 import { isFormUnfilled } from '@helpers/InputErrorHandler'
@@ -10,24 +10,22 @@ const PasswordSetting = ({ setShowPasswordSetting }) => {
     const [newPassword, setNewPassword] = useState('')
 
     const { setAlert } = useContext(AlertContext)
-    const { setUser } = useContext(UserContext)
+
+    const [doFetch] = useApi('/settings/change-password', 'PATCH')
 
     const passwordHandler = e => {
+        const body = { currentPassword, newPassword }
         e.preventDefault()
 
-        if (isFormUnfilled({ currentPassword, newPassword })) return
+        if (isFormUnfilled(body)) return
 
-        fetchApi(
-            '/settings/change-password',
-            { currentPassword, newPassword },
-            'PATCH'
-        ).then(res => {
-            if (res.ok) {
+        setAlert('loading')
+        doFetch((content, ok) => {
+            if (ok) {
                 setAlert('success', 'Password changed')
-                setUser(res.content)
                 setShowPasswordSetting(false)
-            } else setAlert('error', res.error)
-        })
+            } else setAlert('error', content)
+        }, body)
     }
 
     return (

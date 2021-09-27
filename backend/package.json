@@ -29,10 +29,6 @@
         "path": "^0.12.7",
         "validator": "^13.6.0"
     },
-    "devDependencies": {
-        "concurrently": "^6.2.1",
-        "nodemon": "^2.0.12"
-    },
     "bugs": {
         "url": "https://github.com/zlskey/encrypted-note/issues"
     },

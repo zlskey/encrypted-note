@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 export const Alert = styled.div`
+    z-index: 100;
     position: absolute;
     bottom: 2rem;
     left: 50%;
@@ -16,5 +17,4 @@ export const Alert = styled.div`
     gap: 0.4rem;
     padding: 0.7rem 3rem;
     border-radius: 5px;
-    z-index: 10;
 `

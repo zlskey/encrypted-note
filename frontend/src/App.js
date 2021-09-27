@@ -1,10 +1,9 @@
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import NoteGallery from '@views/NoteGallery/NoteGallery'
 import AuthPage from '@views/Auth/Auth'
 import PasswordRecovery from '@views/PasswordRecovery/PasswordRecovery'
-import ThemeContextProvider from './contexts/ThemeContext'
+import ThemeContextProvider, { ThemeContext } from './contexts/ThemeContext'
 import AlertContextProvider from './contexts/AlertContext'
-import UserContextProvider, { UserContext } from './contexts/UserContext'
 import {
     BrowserRouter as Router,
     Switch,
@@ -12,34 +11,63 @@ import {
     Redirect,
 } from 'react-router-dom'
 
+import SiteLoader from './components/SiteLoader/SiteLoader'
+import { useSelector, useDispatch } from 'react-redux'
+import useApi from '@hooks/useApi'
+import { UPDATE_USER } from '@redux/types'
+
 const App = () => {
     return (
         <ThemeContextProvider>
             <AlertContextProvider>
-                <UserContextProvider>
-                    <AppRouter />
-                </UserContextProvider>
+                <AppRouter />
             </AlertContextProvider>
         </ThemeContextProvider>
     )
 }
 
 const AppRouter = () => {
-    const { user } = useContext(UserContext)
+    const { theme } = useContext(ThemeContext)
+    const user = useSelector(state => state.auth.user)
+
+    const dispatch = useDispatch()
+
+    const [doFetch, status] = useApi('/auth/verify')
+
+    useEffect(() => {
+        doFetch(content => {
+            dispatch({
+                type: UPDATE_USER,
+                data: { user: content === false ? null : content },
+            })
+        })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return (
-        <Router>
-            <Switch>
-                <Route path='/auth' component={AuthPage} />
-                <Route path='/password-recovery' component={PasswordRecovery} />
+        <>
+            {(status === 'fetching' || status === 'error') && (
+                <SiteLoader theme={theme} />
+            )}
 
-                {user ? (
-                    <Route path='/' component={NoteGallery} />
-                ) : (
-                    <Redirect to='/auth' />
-                )}
-            </Switch>
-        </Router>
+            {status === 'finished' && (
+                <Router>
+                    <Switch>
+                        <Route path='/auth' component={AuthPage} />
+                        <Route
+                            path='/password-recovery'
+                            component={PasswordRecovery}
+                        />
+
+                        {user ? (
+                            <Route path='/' component={NoteGallery} />
+                        ) : (
+                            <Redirect to='/auth' />
+                        )}
+                    </Switch>
+                </Router>
+            )}
+        </>
     )
 }
 

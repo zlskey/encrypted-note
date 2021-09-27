@@ -2,7 +2,6 @@ const Note = require('../schemas/NoteSchema')
 const User = require('../schemas/UserSchema')
 const Key = require('../schemas/KeySchema')
 const pgpHandler = require('../middlewares/pgpHandler')
-const errorHandler = require('../middlewares/errorHandler')
 const checkRequirements = require('../middlewares/checkRequirements')
 
 module.exports.toggleTheme = async (req, res, next) => {
@@ -13,7 +12,7 @@ module.exports.toggleTheme = async (req, res, next) => {
         await User.findOneAndUpdate({ username: req.user.username }, { theme })
         res.status(201).json(true)
     } catch (err) {
-        errorHandler(err, next)
+        next(err)
     }
 }
 
@@ -36,7 +35,7 @@ module.exports.startEncryption = async (req, res, next) => {
 
         res.status(201).json(req.user)
     } catch (err) {
-        errorHandler(err, next)
+        next(err)
     }
 }
 
@@ -63,7 +62,7 @@ module.exports.changePin = async (req, res, next) => {
 
         res.status(200).json(true)
     } catch (err) {
-        errorHandler(err, next)
+        next(err)
     }
 }
 
@@ -82,6 +81,6 @@ module.exports.changePassword = async (req, res, next) => {
 
         res.status(200).json(user)
     } catch (err) {
-        errorHandler(err, next)
+        next(err)
     }
 }

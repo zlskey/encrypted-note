@@ -1,7 +1,6 @@
 const Note = require('../schemas/NoteSchema')
 const User = require('../schemas/UserSchema')
 const pgpHandler = require('../middlewares/pgpHandler')
-const errorHandler = require('../middlewares/errorHandler')
 const checkRequirements = require('../middlewares/checkRequirements')
 
 module.exports.create = async (req, res, next) => {
@@ -20,7 +19,7 @@ module.exports.create = async (req, res, next) => {
 
         res.status(201).json(note)
     } catch (err) {
-        errorHandler(err, next)
+        next(err)
     }
 }
 
@@ -42,7 +41,7 @@ module.exports.edit = async (req, res, next) => {
 
         res.status(201).json(true)
     } catch (err) {
-        errorHandler(err, next)
+        next(err)
     }
 }
 
@@ -56,7 +55,7 @@ module.exports.remove = async (req, res, next) => {
 
         res.status(201).json(true)
     } catch (err) {
-        errorHandler(err, next)
+        next(err)
     }
 }
 
@@ -93,7 +92,7 @@ module.exports.share = async (req, res, next) => {
 
         res.status(201).json([...recipients, recipient])
     } catch (err) {
-        errorHandler(err, next)
+        next(err)
     }
 }
 
@@ -129,6 +128,6 @@ module.exports.unlink = async (req, res, next) => {
         const output = isAuthor ? recipients : true
         res.status(201).json(output)
     } catch (err) {
-        errorHandler(err, next)
+        next(err)
     }
 }

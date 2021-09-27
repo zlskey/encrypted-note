@@ -3,6 +3,7 @@ import React, { useContext } from 'react'
 import { IconInfoCircle, IconAlertCircle, IconCircleCheck } from '@tabler/icons'
 
 import CloseOnOuterClick from '@components/CloseOnOuterClick/CloseOnOuterClick'
+import Loader from '@components/Loader/Loader'
 import { ThemeContext } from '@contexts/ThemeContext'
 import { Alert as AlertDiv } from './Alert.styles'
 
@@ -25,6 +26,7 @@ const Alert = ({ type, content, color, showAlert, setShowAlert }) => {
                                 {type === 'error' && <IconAlertCircle />}
                                 {type === 'info' && <IconInfoCircle />}
                                 {type === 'success' && <IconCircleCheck />}
+                                {type === 'loading' && <Loader />}
 
                                 {content && content.replace('Error: ', '')}
                             </AlertDiv>

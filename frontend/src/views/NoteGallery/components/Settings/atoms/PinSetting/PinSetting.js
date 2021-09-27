@@ -1,29 +1,35 @@
-import fetchApi from '@helpers/fetchApi'
 import { useContext, useState } from 'react'
-import { UserContext } from '@contexts/UserContext'
+import { useDispatch, useSelector } from 'react-redux'
+
 import { AlertContext } from '@contexts/AlertContext'
 import InputField from '@components/InputField/InputField'
 import { isFormUnfilled } from '@helpers/InputErrorHandler'
+import useApi from '@hooks/useApi'
+import { UPDATE_USER } from '@redux/types'
 
 const PinSetting = ({ setShowPinSetting }) => {
     const [currentPin, setCurrentPin] = useState('')
     const [newPin, setNewPin] = useState('')
     const { setAlert } = useContext(AlertContext)
-    const { user, setUser } = useContext(UserContext)
+    const dispatch = useDispatch()
+    const user = useSelector(state => state.auth.user)
+
+    const [doChangePinFetch] = useApi('/settings/change-pin', 'PATCH')
+    const [doSetPinFetch] = useApi('/settings/start-encryption', 'PATCH')
 
     const changePin = e => {
         e.preventDefault()
+        const body = { currentPin, newPin }
 
-        if (isFormUnfilled({ currentPin, newPin })) return
+        if (isFormUnfilled(body)) return
 
-        fetchApi('/settings/change-pin', { currentPin, newPin }, 'PATCH').then(
-            res => {
-                if (res.ok) {
-                    setAlert('success', 'Pin changed')
-                    setShowPinSetting(false)
-                } else setAlert('error', res.error)
-            }
-        )
+        setAlert('loading')
+        doChangePinFetch((content, ok) => {
+            if (ok) {
+                setAlert('success', 'Pin changed')
+                setShowPinSetting(false)
+            } else setAlert('error', content)
+        }, body)
     }
 
     const setPin = e => {
@@ -31,14 +37,16 @@ const PinSetting = ({ setShowPinSetting }) => {
 
         if (isFormUnfilled({ newPin })) return
 
-        fetchApi('/settings/start-encryption', { pin: newPin }, 'PATCH').then(
-            res => {
-                if (res.ok) {
-                    setUser(res.content)
+        setAlert('loading')
+        doSetPinFetch(
+            (content, ok) => {
+                if (ok) {
+                    dispatch({ type: UPDATE_USER, data: { user: content } })
                     setAlert('success', "Now you're safe")
                     setShowPinSetting(false)
-                } else setAlert('error', res.error)
-            }
+                } else setAlert('error', content)
+            },
+            { pin: newPin }
         )
     }
 

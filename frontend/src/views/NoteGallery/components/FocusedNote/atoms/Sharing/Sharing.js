@@ -1,67 +1,82 @@
 import { useContext, useState } from 'react'
 import { IconUnlink } from '@tabler/icons'
 
-import fetchApi from '@helpers/fetchApi'
 import { ThemeContext } from '@contexts/ThemeContext'
 import { AlertContext } from '@contexts/AlertContext'
 import { setError, setValid } from '@helpers/InputErrorHandler'
 
 import { SharingDiv, User, Input } from './Sharing.styles'
+import useApi from '@hooks/useApi'
 
-const Sharing = ({ note, setNotes }) => {
+import { CHANGE_USER_NOTE, UPDATE_FOCUSED_NOTE } from '@redux/types'
+import { useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
+
+const Sharing = () => {
+    const note = useSelector(state => state.focusedNote.data)
+    const dispatch = useDispatch()
+
     const { theme } = useContext(ThemeContext)
     const { setAlert } = useContext(AlertContext)
-    const [newRecipient, setNewRecipient] = useState('')
-    const [recipients, setRecipients] = useState(note.recipients)
 
-    const { _id: id, content } = note
+    const [doShareFetch] = useApi('/note/share', 'PATCH')
+    const [doUnlinkFetch] = useApi('/note/unlink', 'PATCH')
+
+    const [newRecipient, setNewRecipient] = useState('')
 
     const shareNote = async e => {
         e.preventDefault()
 
-        const res = await fetchApi(
-            '/note/share',
-            { id, content, recipient: newRecipient },
-            'PATCH'
-        )
+        const body = {
+            id: note._id,
+            content: note.content,
+            recipient: newRecipient,
+        }
 
-        if (res.ok) {
-            setRecipients(res.content)
-            setNotes(notes => {
-                return notes.map(el => {
-                    if (el._id === id) return note
-                    else return el
+        setAlert('loading')
+        doShareFetch((content, ok) => {
+            if (ok) {
+                dispatch({
+                    type: CHANGE_USER_NOTE,
+                    note: { ...note, recipients: content },
                 })
-            })
-            setValid('res')
-        } else setAlert('error', res.error)
-        setNewRecipient('')
+                dispatch({
+                    type: UPDATE_FOCUSED_NOTE,
+                    data: { recipients: content },
+                })
+                setValid('res')
+                setAlert('hide')
+            } else setAlert('error', content)
+
+            setNewRecipient('')
+        }, body)
     }
 
     const unlinkNote = async recipientToUnlink => {
-        const res = await fetchApi(
-            '/note/unlink',
-            { recipientToUnlink, id, content },
-            'PATCH'
-        )
+        const body = { recipientToUnlink, id: note._id, content: note.content }
 
-        if (res.ok) {
-            setRecipients(res.content)
-            setNotes(notes => {
-                return notes.map(note => {
-                    if (note._id === id) return note
-                    else return note
+        setAlert('loading')
+        doUnlinkFetch((content, ok) => {
+            if (ok) {
+                dispatch({
+                    type: CHANGE_USER_NOTE,
+                    note: { ...note, recipients: content },
                 })
-            })
-            setValid('res')
-        } else setError('res', res.error)
+                dispatch({
+                    type: UPDATE_FOCUSED_NOTE,
+                    data: { recipients: content },
+                })
+                setValid('res')
+                setAlert('hide')
+            } else setError('res', content)
+        }, body)
     }
 
     return (
         <SharingDiv theme={theme}>
             <p>Users with access: </p>
 
-            {recipients.map(user => (
+            {note.recipients.map(user => (
                 <User
                     key={user}
                     className='clickable'

@@ -15,17 +15,21 @@ const AlertContextProvider = ({ children }) => {
                 setColor('#f44336')
                 break
             case 'info':
+            case 'loading':
                 setColor('#2196f3')
                 break
             case 'success':
                 setColor('#4caf50')
+                break
+            case 'hide':
+                setShowAlert(false)
                 break
             default:
                 setColor(current => current)
         }
     }, [type])
 
-    const setAlert = (type, content) => {
+    const setAlert = (type, content = '') => {
         setShowAlert(true)
         setContent(content)
         setType(type)

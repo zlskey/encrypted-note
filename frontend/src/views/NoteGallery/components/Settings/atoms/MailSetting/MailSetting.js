@@ -1,27 +1,33 @@
-import fetchApi from '@helpers/fetchApi'
 import { useContext, useState } from 'react'
-import { UserContext } from '@contexts/UserContext'
+import { useDispatch } from 'react-redux'
+
+import useApi from '@hooks/useApi'
 import { AlertContext } from '@contexts/AlertContext'
 import InputField from '@components/InputField/InputField'
 import { isFormUnfilled } from '@helpers/InputErrorHandler'
+import { UPDATE_USER } from '@redux/types'
 
 const MailSetting = ({ setShowMailSetting }) => {
     const [mail, setMail] = useState('')
     const { setAlert } = useContext(AlertContext)
-    const { setUser } = useContext(UserContext)
+    const dispatch = useDispatch()
+
+    const [doFetch] = useApi('/user/mail', 'POST')
 
     const mailHandler = e => {
         e.preventDefault()
+        const body = { mail }
 
-        if (isFormUnfilled({ mail })) return
+        if (isFormUnfilled(body)) return
 
-        fetchApi('/user/mail', { mail }).then(res => {
-            if (res.ok) {
+        setAlert('loading')
+        doFetch((content, ok) => {
+            if (ok) {
+                dispatch({ type: UPDATE_USER, data: { user: content } })
                 setAlert('success', 'Mail changed')
-                setUser(res.content)
                 setShowMailSetting(false)
-            } else setAlert('error', res.error)
-        })
+            } else setAlert('error', content)
+        }, body)
     }
 
     return (
