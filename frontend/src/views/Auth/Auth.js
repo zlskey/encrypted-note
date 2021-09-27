@@ -10,18 +10,6 @@ const AuthWindow = () => {
     const { theme } = useContext(ThemeContext)
     const [action, setAction] = useState('login')
 
-    // useEffect(() => {
-    //     if (!user) return
-
-    //     doFetch((content, ok) => {
-    //         if (ok) {
-    //             dispatch({ type: UPDATE_USER, data: { user: null } })
-    //             setAlert('success', 'Come back soon 😊')
-    //         }
-    //     })
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [setAlert, dispatch, doFetch])
-
     return (
         <>
             <AuthPageDiv theme={theme}>

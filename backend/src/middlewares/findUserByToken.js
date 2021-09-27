@@ -6,7 +6,6 @@ module.exports = async req => {
 
     if (token) {
         const id = jwt.verify(token, process.env.JWT_SECRET).id
-        // const id = '614b82d8a7028334b8ca857a'
 
         try {
             const data = await User.findById(id)
