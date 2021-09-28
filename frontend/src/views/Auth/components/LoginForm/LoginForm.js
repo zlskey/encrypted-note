@@ -1,17 +1,17 @@
 import { useContext, useState, useEffect } from 'react'
 import { useHistory, Link } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
 
+import SlideAnimation from '@components/SlideAnimation/SlideAnimation'
 import InputField from '@components/InputField/InputField'
 import RadioField from '@components/RadioField/RadioField'
 import Button from '@components/Button/Button'
-import SlideAnimation from '@components/SlideAnimation/SlideAnimation'
-import { setError, setValid } from '@helpers/InputErrorHandler'
 
-import { AlertContext } from '@contexts/AlertContext'
+import { setError, setValid } from '@helpers/InputErrorHandler'
 import { Form, LoginBar, Separator } from './LoginForm.styles'
-import { useSelector, useDispatch } from 'react-redux'
-import useApi from '@hooks/useApi'
+import { AlertContext } from '@contexts/AlertContext'
 import { UPDATE_USER } from '@redux/types'
+import useApi from '@hooks/useApi'
 
 const Login = ({ action }) => {
     const { setAlert } = useContext(AlertContext)
@@ -57,6 +57,7 @@ const Login = ({ action }) => {
                     setContent={setLogin}
                     required={true}
                 />
+
                 <InputField
                     name='password'
                     text='Password'
