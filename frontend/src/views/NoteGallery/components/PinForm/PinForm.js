@@ -6,7 +6,7 @@ import Button from '@components/Button/Button'
 import Window from '@components/Window/Window'
 
 import { UPDATE_USER_NOTES, UPDATE_SHARED_NOTES } from '@redux/types'
-import { isFormUnfilled, setError } from '@helpers/InputErrorHandler'
+import { setError } from '@helpers/InputErrorHandler'
 import useApi from '@hooks/useApi'
 
 import { customStyles } from './PinForm.styles'
@@ -20,23 +20,25 @@ const PinForm = ({ setShowPinForm, showPinForm }) => {
     const getNotes = async e => {
         e.preventDefault()
 
-        if (isFormUnfilled({ pin })) return
-
-        const body = { pin }
-
-        doFetch((content, ok) => {
-            if (ok) {
-                dispatch({ type: UPDATE_USER_NOTES, notes: content.userNotes })
-                dispatch({
-                    type: UPDATE_SHARED_NOTES,
-                    notes: content.sharedNotes,
-                })
-                setShowPinForm(false)
-            } else {
-                setPin('')
-                setError('pin', content)
-            }
-        }, body)
+        doFetch(
+            (content, ok) => {
+                if (ok) {
+                    dispatch({
+                        type: UPDATE_USER_NOTES,
+                        notes: content.userNotes,
+                    })
+                    dispatch({
+                        type: UPDATE_SHARED_NOTES,
+                        notes: content.sharedNotes,
+                    })
+                    setShowPinForm(false)
+                } else {
+                    setPin('')
+                    setError('pin', content)
+                }
+            },
+            { pin }
+        )
     }
 
     return (

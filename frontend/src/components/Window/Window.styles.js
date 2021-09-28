@@ -14,9 +14,9 @@ export const Content = styled.div`
     z-index: 10;
     border-radius: 10px;
     margin-inline: auto;
-    background-color: ${({ theme }) => theme.uiColor};
-    box-shadow: ${({ theme }) => theme.type === 'light' && theme.shadow};
-    color: ${({ theme }) => theme.fontColor};
+    background-color: var(--ui);
+    box-shadow: var(--shadow);
+    color: var(--font);
     transition: 0.1s;
     overflow: hidden;
     position: absolute;

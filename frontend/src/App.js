@@ -1,8 +1,7 @@
-import { useContext, useEffect } from 'react'
+import { useEffect } from 'react'
 import NoteGallery from '@views/NoteGallery/NoteGallery'
 import AuthPage from '@views/Auth/Auth'
 import PasswordRecovery from '@views/PasswordRecovery/PasswordRecovery'
-import ThemeContextProvider, { ThemeContext } from './contexts/ThemeContext'
 import AlertContextProvider from './contexts/AlertContext'
 import {
     BrowserRouter as Router,
@@ -18,17 +17,14 @@ import { UPDATE_USER } from '@redux/types'
 
 const App = () => {
     return (
-        <ThemeContextProvider>
-            <AlertContextProvider>
-                <AppRouter />
-            </AlertContextProvider>
-        </ThemeContextProvider>
+        <AlertContextProvider>
+            <AppRouter />
+        </AlertContextProvider>
     )
 }
 
 const AppRouter = () => {
-    const { theme } = useContext(ThemeContext)
-    const user = useSelector(state => state.auth.user)
+    const user = useSelector(state => state.user)
 
     const dispatch = useDispatch()
 
@@ -36,19 +32,21 @@ const AppRouter = () => {
 
     useEffect(() => {
         doFetch(content => {
-            dispatch({
-                type: UPDATE_USER,
-                data: { user: content === false ? null : content },
-            })
+            document.documentElement.setAttribute('data-theme', content.theme)
+
+            if (content) {
+                dispatch({
+                    type: UPDATE_USER,
+                    data: content,
+                })
+            }
         })
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (
         <>
-            {(status === 'fetching' || status === 'error') && (
-                <SiteLoader theme={theme} />
-            )}
+            {(status === 'fetching' || status === 'error') && <SiteLoader />}
 
             {status === 'finished' && (
                 <Router>

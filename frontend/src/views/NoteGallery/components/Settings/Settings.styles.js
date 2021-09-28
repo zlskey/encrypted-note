@@ -18,8 +18,9 @@ export const Header = styled.h1`
 `
 
 export const SettingsButton = styled.button`
-    background-color: ${({ theme }) => theme.uiColor};
-    box-shadow: ${({ theme }) => theme.type === 'light' && theme.shadow};
+    background-color: var(--ui);
+    color: var(--font);
+    box-shadow: var(--shadow);
     border: none;
     outline: none;
     border-radius: 50%;

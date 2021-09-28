@@ -3,7 +3,6 @@ import { IconPlus } from '@tabler/icons'
 
 import { NoteGalleryDiv, Notes, SectionHeader } from './NoteGallery.styles'
 
-import { ThemeContext } from '@contexts/ThemeContext'
 import { AlertContext } from '@contexts/AlertContext'
 
 import Note from './components/Note/Note'
@@ -19,13 +18,12 @@ import { useSelector, useDispatch } from 'react-redux'
 const loadingRange = new Array(8).fill('loading')
 
 const NoteGallery = () => {
-    const user = useSelector(state => state.auth.user)
+    const user = useSelector(state => state.user)
     const userNotes = useSelector(state => state.notes.user)
     const sharedNotes = useSelector(state => state.notes.shared)
     const noteToFocus = useSelector(state => state.focusedNote.data)
     const dispatch = useDispatch()
 
-    const { theme } = useContext(ThemeContext)
     const { setAlert } = useContext(AlertContext)
 
     const [showPinForm, setShowPinForm] = useState(user.encryption)
@@ -56,8 +54,8 @@ const NoteGallery = () => {
 
             {noteToFocus && <FocusedNote />}
 
-            <NoteGalleryDiv theme={theme}>
-                <SectionHeader theme={theme}>
+            <NoteGalleryDiv>
+                <SectionHeader>
                     <p>Your notes</p>
 
                     <IconPlus
@@ -87,7 +85,7 @@ const NoteGallery = () => {
 
                 {sharedNotes.length !== 0 && (
                     <>
-                        <SectionHeader theme={theme}>
+                        <SectionHeader>
                             <p>Shared notes</p>
                         </SectionHeader>
                         <Notes>

@@ -41,7 +41,7 @@ const SignUp = ({ action }) => {
         const user = { username, password, mail }
         doFetch((content, ok) => {
             if (ok) {
-                dispatch({ type: UPDATE_USER, data: { user: content } })
+                dispatch({ type: UPDATE_USER, data: content })
                 setAlert('success', `Welcome ${content.username}`)
             } else setError('res', content)
         }, user)

@@ -4,7 +4,7 @@ import { getColumns } from '@helpers/responsiveFacilities'
 export const NoteGalleryDiv = styled.div`
     padding: 0 10px;
     transition: 0.2s;
-    color: ${({ theme }) => theme.fontColor};
+    color: var(--font);
 `
 
 export const Notes = styled.div`
@@ -21,7 +21,7 @@ export const SectionHeader = styled.div`
     width: 100%;
     margin-top: 20px;
     text-align: left;
-    border-bottom: 2px solid ${({ theme }) => theme.fontColor};
+    border-bottom: 2px solid var(--font);
     opacity: 0.7;
     display: flex;
     flex-direction: row;

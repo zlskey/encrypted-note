@@ -1,19 +1,16 @@
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 
 import { AuthPageDiv, ActionSwitch, SwitchOption } from './Auth.styles'
 import LoginForm from './components/LoginForm/LoginForm'
 import SignUpForm from './components/SignUpForm/SignUpForm'
 
-import { ThemeContext } from '@contexts/ThemeContext'
-
 const AuthWindow = () => {
-    const { theme } = useContext(ThemeContext)
     const [action, setAction] = useState('login')
 
     return (
         <>
-            <AuthPageDiv theme={theme}>
-                <ActionSwitch theme={theme}>
+            <AuthPageDiv>
+                <ActionSwitch>
                     <SwitchOption
                         onClick={() => setAction('login')}
                         className={`clickable ${

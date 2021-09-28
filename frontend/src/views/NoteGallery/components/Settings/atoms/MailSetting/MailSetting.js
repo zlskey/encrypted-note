@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import useApi from '@hooks/useApi'
 import { AlertContext } from '@contexts/AlertContext'
 import InputField from '@components/InputField/InputField'
-import { isFormUnfilled } from '@helpers/InputErrorHandler'
+import {} from '@helpers/InputErrorHandler'
 import { UPDATE_USER } from '@redux/types'
 
 const MailSetting = ({ setShowMailSetting }) => {
@@ -16,18 +16,18 @@ const MailSetting = ({ setShowMailSetting }) => {
 
     const mailHandler = e => {
         e.preventDefault()
-        const body = { mail }
-
-        if (isFormUnfilled(body)) return
 
         setAlert('loading')
-        doFetch((content, ok) => {
-            if (ok) {
-                dispatch({ type: UPDATE_USER, data: { user: content } })
-                setAlert('success', 'Mail changed')
-                setShowMailSetting(false)
-            } else setAlert('error', content)
-        }, body)
+        doFetch(
+            (content, ok) => {
+                if (ok) {
+                    dispatch({ type: UPDATE_USER, data: content })
+                    setAlert('success', 'Mail changed')
+                    setShowMailSetting(false)
+                } else setAlert('error', content)
+            },
+            { mail }
+        )
     }
 
     return (

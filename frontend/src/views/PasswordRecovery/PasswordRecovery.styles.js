@@ -16,8 +16,8 @@ export const Window = styled.div`
     padding: 20px 40px;
     text-align: center;
     border-radius: 5px;
-    background-color: ${props => props.theme.uiColor};
-    color: ${props => props.theme.fontColor};
+    background-color: var(--ui);
+    color: var(--font);
     position: relative;
 `
 

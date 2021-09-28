@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { AlertContext } from '@contexts/AlertContext'
 import InputField from '@components/InputField/InputField'
-import { isFormUnfilled } from '@helpers/InputErrorHandler'
+import {} from '@helpers/InputErrorHandler'
 import useApi from '@hooks/useApi'
 import { UPDATE_USER } from '@redux/types'
 
@@ -12,7 +12,7 @@ const PinSetting = ({ setShowPinSetting }) => {
     const [newPin, setNewPin] = useState('')
     const { setAlert } = useContext(AlertContext)
     const dispatch = useDispatch()
-    const user = useSelector(state => state.auth.user)
+    const user = useSelector(state => state.user)
 
     const [doChangePinFetch] = useApi('/settings/change-pin', 'PATCH')
     const [doSetPinFetch] = useApi('/settings/start-encryption', 'PATCH')
@@ -20,8 +20,6 @@ const PinSetting = ({ setShowPinSetting }) => {
     const changePin = e => {
         e.preventDefault()
         const body = { currentPin, newPin }
-
-        if (isFormUnfilled(body)) return
 
         setAlert('loading')
         doChangePinFetch((content, ok) => {
@@ -35,13 +33,11 @@ const PinSetting = ({ setShowPinSetting }) => {
     const setPin = e => {
         e.preventDefault()
 
-        if (isFormUnfilled({ newPin })) return
-
         setAlert('loading')
         doSetPinFetch(
             (content, ok) => {
                 if (ok) {
-                    dispatch({ type: UPDATE_USER, data: { user: content } })
+                    dispatch({ type: UPDATE_USER, data: content })
                     setAlert('success', "Now you're safe")
                     setShowPinSetting(false)
                 } else setAlert('error', content)

@@ -1,6 +1,5 @@
-import { useContext, useEffect, useState } from 'react'
+import { useState } from 'react'
 
-import { ThemeContext } from '@contexts/ThemeContext'
 import Window from '@components/Window/Window'
 import TopPanel from './atoms/TopPanel/TopPanel'
 import { NoteContent, TextArea, noteCustomStyles } from './FocusedNote.styles'
@@ -12,8 +11,6 @@ const FocusedNote = () => {
     const dispatch = useDispatch()
 
     const [content, setContent] = useState(data.content)
-
-    const { theme } = useContext(ThemeContext)
 
     const [isSaved, setIsSaved] = useState(null)
     const [isEditing, setIsEditing] = useState(false)
@@ -40,7 +37,6 @@ const FocusedNote = () => {
                     autoComplete='off'
                     autoFocus='on'
                     value={content}
-                    theme={theme}
                     onChange={e => {
                         setContent(e.target.value)
                         setIsSaved(false)

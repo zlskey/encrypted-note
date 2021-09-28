@@ -1,6 +1,5 @@
-import { useContext } from 'react'
-import { ThemeContext } from '@contexts/ThemeContext'
 import { IconCheck } from '@tabler/icons'
+
 import {
     InputField,
     Input,
@@ -10,8 +9,6 @@ import {
 } from './RadioField.styles'
 
 const RadioField = ({ name, text, isChecked, setIsChecked }) => {
-    const { theme } = useContext(ThemeContext)
-
     return (
         <InputField className='clickable'>
             <Input
@@ -22,11 +19,7 @@ const RadioField = ({ name, text, isChecked, setIsChecked }) => {
             />
 
             <Label htmlFor={name}>
-                <Checkbox theme={theme}>
-                    {isChecked && (
-                        <IconCheck size='100%' color={theme.fontColor} />
-                    )}
-                </Checkbox>
+                <Checkbox>{isChecked && <IconCheck size='100%' />}</Checkbox>
 
                 <Content>{text}</Content>
             </Label>

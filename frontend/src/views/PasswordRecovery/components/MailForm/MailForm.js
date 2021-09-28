@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import InputField from '@components/InputField/InputField'
 import Button from '@components/Button/Button'
-import { setError } from '@helpers/InputErrorHandler'
+import { setError, setValid } from '@helpers/InputErrorHandler'
 import useApi from '@hooks/useApi'
 import { Info } from './MailForm.styles'
 
@@ -14,6 +14,7 @@ const MailSending = () => {
     const handleMailSending = async e => {
         e.preventDefault()
 
+        setValid('res')
         doFetch(
             (content, ok) => {
                 if (ok) setInfoMessage('Mail is sent')

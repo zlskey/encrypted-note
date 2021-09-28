@@ -16,9 +16,9 @@ export const AuthPageDiv = styled.div`
     left: 50%;
     width: MIN(400px, 95vw);
 
-    color: ${({ theme }) => theme.fontColor};
-    background-color: ${({ theme }) => theme.uiColor};
-    box-shadow: ${({ theme }) => theme.shadow};
+    color: var(--font);
+    background-color: var(--ui);
+    box-shadow: var(--shadow);O
 `
 
 export const ActionSwitch = styled.div`
@@ -29,7 +29,7 @@ export const ActionSwitch = styled.div`
     flex-direction: row;
     align-items: stretch;
     justify-content: space-around;
-    box-shadow: ${({ theme }) => theme.shadow};
+    box-shadow: var(--shadow);O
     margin-top: 10px;
     overflow: hidden;
 `

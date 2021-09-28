@@ -10,7 +10,7 @@ import { useContext, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { AlertContext } from '@contexts/AlertContext'
-import { ThemeContext } from '@contexts/ThemeContext'
+
 import useApi from '@hooks/useApi'
 import {
     CHANGE_USER_NOTE,
@@ -30,12 +30,11 @@ const TopPanel = ({
     setIsEditing,
     content,
 }) => {
-    const user = useSelector(state => state.auth.user)
+    const user = useSelector(state => state.user)
     const note = useSelector(state => state.focusedNote.data)
     const dispatch = useDispatch()
 
     const { setAlert } = useContext(AlertContext)
-    const { theme } = useContext(ThemeContext)
 
     const [showShareWindow, setShowShareWindow] = useState(false)
     const isShared = note.author && note.author !== user.username
@@ -100,7 +99,7 @@ const TopPanel = ({
     }
 
     return (
-        <TopPanelDiv theme={theme}>
+        <TopPanelDiv>
             <UpperRow>
                 <Buttons>
                     <Icon

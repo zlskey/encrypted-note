@@ -10,7 +10,7 @@ module.exports.toggleTheme = async (req, res, next) => {
         const theme = user.theme === 'light' ? 'dark' : 'light'
 
         await User.findOneAndUpdate({ username: req.user.username }, { theme })
-        res.status(201).json(true)
+        res.status(201).json(theme)
     } catch (err) {
         next(err)
     }

@@ -23,5 +23,5 @@ export const LoginBar = styled.div`
 export const Separator = styled.div`
     height: 20px;
     width: 1px;
-    background-color: ${props => props.theme.fontColor};
+    background-color: var(--font);
 `

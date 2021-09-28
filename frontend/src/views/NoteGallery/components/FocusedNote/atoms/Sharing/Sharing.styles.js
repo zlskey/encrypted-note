@@ -8,8 +8,8 @@ export const SharingDiv = styled.div`
 `
 
 export const User = styled.p`
-    background-color: ${({ theme }) => theme.fontColor};
-    color: ${({ theme }) => theme.bgColor};
+    background-color: var(--font);
+    color: var(--bg);
     padding: 3px 10px;
     border-radius: 100px;
     display: flex;
@@ -27,5 +27,5 @@ export const Input = styled.input`
     outline: none;
     font-size: 16px;
     transition: 0.3s;
-    color: ${({ theme }) => theme.fontColor};
+    color: var(--font);
 `

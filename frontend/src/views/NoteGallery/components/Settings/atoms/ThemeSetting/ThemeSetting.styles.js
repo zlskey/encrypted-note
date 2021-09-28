@@ -8,31 +8,28 @@ export const SwitchContainer = styled.div`
     gap: 0.3rem;
 `
 
-export const Switch = styled.div`
-    border-radius: 9999px;
+export const Switch = styled.label`
+    border-radius: 100px;
     height: 25px;
     aspect-ratio: 2/1;
-    position: relative;
-    transition: 0.3s;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
     box-sizing: content-box;
     cursor: pointer;
-    border: 3px solid ${({ theme }) => theme.bgColor};
-    background-color: ${({ theme }) => theme.bgColor};
-    box-shadow: ${({ theme }) => theme.shadow};
+    border: 3px solid var(--bg);
+    background-color: var(--bg);
+    box-shadow: var(--shadow);
 
-    &::after {
+    & > input:checked + label {
+        transform: translateX(100%);
+    }
+
+    label {
         content: '';
         width: 25px;
         aspect-ratio: 1/1;
+        cursor: pointer;
         border-radius: 50%;
-        transition: 0.3s;
+        transition: 0.2s;
         display: inline-block;
-
-        transform: ${({ theme }) =>
-            theme.type === 'light' ? 'translateX(100%)' : ''};
-        background-color: ${({ theme }) => theme.fontColor};
+        background-color: var(--font);
     }
 `

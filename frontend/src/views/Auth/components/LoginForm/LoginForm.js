@@ -5,8 +5,8 @@ import InputField from '@components/InputField/InputField'
 import RadioField from '@components/RadioField/RadioField'
 import Button from '@components/Button/Button'
 import SlideAnimation from '@components/SlideAnimation/SlideAnimation'
-import { setError, isFormUnfilled, setValid } from '@helpers/InputErrorHandler'
-import { ThemeContext } from '@contexts/ThemeContext'
+import { setError, setValid } from '@helpers/InputErrorHandler'
+
 import { AlertContext } from '@contexts/AlertContext'
 import { Form, LoginBar, Separator } from './LoginForm.styles'
 import { useSelector, useDispatch } from 'react-redux'
@@ -15,9 +15,9 @@ import { UPDATE_USER } from '@redux/types'
 
 const Login = ({ action }) => {
     const { setAlert } = useContext(AlertContext)
-    const { theme } = useContext(ThemeContext)
+
     const history = useHistory()
-    const user = useSelector(state => state.auth.user)
+    const user = useSelector(state => state.user)
     const dispatch = useDispatch()
 
     const [login, setLogin] = useState('')
@@ -35,7 +35,7 @@ const Login = ({ action }) => {
 
         doFetch((content, ok) => {
             if (ok) {
-                dispatch({ type: UPDATE_USER, data: { user: content } })
+                dispatch({ type: UPDATE_USER, data: content })
                 setAlert('success', `Hi ${content.username} 👋`)
             } else setError('res', content)
         }, user)
@@ -74,19 +74,9 @@ const Login = ({ action }) => {
                         setIsChecked={setDontLogout}
                     />
 
-                    {window.innerWidth > 500 && <Separator theme={theme} />}
+                    {window.innerWidth > 500 && <Separator />}
 
-                    <Link
-                        style={{
-                            textDecoration: 'none',
-                            color: theme.fontColor,
-                            fontWeight: 300,
-                            fontSize: '19px',
-                        }}
-                        to='/password-recovery'
-                    >
-                        Reset password
-                    </Link>
+                    <Link to='/password-recovery'>Reset password</Link>
                 </LoginBar>
 
                 <Button loading={status === 'fetching'} content='Confirm' />

@@ -27,8 +27,8 @@ export const Checkbox = styled.div`
     width: 20px;
     height: 20px;
     border-radius: 3px;
-    background-color: ${props => props.theme.bgColor};
-    box-shadow: ${props => props.theme.type === 'light' && props.theme.shadow};
+    background-color: var(--bg);
+    box-shadow: var(--shadow);
 `
 
 export const Content = styled.p`

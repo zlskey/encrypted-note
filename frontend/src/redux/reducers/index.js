@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux'
-import authReducer from './authReducer'
+import userReducer from './userReducer'
 import notesReducer from './notesReducer'
 import focusedNoteReducer from './focusedNoteReducer'
 
 export default combineReducers({
-    auth: authReducer,
+    user: userReducer,
     notes: notesReducer,
     focusedNote: focusedNoteReducer,
 })

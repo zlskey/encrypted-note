@@ -11,7 +11,7 @@ export const Loader = styled.div`
 
     * {
         border-radius: 50%;
-        background-color: ${({ theme }) => theme.bgColor};
+        background-color: var(--bg);
         border: 0.5rem solid transparent;
         animation: rotate infinite linear;
         animation-duration: 8s;
@@ -23,11 +23,11 @@ export const Loader = styled.div`
     }
 
     .inlineBorders {
-        border-inline-color: ${({ theme }) => theme.fontColor};
+        border-inline-color: var(--font);
     }
 
     .blockBorders {
-        border-block-color: ${({ theme }) => theme.fontColor};
+        border-block-color: var(--font);
     }
 
     @keyframes rotate {

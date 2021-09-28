@@ -1,5 +1,4 @@
-import { useContext, useRef, useEffect } from 'react'
-import { ThemeContext } from '@contexts/ThemeContext'
+import { useRef, useEffect } from 'react'
 
 import { Background, Content } from './Window.styles'
 
@@ -10,7 +9,6 @@ const Window = ({
     onClickClosing = false,
     customStyles = {},
 }) => {
-    const { theme } = useContext(ThemeContext)
     const content = useRef(null)
 
     const closeWindow = e => {
@@ -27,17 +25,14 @@ const Window = ({
         return () => {
             document.removeEventListener('keyup', handleKeyUp)
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (
         <>
             {showWindow && (
                 <Background onClick={closeWindow}>
-                    <Content
-                        ref={content}
-                        theme={theme}
-                        customStyles={customStyles}
-                    >
+                    <Content ref={content} customStyles={customStyles}>
                         {children}
                     </Content>
                 </Background>

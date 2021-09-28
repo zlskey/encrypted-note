@@ -1,6 +1,6 @@
 import { IconSettings } from '@tabler/icons'
-import { useContext, useEffect, useState } from 'react'
-import { ThemeContext } from '@contexts/ThemeContext'
+import { useContext, useState } from 'react'
+
 import CloseOnOuterClick from '@components/CloseOnOuterClick/CloseOnOuterClick'
 import Window from '@components/Window/Window'
 import Button from '@components/Button/Button'
@@ -12,7 +12,7 @@ import PinSetting from './atoms/PinSetting/PinSetting'
 import ThemeSetting from './atoms/ThemeSetting/ThemeSetting'
 import { AlertContext } from '@contexts/AlertContext'
 import { useSelector, useDispatch } from 'react-redux'
-import { UPDATE_USER } from '@redux/types'
+import { LOGOUT_USER } from '@redux/types'
 import useApi from '@hooks/useApi'
 
 import {
@@ -23,10 +23,9 @@ import {
 } from './Settings.styles'
 
 const Settings = () => {
-    const user = useSelector(state => state.auth.user)
+    const user = useSelector(state => state.user)
     const dispatch = useDispatch()
 
-    const { theme } = useContext(ThemeContext)
     const { setAlert } = useContext(AlertContext)
 
     const [showSettings, setShowSettings] = useState(false)
@@ -41,7 +40,7 @@ const Settings = () => {
 
         doFetch((content, ok) => {
             if (ok) {
-                dispatch({ type: UPDATE_USER, data: { user: null } })
+                dispatch({ type: LOGOUT_USER })
                 setAlert('success', 'Come back soon 😊')
             }
         })
@@ -51,14 +50,9 @@ const Settings = () => {
         <>
             <SettingsButton
                 onClick={() => setShowSettings(currentState => !currentState)}
-                theme={theme}
                 className='clickable'
             >
-                <IconSettings
-                    color={theme.fontColor}
-                    size='40px'
-                    style={{ opacity: 0.8 }}
-                />
+                <IconSettings size='40px' style={{ opacity: 0.8 }} />
             </SettingsButton>
 
             <Window

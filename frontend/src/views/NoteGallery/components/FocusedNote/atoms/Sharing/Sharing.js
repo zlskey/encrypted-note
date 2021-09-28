@@ -1,7 +1,6 @@
 import { useContext, useState } from 'react'
 import { IconUnlink } from '@tabler/icons'
 
-import { ThemeContext } from '@contexts/ThemeContext'
 import { AlertContext } from '@contexts/AlertContext'
 import { setError, setValid } from '@helpers/InputErrorHandler'
 
@@ -16,7 +15,6 @@ const Sharing = () => {
     const note = useSelector(state => state.focusedNote.data)
     const dispatch = useDispatch()
 
-    const { theme } = useContext(ThemeContext)
     const { setAlert } = useContext(AlertContext)
 
     const [doShareFetch] = useApi('/note/share', 'PATCH')
@@ -73,7 +71,7 @@ const Sharing = () => {
     }
 
     return (
-        <SharingDiv theme={theme}>
+        <SharingDiv>
             <p>Users with access: </p>
 
             {note.recipients.map(user => (
@@ -81,7 +79,6 @@ const Sharing = () => {
                     key={user}
                     className='clickable'
                     title={`unlink ${user}`}
-                    theme={theme}
                     onClick={e => unlinkNote(user)}
                 >
                     {user} <IconUnlink size='15' />
@@ -92,7 +89,6 @@ const Sharing = () => {
                 <Input
                     value={newRecipient}
                     onChange={e => setNewRecipient(e.target.value)}
-                    theme={theme}
                     type='text'
                     placeholder='share to...'
                 />

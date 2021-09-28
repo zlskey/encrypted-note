@@ -24,7 +24,7 @@ export const TextArea = styled.textarea`
     font-size: 1.1rem;
     padding-block: 0.8rem;
 
-    color: ${({ theme }) => theme.fontColor};
+    color: var(--font);
 `
 
 export const noteCustomStyles = {

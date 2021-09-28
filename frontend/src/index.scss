@@ -31,6 +31,19 @@
 html {
     font-size: 18px;
     min-height: 100vh;
+    background-color: var(--bg);
+
+    --shadow: 0 0 10px -5px #212121;
+    --bg: #fafafa;
+    --font: #424242;
+    --ui: #eeeeee;
+}
+
+html[data-theme='dark'] {
+    --shadow: none;
+    --bg: #212121;
+    --font: #fafafa;
+    --ui: #424242;
 }
 
 #root {
@@ -55,10 +68,6 @@ html {
     }
 }
 
-svg {
-    transition: 0.1s;
-}
-
 .error {
     background-color: #f44336;
     color: #fafafa;
@@ -67,4 +76,15 @@ svg {
     font-size: 1rem;
     border-radius: 5px;
     padding: 10px;
+}
+
+svg {
+    transition: 0.1s;
+}
+
+a {
+    color: var(--font);
+    text-decoration: none;
+    font-size: 1rem;
+    font-family: 'Roboto', sans-serif !important;
 }

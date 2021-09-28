@@ -3,7 +3,7 @@ import { useContext, useState } from 'react'
 
 import { AlertContext } from '@contexts/AlertContext'
 import InputField from '@components/InputField/InputField'
-import { isFormUnfilled } from '@helpers/InputErrorHandler'
+import {} from '@helpers/InputErrorHandler'
 
 const PasswordSetting = ({ setShowPasswordSetting }) => {
     const [currentPassword, setCurrentPassword] = useState('')
@@ -14,10 +14,8 @@ const PasswordSetting = ({ setShowPasswordSetting }) => {
     const [doFetch] = useApi('/settings/change-password', 'PATCH')
 
     const passwordHandler = e => {
-        const body = { currentPassword, newPassword }
         e.preventDefault()
-
-        if (isFormUnfilled(body)) return
+        const body = { currentPassword, newPassword }
 
         setAlert('loading')
         doFetch((content, ok) => {

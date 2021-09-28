@@ -23,8 +23,8 @@ export const Input = styled.input`
     font-weight: 300;
     font-family: 'Roboto', sans-serif;
     color: inherit;
-    background-color: ${({ theme }) => theme.bgColor};
-    box-shadow: ${({ theme }) => theme.type === 'light' && theme.shadow};
+    background-color: var(--bg);
+    box-shadow: var(--shadow);
 `
 
 export const Error = styled.div`

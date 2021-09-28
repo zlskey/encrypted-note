@@ -1,15 +1,13 @@
 import { useTransition, animated } from 'react-spring'
-import React, { useContext } from 'react'
+import React from 'react'
 import { IconInfoCircle, IconAlertCircle, IconCircleCheck } from '@tabler/icons'
 
 import CloseOnOuterClick from '@components/CloseOnOuterClick/CloseOnOuterClick'
 import Loader from '@components/Loader/Loader'
-import { ThemeContext } from '@contexts/ThemeContext'
+
 import { Alert as AlertDiv } from './Alert.styles'
 
 const Alert = ({ type, content, color, showAlert, setShowAlert }) => {
-    const { theme } = useContext(ThemeContext)
-
     const transition = useTransition(showAlert, {
         from: { opacity: 0 },
         enter: { opacity: 1 },
@@ -22,7 +20,7 @@ const Alert = ({ type, content, color, showAlert, setShowAlert }) => {
                 (style, item) =>
                     item && (
                         <animated.div style={style}>
-                            <AlertDiv background={color} theme={theme}>
+                            <AlertDiv background={color}>
                                 {type === 'error' && <IconAlertCircle />}
                                 {type === 'info' && <IconInfoCircle />}
                                 {type === 'success' && <IconCircleCheck />}

@@ -4,7 +4,7 @@ export const TopPanelDiv = styled.div`
     padding: 10px;
     display: flex;
     flex-direction: column;
-    box-shadow: ${({ theme }) => theme.shadow};
+    box-shadow: var(--shadow);
     gap: 10px;
 `
 

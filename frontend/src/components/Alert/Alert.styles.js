@@ -7,7 +7,7 @@ export const Alert = styled.div`
     left: 50%;
     transform: translateX(-50%);
     background-color: ${props => props.background};
-    box-shadow: ${props => props.theme.type === 'light' && props.theme.shadow};
+    box-shadow: var(--shadow);
     color: #fafafa;
     font-size: 1.3rem;
     display: flex;

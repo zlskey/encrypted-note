@@ -15,10 +15,10 @@ export const NoteDiv = styled.div`
     text-overflow: ellipsis;
     font-weight: 300;
     color: inherit;
-
-    border: 5px solid ${({ theme }) => theme.uiColor};
-    background-color: ${({ theme }) => theme.uiColor};
-    box-shadow: ${({ theme }) => theme.type === 'light' && theme.shadow};
+    border: 5px solid var(--ui);
+    background-color: var(--ui);
+    box-shadow: var(--shadow);
+    transition: 0.3s;
 `
 
 const loadAnimation = keyframes`
@@ -45,8 +45,8 @@ export const NoteDate = styled.div`
             position: relative;
             overflow: hidden;
             animation: ${loadAnimation} 2s linear infinite;
-            background-color: ${({ theme }) => theme.bgColor};
-            color: ${({ theme }) => theme.bgColor};
+            background-color: var(--bg);
+            color: var(--bg);
         `}
 `
 export const Content = styled.div`
@@ -62,6 +62,6 @@ export const Content = styled.div`
             position: relative;
             overflow: hidden;
             animation: ${loadAnimation} 2s linear infinite;
-            background-color: ${({ theme }) => theme.bgColor};
+            background-color: var(--bg);
         `}
 `

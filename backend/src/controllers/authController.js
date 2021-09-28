@@ -90,7 +90,7 @@ module.exports.sendRecoverMail = async (req, res, next) => {
     try {
         checkRequirements(mail)
         const user = await User.findOne({ mail })
-        if (!user) throw new Error("User with this mail doesn't exists")
+        if (!user) throw new Error("User with this mail doesn't exists EXERR")
 
         const isRecoveryInProcess = await PasswordRecovery.findOne({ mail })
         if (isRecoveryInProcess)
