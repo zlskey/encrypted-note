@@ -1,9 +1,9 @@
 import { useContext, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
-import InputField from '@components/InputField/InputField'
-import Button from '@components/Button/Button'
-import SlideAnimation from '@components/SlideAnimation/SlideAnimation'
+import InputField from '@commons/InputField/InputField'
+import Button from '@commons/Button/Button'
+import SlideAnimation from '@commons/SlideAnimation/SlideAnimation'
 import { setError, setValid } from '@helpers/InputErrorHandler'
 import { AlertContext } from '@contexts/AlertContext'
 import useApi from '@hooks/useApi'

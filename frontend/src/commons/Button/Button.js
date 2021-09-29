@@ -1,5 +1,5 @@
 import { StyledButton } from './Button.styles'
-import Loader from '@components/Loader/Loader'
+import Loader from '@commons/Loader/Loader'
 import { useState, useEffect, useRef } from 'react'
 
 const Button = ({ content, loading = false, color = '#2196f3' }) => {

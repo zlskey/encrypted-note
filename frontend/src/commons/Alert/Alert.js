@@ -2,8 +2,8 @@ import { useTransition, animated } from 'react-spring'
 import React from 'react'
 import { IconInfoCircle, IconAlertCircle, IconCircleCheck } from '@tabler/icons'
 
-import CloseOnOuterClick from '@components/CloseOnOuterClick/CloseOnOuterClick'
-import Loader from '@components/Loader/Loader'
+import CloseOnOuterClick from '@commons/CloseOnOuterClick/CloseOnOuterClick'
+import Loader from '@commons/Loader/Loader'
 
 import { Alert as AlertDiv } from './Alert.styles'
 

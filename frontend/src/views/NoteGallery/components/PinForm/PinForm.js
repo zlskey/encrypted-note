@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 
-import InputField from '@components/InputField/InputField'
-import Button from '@components/Button/Button'
-import Window from '@components/Window/Window'
+import InputField from '@commons/InputField/InputField'
+import Button from '@commons/Button/Button'
+import Window from '@commons/Window/Window'
 
 import { UPDATE_USER_NOTES, UPDATE_SHARED_NOTES } from '@redux/types'
 import { setError } from '@helpers/InputErrorHandler'

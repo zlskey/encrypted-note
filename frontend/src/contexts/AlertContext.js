@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react'
-import Alert from '@components/Alert/Alert'
+import Alert from '@commons/Alert/Alert'
 
 export const AlertContext = createContext(null)
 

@@ -1,9 +1,9 @@
 import { IconSettings } from '@tabler/icons'
 import { useContext, useState } from 'react'
 
-import CloseOnOuterClick from '@components/CloseOnOuterClick/CloseOnOuterClick'
-import Window from '@components/Window/Window'
-import Button from '@components/Button/Button'
+import CloseOnOuterClick from '@commons/CloseOnOuterClick/CloseOnOuterClick'
+import Window from '@commons/Window/Window'
+import Button from '@commons/Button/Button'
 
 import SettingComponent from './atoms/SettingComponent/SettingComponent'
 import MailSetting from './atoms/MailSetting/MailSetting'

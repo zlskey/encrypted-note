@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react'
-import InputField from '@components/InputField/InputField'
-import Button from '@components/Button/Button'
+import InputField from '@commons/InputField/InputField'
+import Button from '@commons/Button/Button'
 import { setError, setValid } from '@helpers/InputErrorHandler'
 import useApi from '@hooks/useApi'
 import { useHistory } from 'react-router'

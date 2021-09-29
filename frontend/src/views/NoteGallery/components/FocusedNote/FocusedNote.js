@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import Window from '@components/Window/Window'
+import Window from '@commons/Window/Window'
 import TopPanel from './atoms/TopPanel/TopPanel'
 import { NoteContent, TextArea, noteCustomStyles } from './FocusedNote.styles'
 import { useSelector, useDispatch } from 'react-redux'

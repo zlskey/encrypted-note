@@ -2,7 +2,7 @@ import { useContext, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { AlertContext } from '@contexts/AlertContext'
-import InputField from '@components/InputField/InputField'
+import InputField from '@commons/InputField/InputField'
 import {} from '@helpers/InputErrorHandler'
 import useApi from '@hooks/useApi'
 import { UPDATE_USER } from '@redux/types'

@@ -2,7 +2,7 @@ import useApi from '@hooks/useApi'
 import { useContext, useState } from 'react'
 
 import { AlertContext } from '@contexts/AlertContext'
-import InputField from '@components/InputField/InputField'
+import InputField from '@commons/InputField/InputField'
 import {} from '@helpers/InputErrorHandler'
 
 const PasswordSetting = ({ setShowPasswordSetting }) => {

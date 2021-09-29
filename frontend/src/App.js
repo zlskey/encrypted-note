@@ -10,7 +10,7 @@ import {
     Redirect,
 } from 'react-router-dom'
 
-import SiteLoader from './components/SiteLoader/SiteLoader'
+import SiteLoader from '@commons/SiteLoader/SiteLoader'
 import { useSelector, useDispatch } from 'react-redux'
 import useApi from '@hooks/useApi'
 import { UPDATE_USER } from '@redux/types'
