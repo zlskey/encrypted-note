@@ -1,6 +1,6 @@
-const Note = require('../schemas/NoteSchema')
-const User = require('../schemas/UserSchema')
-const Key = require('../schemas/KeySchema')
+const Note = require('../models/Note.model')
+const User = require('../models/User.model')
+const Key = require('../models/Key.model')
 const pgpHandler = require('../middlewares/pgpHandler')
 const checkRequirements = require('../middlewares/checkRequirements')
 

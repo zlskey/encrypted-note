@@ -1,5 +1,5 @@
-const Note = require('../schemas/NoteSchema')
-const User = require('../schemas/UserSchema')
+const Note = require('../models/Note.model')
+const User = require('../models/User.model')
 const pgpHandler = require('../middlewares/pgpHandler')
 const checkRequirements = require('../middlewares/checkRequirements')
 

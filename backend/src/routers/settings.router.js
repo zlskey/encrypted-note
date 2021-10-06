@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const settingsController = require('../controllers/settingsController')
+const settingsController = require('../controllers/settings.controller')
 
 router.patch('/theme', settingsController.toggleTheme)
 router.patch('/start-encryption', settingsController.startEncryption)

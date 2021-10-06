@@ -1,10 +1,12 @@
-const User = require('../schemas/UserSchema')
-const PasswordRecovery = require('../schemas/PasswordRecovery')
 const jwt = require('jsonwebtoken')
+const { isEmail } = require('validator')
+
+const User = require('../models/User.model')
+const PasswordRecovery = require('../models/PasswordRecovery.model')
+
 const findUserByToken = require('../middlewares/findUserByToken')
 const checkRequirements = require('../middlewares/checkRequirements')
 const { sendPasswordRecoveryMail } = require('../middlewares/mailHandler')
-const { isEmail } = require('validator')
 
 const maxAge = 7 * 24 * 60 * 60
 const createToken = (id, dontLogout = false) => {

@@ -1,8 +1,8 @@
 const router = require('express').Router()
-const authRouter = require('./authRouter')
-const noteRouter = require('./noteRouter')
-const settingsRouter = require('./settingsRouter')
-const userRouter = require('./userRouter')
+const authRouter = require('./auth.router')
+const noteRouter = require('./note.router')
+const settingsRouter = require('./settings.router')
+const userRouter = require('./user.router')
 
 const checkUser = require('../middlewares/checkUser')
 

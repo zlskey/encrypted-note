@@ -1,6 +1,6 @@
-const Key = require('../schemas/KeySchema')
+const Key = require('../models/Key.model')
 const openpgp = require('openpgp')
-const Note = require('../schemas/NoteSchema')
+const Note = require('../models/Note.model')
 
 const readPrivateKey = async (username, pin) => {
     try {

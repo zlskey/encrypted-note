@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const userController = require('../controllers/userController')
+const userController = require('../controllers/user.controller')
 
 router.get('/logout', userController.logout)
 router.post('/notes', userController.getNotes)

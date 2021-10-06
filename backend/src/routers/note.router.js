@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const noteController = require('../controllers/noteController')
+const noteController = require('../controllers/note.controller')
 
 router.post('/', noteController.create)
 router.patch('/', noteController.edit)

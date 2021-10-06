@@ -2,10 +2,10 @@
     "name": "encrypted-note",
     "version": "1.0.0",
     "description": "",
-    "main": "server.js",
+    "main": "app.js",
     "scripts": {
-        "start": "node app",
-        "dev": "nodemon app"
+        "start": "node src/app",
+        "dev": "nodemon src/app"
     },
     "repository": {
         "type": "git",

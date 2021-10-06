@@ -13,8 +13,8 @@ const dbURI = process.env.DATABASE_URL
 const origin = process.env.CORS_ORIGIN
 const NODE_ENV = process.env.NODE_ENV
 
-const router = require('./src/routers/router')
-const errorHandler = require('./src/middlewares/errorHandler')
+const router = require('./routers')
+const errorHandler = require('./middlewares/errorHandler')
 
 app = express()
 
