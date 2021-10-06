@@ -1,14 +1,14 @@
 FROM node:16-alpine3.11 AS build
 
 COPY . .
-RUN yarn install
-RUN npm run build
 
-FROM nginx:1.21.1-alpine
+RUN --mount=type=cache,target=/root/.yarn YARN_CACHE_FOLDER=/root/.yarn yarn --frozen-lockfile
+
+RUN yarn install
+RUN yarn run build
+
+FROM nginx:latest
 
 COPY --from=build /build /usr/share/nginx/html
-COPY --from=build /nginx.sh .
 
-RUN chmod +x ./nginx.sh
-
-ENTRYPOINT [ "./nginx.sh" ]
+ENTRYPOINT nginx -g "daemon off;"
