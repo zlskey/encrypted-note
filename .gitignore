@@ -1,5 +1,4 @@
+dist
+build
 node_modules
 .env
-docker-compose.yml
-build
-fetches.js

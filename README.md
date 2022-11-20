@@ -2,6 +2,12 @@
 
 Web app build with MERN stack. You can try it [here](https://note.zlskey.pl)
 
+## Update log
+To keep this project as a part of my portfolio I decided to rewrite whole app. 
+
+New things:
+- Typescript
+- MUI components
 ## Technologies
 
 -   React.js as frontend
@@ -12,14 +18,13 @@ Web app build with MERN stack. You can try it [here](https://note.zlskey.pl)
 
 -   JWT auth
 -   note encrypting using openpgp
--   password recovery using email
 -   Creating/Editing notes
 -   Sharing notes between users
 -   Separated password for account and PIN to decrypt notes
 
 ## Installation
 
-### With docker:
+### With docker: (easier)
 
 #### 1. Clone repo
 
@@ -27,13 +32,7 @@ Web app build with MERN stack. You can try it [here](https://note.zlskey.pl)
 git clone https://github.com/zlskey/encrypted-note.git
 cd encrypted-note
 ```
-
-#### 2. Preparing docker-compose
-
--   Rename docker-compose.yml.example to docker-compose.yml
--   Set enviroment variables inside docker-compose.yml
-
-#### 3. Run containers
+#### 2. Run containers
 
 ```bash
 docker compose up -d --build
@@ -52,7 +51,7 @@ cd encrypted-note
 
 #### 2. Enviroment variables
 
-Rename .env.example files to .env and set your enviroment variables in
+Rename .env.example files to .env 
 
 -   `~/encrypted-note/backend/.env.example`
 -   `~/encrypted-note/frontend/.env.example`
@@ -60,22 +59,13 @@ Rename .env.example files to .env and set your enviroment variables in
 #### 3. Install dependencies
 
 ```bash
-# ~/encrypted-note directory
-
-cd frontend
+# ~/frontend
 yarn install
+npm start
 
-cd ../backend
+# ~/backend
 npm install
-```
-
-#### 4. Start app
-
-```bash
-# ~/encrypted-note directory
-
-# frontend will run on port 3000 & backend on port 5000
-# you will have to run 'npm start' in both directories
+npm run dev
 ```
 
 ## License

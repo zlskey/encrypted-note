@@ -1,14 +1,19 @@
 FROM node:16-alpine3.11 AS build
 
-COPY . .
+WORKDIR /app
 
-RUN --mount=type=cache,target=/root/.yarn YARN_CACHE_FOLDER=/root/.yarn yarn --frozen-lockfile
+ARG REACT_APP_API_URL
+RUN echo "REACT_APP_API_URL=${REACT_APP_API_URL}" > .env
 
+COPY package.json .
 RUN yarn install
+
+COPY . .
 RUN yarn run build
 
 FROM nginx:latest
 
-COPY --from=build /build /usr/share/nginx/html
+COPY --from=build /app/build /usr/share/nginx/html
+COPY default.conf /etc/nginx/conf.d/default.conf 
 
 ENTRYPOINT nginx -g "daemon off;"

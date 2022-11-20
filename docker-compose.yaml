@@ -1,0 +1,30 @@
+version: '3'
+services:
+
+  backend:
+    container_name: backend
+    depends_on:
+      - mongodb
+    build: ./backend
+    environment:
+      - CORS_ORIGIN=http://localhost
+      - MONGODB_URL=mongodb://mongodb/encrypted-note
+      - JWT_SECRET=secret
+      - NODE_ENV=production
+      - PORT=5000
+    ports:
+      - "5000:5000"
+
+  frontend:
+    container_name: frontend
+    build:
+      context: ./frontend
+      args:
+        - REACT_APP_API_URL=http://localhost:5000
+    ports:
+      - "80:80"
+
+  mongodb:
+    container_name: database
+    image: mongo
+    restart: unless-stopped
