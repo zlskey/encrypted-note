@@ -35,7 +35,7 @@ export default class HttpService {
                 err.response.status === 500
             ) {
                 this.setAlert(constants.error.network)
-                console.log(constants.error.network)
+                console.log(err)
                 throw Error(err)
             }
 

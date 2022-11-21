@@ -56,7 +56,7 @@ const EncryptionDialog = ({ handleClose, isOpen }: DialogProps) => {
 
             setAlert(constants.info.changed_passphrase, 'info')
         } else {
-            await api.user.startEncryption(passphrase)
+            await api.user.startEncryption(newPassphrase)
 
             setAlert(constants.info.start_encryption, 'info')
         }
