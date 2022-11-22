@@ -56,3 +56,24 @@ export const validatePassphrase: RequestHandler = async (req, res, next) => {
 
     res.status(202).json(isValid)
 }
+
+export const changeUsername: RequestHandler = async (req, res, next) => {
+    const { username } = req.body
+
+    const user = await userService.getById(req.userId)
+    const updatedUser = await user.changeUsername(username)
+
+    res.status(201).json(updatedUser)
+}
+
+export const toggleTimeout: RequestHandler = async (req, res, next) => {
+    const user = await userService.toggleTimeout(req.userId)
+
+    res.status(201).json(user)
+}
+
+export const toggleLightMode: RequestHandler = async (req, res, next) => {
+    const user = await userService.toggleLightMode(req.userId)
+
+    res.status(201).json(user)
+}

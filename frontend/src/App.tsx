@@ -3,22 +3,20 @@ import { CssBaseline, createTheme } from '@mui/material'
 import React, { useCallback, useEffect, useState } from 'react'
 
 import AlertContextProvider from './contexts/AlertContext'
+import ChangePassphrase from './Pages/ChangePassphrase'
+import ChangePassword from './Pages/ChangePassword'
+import ChangeUsername from './Pages/ChangeUsername'
 import Login from './Pages/Login'
 import Note from './Pages/Note'
 import Notes from './Pages/Notes'
 import PassphraseContextProvider from './contexts/PassphraseContext'
+import Settings from './Pages/Settings'
 import SignUp from './Pages/SignUp'
 import SiteLoader from './Pages/Loader'
 import { ThemeProvider } from '@emotion/react'
 import { selectUser } from 'src/reducers/user.reducer'
 import useApi from 'src/hooks/useApi'
 import { useSelector } from 'react-redux'
-
-const darkTheme = createTheme({
-    palette: {
-        mode: 'dark',
-    },
-})
 
 const App = () => {
     const api = useApi()
@@ -38,48 +36,63 @@ const App = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user])
 
+    const getTheme = () => {
+        return createTheme({
+            palette: {
+                mode: user.lightMode ? 'light' : 'dark',
+            },
+        })
+    }
+
     useEffect(() => {
         authorizeUser()
     }, [authorizeUser])
 
     if (isLoading)
         return (
-            <ThemeProvider theme={darkTheme}>
+            <ThemeProvider theme={getTheme}>
                 <SiteLoader /> <CssBaseline />
             </ThemeProvider>
         )
 
     return (
-        <ThemeProvider theme={darkTheme}>
+        <ThemeProvider theme={getTheme}>
             <AlertContextProvider>
                 <PassphraseContextProvider>
                     <BrowserRouter>
                         <CssBaseline />
 
-                        <Routes>
-                            {Boolean(user['_id']) ? (
-                                <>
-                                    <Route path='/' element={<Notes />} />
-                                    <Route path='/note' element={<Note />} />
+                        {Boolean(user['_id']) ? (
+                            <Routes>
+                                <Route path='/' element={<Notes />} />
+                                <Route path='/note' element={<Note />} />
+                                <Route path='/settings'>
                                     <Route
-                                        path='*'
-                                        element={<Navigate to='/' />}
+                                        path='username'
+                                        element={<ChangeUsername />}
                                     />
-                                </>
-                            ) : (
-                                <>
                                     <Route
-                                        path='/signup'
-                                        element={<SignUp />}
+                                        path='password'
+                                        element={<ChangePassword />}
                                     />
-                                    <Route path='/login' element={<Login />} />
                                     <Route
-                                        path='*'
-                                        element={<Navigate to='/login' />}
+                                        path='passphrase'
+                                        element={<ChangePassphrase />}
                                     />
-                                </>
-                            )}
-                        </Routes>
+                                    <Route path='' element={<Settings />} />
+                                </Route>
+                                <Route path='*' element={<Navigate to='/' />} />
+                            </Routes>
+                        ) : (
+                            <Routes>
+                                <Route path='/signup' element={<SignUp />} />
+                                <Route path='/login' element={<Login />} />
+                                <Route
+                                    path='*'
+                                    element={<Navigate to='/login' />}
+                                />
+                            </Routes>
+                        )}
                     </BrowserRouter>
                 </PassphraseContextProvider>
             </AlertContextProvider>

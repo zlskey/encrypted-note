@@ -4,6 +4,7 @@ import {
     Container,
     IconButton,
     InputBase,
+    Paper,
     Tooltip,
     Typography,
     useMediaQuery,
@@ -201,7 +202,7 @@ const NoteEditor = () => {
                     )}
                 </Box>
 
-                <Card sx={{ p: 2 }}>
+                <Paper elevation={4} sx={{ p: 2 }}>
                     <InputBase
                         autoFocus={!searchParams.get('id')}
                         value={content}
@@ -213,7 +214,7 @@ const NoteEditor = () => {
                         minRows={15}
                         spellCheck={false}
                     />
-                </Card>
+                </Paper>
             </Box>
         </Container>
     )

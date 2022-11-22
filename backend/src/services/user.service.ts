@@ -47,8 +47,26 @@ export const getById = async (id: IUser['_id'] | string): Promise<IUser> => {
     return user
 }
 
-export const remove = async (username: IUser['username']): Promise<void> => {
-    await User.findOneAndDelete({ username })
+export const remove = async (userId: IUser['_id']): Promise<void> => {
+    await getById(userId) // to validate if user exist
+    await User.findByIdAndRemove(userId)
 }
 
-export const update = async (username: IUser['username']): Promise<void> => {}
+export const update = async (
+    userId: IUser['_id'],
+    payload: any
+): Promise<IUser> => {
+    return await User.findByIdAndUpdate(userId, payload, { new: true })
+}
+
+export const toggleTimeout = async (userId: IUser['_id']): Promise<IUser> => {
+    const user = await getById(userId)
+
+    return await update(userId, { timeout: !user.timeout })
+}
+
+export const toggleLightMode = async (userId: IUser['_id']): Promise<IUser> => {
+    const user = await getById(userId)
+
+    return await update(userId, { lightMode: !user.lightMode })
+}

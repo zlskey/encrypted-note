@@ -63,7 +63,7 @@ export default class UserService {
         currentPassword: string,
         newPassword: string
     ): Promise<void> {
-        await this.httpService.patch('user/change-password', {
+        await this.httpService.patch('user/password', {
             currentPassword,
             newPassword,
         })
@@ -73,7 +73,7 @@ export default class UserService {
         currentPassphrase: string,
         newPassphrase: string
     ): Promise<void> {
-        await this.httpService.patch('user/change-passphrase', {
+        await this.httpService.patch('user/passphrase', {
             currentPassphrase,
             newPassphrase,
         })
@@ -83,6 +83,30 @@ export default class UserService {
         await this.httpService.patch('user/start-encryption', { passphrase })
 
         const action = userActions.enableEncryption()
+
+        this.dispatch(action)
+    }
+
+    async changeUsername(username: string): Promise<void> {
+        const res = await this.httpService.patch('user/username', { username })
+
+        const action = userActions.setUserData(res.data)
+
+        this.dispatch(action)
+    }
+
+    async toggleLightMode(): Promise<void> {
+        const res = await this.httpService.patch('user/light-mode', {})
+
+        const action = userActions.setUserData(res.data)
+
+        this.dispatch(action)
+    }
+
+    async toggleTimeout(): Promise<void> {
+        const res = await this.httpService.patch('user/timeout', {})
+
+        const action = userActions.setUserData(res.data)
 
         this.dispatch(action)
     }

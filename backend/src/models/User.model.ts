@@ -1,4 +1,4 @@
-import { keysService, noteService } from 'src/services'
+import { keysService, noteService, userService } from 'src/services'
 
 import { ErrorObject } from 'src/middlewares/error.middleware'
 import _ from 'lodash'
@@ -13,6 +13,8 @@ export interface IUser {
     username: string
     password: string
     encryption: boolean
+    lightMode: boolean
+    timeout: boolean
 
     removePassword(): Omit<IUser, 'password'>
     validatePassword(this: IUser, password: string): Promise<void>
@@ -23,6 +25,7 @@ export interface IUser {
         current: string,
         newPassphrase: string
     ): Promise<void>
+    changeUsername(this: IUser, username: string): Promise<IUser>
 }
 
 const userSchema = new mongoose.Schema<IUser>({
@@ -35,6 +38,14 @@ const userSchema = new mongoose.Schema<IUser>({
         type: String,
     },
     encryption: {
+        type: Boolean,
+        default: false,
+    },
+    lightMode: {
+        type: Boolean,
+        default: false,
+    },
+    timeout: {
         type: Boolean,
         default: false,
     },
@@ -117,6 +128,20 @@ class UserClass {
         for (const note of notes) {
             await note.encrypt()
         }
+    }
+
+    async changeUsername(this: IUser, username: string): Promise<IUser> {
+        if (this.username === username) {
+            throw new ErrorObject(constants.username_duplicate) // @todo
+        }
+
+        const isOccupied = await User.findOne({ username })
+
+        if (isOccupied) {
+            throw new ErrorObject(constants.username_duplicate)
+        }
+
+        return userService.update(this._id, { username })
     }
 
     removePassword(this: IUser): Omit<IUser, 'password'> {

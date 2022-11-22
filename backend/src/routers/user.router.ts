@@ -4,13 +4,13 @@ import { wrapAsync } from '../utils'
 
 const userRouter = Router()
 
-userRouter.patch('/change-password', wrapAsync(userController.changePassword))
+userRouter.patch('/password', wrapAsync(userController.changePassword))
 userRouter.patch('/start-encryption', wrapAsync(userController.startEncryption))
-userRouter.patch(
-    '/change-passphrase',
-    wrapAsync(userController.changePassphrase)
-)
+userRouter.patch('/passphrase', wrapAsync(userController.changePassphrase))
 userRouter.get('/key-chain', wrapAsync(userController.getKeyChain))
+userRouter.patch('/username', wrapAsync(userController.changeUsername))
+userRouter.patch('/timeout', wrapAsync(userController.toggleTimeout))
+userRouter.patch('/light-mode', wrapAsync(userController.toggleLightMode))
 userRouter.get(
     '/validate-passphrase',
     wrapAsync(userController.validatePassphrase)

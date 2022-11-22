@@ -27,7 +27,7 @@ const NoteItem = ({ note }: { note: INote }) => {
     }
 
     return (
-        <Card onClick={() => handleEdit()}>
+        <Card onClick={() => handleEdit()} elevation={2}>
             <CardActionArea>
                 <CardHeader
                     action={

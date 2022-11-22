@@ -11,6 +11,7 @@ const constants = {
     info: {
         changed_password: 'Password changed',
         changed_passphrase: 'Passphrase changed',
+        changed_username: 'Username changed',
         start_encryption: "You're safe now 🔐",
     },
     success: {

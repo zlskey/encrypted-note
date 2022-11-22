@@ -1,11 +1,11 @@
 import {
     Box,
-    Card,
     Chip,
     DialogContent,
     DialogTitle,
     IconButton,
     InputBase,
+    Paper,
     Skeleton,
     Tooltip,
     Typography,
@@ -96,8 +96,8 @@ const ShareDialog = ({ isOpen, handleClose, noteId }: DialogProps) => {
                 </IconButton>
             </DialogTitle>
 
-            <DialogContent>
-                <Card sx={{ p: 1, my: 1, whiteSpace: 'nowrap' }}>
+            <DialogContent sx={{ overflowX: 'hidden' }}>
+                <Paper sx={{ p: 1, my: 1, whiteSpace: 'nowrap' }} elevation={2}>
                     Add user:{' '}
                     <InputBase
                         onChange={e => setUsername(e.target.value)}
@@ -107,9 +107,13 @@ const ShareDialog = ({ isOpen, handleClose, noteId }: DialogProps) => {
                         fullWidth
                         rows={1}
                     />
-                </Card>
+                </Paper>
 
-                <Card hidden={!note.recipients.length} sx={{ p: 1, my: 1 }}>
+                <Paper
+                    hidden={!note.recipients.length}
+                    sx={{ p: 1, my: 1 }}
+                    elevation={2}
+                >
                     <Typography sx={{ mb: 1 }}>Users with access:</Typography>
 
                     <Box display='flex' gap={1}>
@@ -137,7 +141,7 @@ const ShareDialog = ({ isOpen, handleClose, noteId }: DialogProps) => {
                                   </Skeleton>
                               ))}
                     </Box>
-                </Card>
+                </Paper>
             </DialogContent>
         </Dialog>
     )
