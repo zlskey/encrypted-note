@@ -1,0 +1,7 @@
+server {
+  listen 80;
+  
+  server_name ${PROXY_FRONTEND_DOMAIN} ${PROXY_BACKEND_DOMAIN};
+
+  return 301 https://$host$request_uri;
+}

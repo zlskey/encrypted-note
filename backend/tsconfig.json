@@ -17,6 +17,9 @@
         "noFallthroughCasesInSwitch": true,
         "moduleResolution": "node",
         "baseUrl": ".",
+        "paths": {
+            "src/*": ["src/*"],
+        },
         "allowSyntheticDefaultImports": true,
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
@@ -40,5 +43,5 @@
             "es2019"
         ]
     },
-    "include": ["./src"]
+    "include": ["./src/**/*"],
 }

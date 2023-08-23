@@ -1,0 +1,27 @@
+server {
+  listen 443 ssl;
+
+  server_name ${PROXY_FRONTEND_DOMAIN};
+
+  ssl_certificate /etc/nginx/ssl/${PROXY_FRONTEND_DOMAIN}.crt;
+  ssl_certificate_key /etc/nginx/ssl/${PROXY_FRONTEND_DOMAIN}.key;
+  
+  ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+  ssl_ciphers HIGH:!aNULL:!MD5;
+
+  location / {
+    proxy_buffering off;
+
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header X-Forwarded-Host $host;
+    proxy_set_header X-Forwarded-Port $server_port;
+
+    # Enable WebSocket support for dev server hot reload
+    # https://nginx.org/en/docs/http/websocket.html
+
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+
+    proxy_pass ${PROXY_FRONTEND_INTERNAL_URL};
+  }
+}

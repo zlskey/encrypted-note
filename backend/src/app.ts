@@ -25,5 +25,14 @@ app.use(router)
 app.use(errorMiddleware.notFound)
 app.use(errorMiddleware.errorHandler)
 
-const PORT = process.env.PORT || 80
-app.listen(PORT, () => console.info('Listening on: http://localhost:%d', PORT))
+const PORT = parseInt(process.env.PORT, 10) || 80
+const HOST = process.env.HOST || 'http://localhost'
+
+console.log({
+    PORT,
+    HOST,
+})
+
+app.listen(PORT, HOST, () => {
+    console.log(`Server running on ${HOST}:${PORT}`)
+})
