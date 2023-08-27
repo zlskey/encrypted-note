@@ -26,13 +26,7 @@ app.use(errorMiddleware.notFound)
 app.use(errorMiddleware.errorHandler)
 
 const PORT = parseInt(process.env.PORT, 10) || 80
-const HOST = process.env.HOST || 'http://localhost'
 
-console.log({
-    PORT,
-    HOST,
-})
-
-app.listen(PORT, HOST, () => {
-    console.log(`Server running on ${HOST}:${PORT}`)
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`)
 })
