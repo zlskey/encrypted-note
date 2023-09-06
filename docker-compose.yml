@@ -13,8 +13,21 @@ services:
       - ".env"
       - "frontend/.env"
     networks:
-      note-local-network:
-        ipv4_address: ${DOCKER_FRONTEND_INTERNAL_IP}
+      - note-local-network
+      - proxy
+    labels:
+      # Enable Traefik for this container
+      - "traefik.enable=true"
+
+      # HTTPS Secure Router Configuration
+      - "traefik.http.routers.note.entrypoints=https"
+      - "traefik.http.routers.note.rule=Host(`note.${DOCKER_DOMAIN}`)"
+      - "traefik.http.routers.note.tls=true"
+      - "traefik.http.routers.note.service=note-service"
+      - "traefik.http.services.note-service.loadbalancer.server.port=${DOCKER_FRONTEND_INTERNAL_PORT}"
+
+      # Docker Network Configuration
+      - "traefik.docker.network=proxy"
 
   note-backend:
     container_name: ${DOCKER_BACKEND_CONTAINER_NAME}
@@ -30,41 +43,31 @@ services:
     depends_on:
       - ${DOCKER_DB_CONTAINER_NAME}
     networks:
-      note-local-network:
-        ipv4_address: ${DOCKER_BACKEND_INTERNAL_IP}
+      - note-local-network
+      - proxy
+    labels:
+      # Enable Traefik for this container
+      - "traefik.enable=true"
 
-  note-proxy:
-    container_name: ${DOCKER_PROXY_CONTAINER_NAME}
-    build:
-      context: ./proxy
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./proxy/nginx/certs:/etc/nginx/ssl
-      - ./proxy/nginx/templates:/etc/nginx/templates
-      - ./proxy/nginx/nginx.conf:/etc/nginx/nginx.conf
-    depends_on:
-      - ${DOCKER_FRONTEND_CONTAINER_NAME}
-      - ${DOCKER_BACKEND_CONTAINER_NAME}
-    env_file:
-      - ".env"
-      - "./proxy/.env"
-    networks:
-      note-local-network:
-        ipv4_address: ${DOCKER_PROXY_INTERNAL_IP}
+      # HTTPS Secure Router Configuration
+      - "traefik.http.routers.note-api.entrypoints=https"
+      - "traefik.http.routers.note-api.rule=Host(`note-api.${DOCKER_DOMAIN}`)"
+      - "traefik.http.routers.note-api.tls=true"
+      - "traefik.http.routers.note-api.service=note-api-service"
+      - "traefik.http.services.note-api-service.loadbalancer.server.port=${DOCKER_BACKEND_INTERNAL_PORT}"
+
+      # Docker Network Configuration
+      - "traefik.docker.network=proxy"
 
   note-db:
     container_name: ${DOCKER_DB_CONTAINER_NAME}
     image: mongo
     restart: unless-stopped
     networks:
-      note-local-network:
-        ipv4_address: ${DOCKER_DB_INTERNAL_IP}
+      - note-local-network
 
 networks:
+  proxy:
+    external: true
   note-local-network:
     driver: bridge
-    ipam:
-      config:
-        - subnet: 102.137.0.0/24
