@@ -1,6 +1,6 @@
 # encrypted-note
 
-Web app build with MERN stack. You can try it [here](https://note.zlskey.pl)
+Web app build with MERN stack.
 
 ## Update log
 To keep this project as a part of my portfolio I decided to rewrite whole app. 
